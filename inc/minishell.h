@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
+/*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/14 20:26:21 by xlok             ###   ########.fr       */
+/*   Updated: 2024/09/20 19:54:55 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,21 @@
 # include <stdlib.h>
 # include "libft.h"
 
+typedef enum e_token_kind t_token_kind;
+enum e_token_kind
+{
+	TK_WORD,
+	TK_RESERVED,
+	TK_NUM,
+	TK_EOF,
+};
 
+typedef struct s_token t_token;
+struct s_token
+{
+	t_token_kind	kind;
+	t_token			*next;
+	int				val;
+	char			*str;
+};
 #endif
