@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/20 22:00:11 by athonda          ###   ########.fr       */
+/*   Updated: 2024/09/21 22:03:38 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,7 @@ struct s_token
 	int				val;
 	char			*str;
 };
+
+int	lexer(char *str);
+
 #endif
