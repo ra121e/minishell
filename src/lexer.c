@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/21 22:05:05 by xlok             ###   ########.fr       */
+/*   Updated: 2024/09/22 14:26:45 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 bool	is_delimiter(char c)
 {
-	char	delimiter[] = " +-*/%()[]{}|&'";//TODO:minishell doesn't need arithmetic
+	char	delimiter[] = " =+-*/%()[]{}|&'";//TODO:minishell doesn't need arithmetic
 	int		i;
 
 	i = -1;
@@ -26,37 +26,49 @@ bool	is_delimiter(char c)
 	}
 	if (c == '"')
 		return (1);
-//TODO:redirection
+//TODO:handle redirection char
 	return (0);
 }
 
 bool	is_builtin(char *str)
 {
-	return (ft_strncmp(str, "echo", 4) || ft_strncmp(str, "cd", 2));
-//TODO:add other builtin if works
+	return (!ft_strncmp(str, "echo", 4) || !ft_strncmp(str, "cd", 2) || \
+			!ft_strncmp(str, "pwd", 3) || !ft_strncmp(str, "export", 6) || \
+			!ft_strncmp(str, "unset", 5) || !ft_strncmp(str, "env", 3) || \
+			!ft_strncmp(str, "exit", 4));
 }
 
+//TODO:operator/assignment etc.? what word to choose apart from builtin, word etc.
 int	lexer(char *str)
 {
 	int		start;
 	int		end;
+	int		len;
 	char	*token;
-	
+
 	start = 0;
 	end = 0;
-
-	while (end <= (int)ft_strlen(str))
+	len = (int)(ft_strlen(str));
+	while (end <= len)
 	{
-		if (!is_delimiter(str[end]))
+		if (!is_delimiter(str[end]) && end < len)
 			end++;
-		else if (is_delimiter(str[end]) && start != end)
+		else if (start == end)
 		{
-			token = ft_substr(str, start, end - start + 1);
+			if (str[end] != ' ')
+				printf("Delimiter: %c\n", str[end]);
+			start = ++end;
+		}
+		else
+		{
+			token = ft_substr(str, start, end - start);
 			if (is_builtin(token))
 				printf("Builtin: %s\n", token);
 			else
 				printf("Word: %s\n", token);
-			end++;
+			if (end < len && str[end] != ' ')
+				printf("Delimiter: %c\n", str[end]);
+			start = ++end;
 		}
 	}
 	return (0);
