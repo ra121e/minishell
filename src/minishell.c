@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/22 17:21:31 by xlok             ###   ########.fr       */
+/*   Updated: 2024/09/22 19:43:15 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 //{
 //	char		*input;
 //	char		*prompt;
-//	HIST_ENTRY	**history;
-//	int			i;
-//
 //	prompt = ft_strjoin(ft_strjoin(getenv("USER"), "@"), ":$");//TODO:free
 //	while (1)
 //	{
@@ -29,11 +26,19 @@
 //			add_history(input);
 //		free(input);
 //	}
+//=========================TODO: REMOVE========================================
+//readline handles the up/down arrows to scroll through the in-memory
+//history list so there's no need to access it using other functions like
+//history_list() / history_get() which are forbidden by proj
 ////	prints history
-//	history = history_list();//TODO:history_list() cannot be used
+//	HIST_ENTRY	**history;
+//	int			i;
+//
+//	history = history_list();
 //	i = -1;
 //	while (history[++i])
 //		printf("%s\n", history[i]->line);
+//=========================TODO: REMOVE========================================
 //}
 
 //test lexer
