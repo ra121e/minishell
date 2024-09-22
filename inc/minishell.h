@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/21 22:03:38 by xlok             ###   ########.fr       */
+/*   Updated: 2024/09/22 17:50:11 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <unistd.h>
+# include <stdbool.h>
 # include "libft.h"
 
 typedef enum e_token_kind t_token_kind;
@@ -38,6 +40,7 @@ struct s_token
 	char			*str;
 };
 
-int	lexer(char *str);
+int		lexer(char *str);
+char	*pwd(void);
 
 #endif

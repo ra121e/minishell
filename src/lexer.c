@@ -6,12 +6,11 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/22 14:26:45 by xlok             ###   ########.fr       */
+/*   Updated: 2024/09/22 17:50:13 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdbool.h>//TODO:shift to minishell.h
 
 bool	is_delimiter(char c)
 {

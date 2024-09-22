@@ -6,7 +6,7 @@
 #    By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/09/21 21:59:25 by xlok             ###   ########.fr        #
+#    Updated: 2024/09/22 17:20:08 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ BONUS_DEP := inc/minishell_bonus.h
 
 SRC_DIR := src
 SRC_F := minishell.c \
-		 lexer.c
+		 lexer.c \
+		 builtin_pwd.c
 
 SRC := $(SRC_F:%.c=$(SRC_DIR)/%.c)
 
