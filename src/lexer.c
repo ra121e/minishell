@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
+/*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/22 17:50:13 by xlok             ###   ########.fr       */
+/*   Updated: 2024/09/23 21:42:08 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	lexer(char *str)
 		else
 		{
 			token = ft_substr(str, start, end - start);
+			tokenize(token);
 			if (is_builtin(token))
 				printf("Builtin: %s\n", token);
 			else
