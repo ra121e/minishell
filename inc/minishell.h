@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/22 17:50:11 by xlok             ###   ########.fr       */
+/*   Updated: 2024/09/23 21:41:08 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ struct s_token
 
 int		lexer(char *str);
 char	*pwd(void);
+t_token	*tokenize(char *p);
+t_token	*new_token(t_token_kind kind, char *str, t_token *now);
 
 #endif
