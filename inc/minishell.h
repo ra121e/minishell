@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/23 21:41:08 by athonda          ###   ########.fr       */
+/*   Updated: 2024/09/25 16:52:27 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ enum e_token_kind
 {
 	TK_WORD,
 	TK_RESERVED,
+	TK_BUILTIN,
 	TK_NUM,
 	TK_EOF,
 };
@@ -40,9 +41,12 @@ struct s_token
 	char			*str;
 };
 
-int		lexer(char *str);
+int		is_space(char c);
+t_token	*lexer(char *str);
 char	*pwd(void);
-t_token	*tokenize(char *p);
-t_token	*new_token(t_token_kind kind, char *str, t_token *now);
+t_token	*new_token(char *str,t_token_kind kind);
+void	add_back(t_token **node, t_token *new);
+t_token	*token_last(t_token *now);
+void	tokenize(t_token **head, char *p, t_token_kind kind);
 
 #endif
