@@ -6,11 +6,19 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/23 21:42:08 by athonda          ###   ########.fr       */
+/*   Updated: 2024/09/26 09:23:01 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_space(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' || \
+		c == '\r' || c == '\v' || c == '\f')
+		return (1);
+	return (0);
+}
 
 bool	is_delimiter(char c)
 {
@@ -38,13 +46,15 @@ bool	is_builtin(char *str)
 }
 
 //TODO:operator/assignment etc.? what word to choose apart from builtin, word etc.
-int	lexer(char *str)
+t_token	*lexer(char *str)
 {
 	int		start;
 	int		end;
 	int		len;
 	char	*token;
+	t_token	*head;
 
+	head = NULL;
 	start = 0;
 	end = 0;
 	len = (int)(ft_strlen(str));
@@ -54,8 +64,17 @@ int	lexer(char *str)
 			end++;
 		else if (start == end)
 		{
-			if (str[end] != ' ')
-				printf("Delimiter: %c\n", str[end]);
+/*
+1) few spaces at the end of str: str[end] comes to \0 and handled as delimiter
+  -> add \0 condition in if	statement
+2) get substr and apply tokenize() on the substr which is delimiter
+*/
+			if (str[end] != ' ' && str[end] != '\0')
+			{
+				token = ft_substr(str, start, 1);
+				tokenize(&head, token, TK_RESERVED);
+				printf("Delimiter A: %c\n", str[end]);
+			}
 			start = ++end;
 		}
 		else
@@ -63,13 +82,26 @@ int	lexer(char *str)
 			token = ft_substr(str, start, end - start);
 			tokenize(token);
 			if (is_builtin(token))
+			{
+				tokenize(&head, token, TK_BUILTIN);
 				printf("Builtin: %s\n", token);
+			}
 			else
+			{
+				tokenize(&head, token, TK_WORD);
 				printf("Word: %s\n", token);
+			}
 			if (end < len && str[end] != ' ')
-				printf("Delimiter: %c\n", str[end]);
+			{
+/*
+get substr and apply tokenize() on the substr which is delimiter
+*/
+				token = ft_substr(str, end, 1);
+				tokenize(&head, token, TK_RESERVED);
+				printf("Delimiter B: %c\n", str[end]);
+			}
 			start = ++end;
 		}
 	}
-	return (0);
+	return (head);
 }
