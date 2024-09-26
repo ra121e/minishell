@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/25 16:52:08 by athonda          ###   ########.fr       */
+/*   Updated: 2024/09/26 09:23:01 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,14 @@ t_token	*lexer(char *str)
 		}
 		else
 		{
+			token = ft_substr(str, start, end - start);
 			if (is_builtin(token))
 			{
-				token = ft_substr(str, start, end - start);
 				tokenize(&head, token, TK_BUILTIN);
 				printf("Builtin: %s\n", token);
 			}
 			else
 			{
-				token = ft_substr(str, start, end - start);
 				tokenize(&head, token, TK_WORD);
 				printf("Word: %s\n", token);
 			}
