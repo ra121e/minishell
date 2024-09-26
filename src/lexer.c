@@ -80,7 +80,6 @@ t_token	*lexer(char *str)
 		else
 		{
 			token = ft_substr(str, start, end - start);
-			tokenize(token);
 			if (is_builtin(token))
 			{
 				tokenize(&head, token, TK_BUILTIN);
