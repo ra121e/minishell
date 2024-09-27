@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/25 16:52:27 by athonda          ###   ########.fr       */
+/*   Updated: 2024/09/27 16:21:40 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_token	*lexer(char *str);
 char	*pwd(void);
 t_token	*new_token(char *str,t_token_kind kind);
 void	add_back(t_token **node, t_token *new);
-t_token	*token_last(t_token *now);
+t_token	*token_last(t_token *cur);
 void	tokenize(t_token **head, char *p, t_token_kind kind);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 17:37:18 by athonda           #+#    #+#             */
-/*   Updated: 2024/09/25 16:40:25 by athonda          ###   ########.fr       */
+/*   Updated: 2024/09/27 16:21:09 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void	add_back(t_token **node, t_token *new)
 }
 
 
-t_token	*token_last(t_token *now)
+t_token	*token_last(t_token *cur)
 {
-	if (now == NULL)
+	if (cur == NULL)
 		return (NULL);
-	while (now->next != NULL)
-		now = now->next;
-	return (now);
+	while (cur ->next != NULL)
+		cur = cur->next;
+	return (cur);
 }
