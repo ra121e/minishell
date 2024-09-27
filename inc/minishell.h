@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/27 16:21:40 by athonda          ###   ########.fr       */
+/*   Updated: 2024/09/27 19:32:27 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 typedef enum e_token_kind t_token_kind;
 enum e_token_kind
 {
+	TK_SINGLE_QUOTES,
 	TK_WORD,
 	TK_RESERVED,
 	TK_BUILTIN,
@@ -40,6 +41,14 @@ struct s_token
 	int				val;
 	char			*str;
 };
+
+typedef struct s_ms
+{
+	int		start;
+	int		end;
+	int		len;
+	char	*token;
+}	t_ms;
 
 int		is_space(char c);
 t_token	*lexer(char *str);
