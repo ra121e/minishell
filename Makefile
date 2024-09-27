@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+         #
+#    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/09/15 14:22:27 by xlok             ###   ########.fr        #
+#    Updated: 2024/09/23 21:39:03 by athonda          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,11 @@ DEP := inc/minishell.h
 BONUS_DEP := inc/minishell_bonus.h
 
 SRC_DIR := src
-SRC_F := minishell.c
+SRC_F := minishell.c \
+		 lexer.c \
+		 builtin_pwd.c \
+		 tokenize.c \
+		 token.c
 
 SRC := $(SRC_F:%.c=$(SRC_DIR)/%.c)
 

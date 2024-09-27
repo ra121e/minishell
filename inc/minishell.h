@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
+/*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/14 20:26:21 by xlok             ###   ########.fr       */
+/*   Updated: 2024/09/27 16:21:40 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,36 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+# include <stdarg.h>
+# include <unistd.h>
+# include <stdbool.h>
 # include "libft.h"
 
+typedef enum e_token_kind t_token_kind;
+enum e_token_kind
+{
+	TK_WORD,
+	TK_RESERVED,
+	TK_BUILTIN,
+	TK_NUM,
+	TK_EOF,
+};
+
+typedef struct s_token t_token;
+struct s_token
+{
+	t_token_kind	kind;
+	t_token			*next;
+	int				val;
+	char			*str;
+};
+
+int		is_space(char c);
+t_token	*lexer(char *str);
+char	*pwd(void);
+t_token	*new_token(char *str,t_token_kind kind);
+void	add_back(t_token **node, t_token *new);
+t_token	*token_last(t_token *cur);
+void	tokenize(t_token **head, char *p, t_token_kind kind);
 
 #endif

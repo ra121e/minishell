@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/25 16:54:42 by athonda          ###   ########.fr       */
+/*   Created: 2024/09/20 21:14:07 by athonda           #+#    #+#             */
+/*   Updated: 2024/09/27 16:18:26 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @file tokenize.c
+ * @brief make token from prompt text
+ */
+
 #include "minishell.h"
 
-int	main()
+
+void	tokenize(t_token **head, char *p, t_token_kind kind)
 {
-	char		*input;
-	char		*prompt;
-	t_token		*head;
-	prompt = ft_strjoin(ft_strjoin(getenv("USER"), "@"), ":$");//TODO:free
-	while (1)
-	{
-		input = readline(prompt);
-		if (!input)
-			break ;
-		else if (*input)
-		{
-			add_history(input);
-			head = lexer(input);
-		}
-		free(input);
-		printf("tokens: %s -> %s -> %s...", head->str, head->next->str, head->next->next->str);
-	}
+	t_token	*cur;
+
+	cur = new_token(p, kind);
+	printf("token: %s\n", cur->str);
+	add_back(head, cur);
+	return ;
 }
