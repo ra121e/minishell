@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/27 18:57:46 by xlok             ###   ########.fr       */
+/*   Updated: 2024/09/27 19:42:36 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ int	main()
 			head = lexer(input);
 		}
 		free(input);
-//		printf("tokens: %s -> %s -> %s...", head->str, head->next->str, head->next->next->str);
+		printf("tokens: %s -> %s -> %s...", head->str, head->next->str, head->next->next->str);
 	}
 }
