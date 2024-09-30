@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/27 19:42:36 by athonda          ###   ########.fr       */
+/*   Updated: 2024/09/30 20:19:44 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,13 @@ int	main()
 	char		*input;
 	char		*prompt;
 	t_token		*head;
-	prompt = ft_strjoin(ft_strjoin(getenv("USER"), "@"), ":$");//TODO:free
+
+	prompt = ft_strjoin(ft_strjoin(getenv("USER"), "@"), ":$");
+//the following line affects history display due to length calculation
+//	prompt = ft_strjoin(ft_strjoin("\033[35m", prompt), "\033[0m");
+	if (!prompt)
+		perror("prompt malloc error");//malloc protection
+	head = 0;
 	while (1)
 	{
 		input = readline(prompt);
@@ -29,6 +35,20 @@ int	main()
 			head = lexer(input);
 		}
 		free(input);
-		printf("tokens: %s -> %s -> %s...", head->str, head->next->str, head->next->next->str);
+//==========Print token(s)==========
+		if (head)
+		{
+			printf("\033[32mtoken(s): \033[0m");
+			while (head)
+			{
+				printf("%s", head->str);
+				if (head->next)
+					printf("\033[32m -> \033[0m");
+				head = head->next;
+			}
+			printf("\n");
+		}
+//==========Print token(s)==========
 	}
+	free(prompt);
 }

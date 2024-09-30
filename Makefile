@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/09/23 21:39:03 by athonda          ###   ########.fr        #
+#    Updated: 2024/09/28 19:32:25 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,10 @@ BONUS_DEP := inc/minishell_bonus.h
 SRC_DIR := src
 SRC_F := minishell.c \
 		 lexer.c \
+		 lexer_helper.c \
+		 lexer_quote.c \
+		 lexer_redirection.c \
+		 lexer_pipe.c \
 		 builtin_pwd.c \
 		 tokenize.c \
 		 token.c

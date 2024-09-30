@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/27 19:32:27 by xlok             ###   ########.fr       */
+/*   Updated: 2024/09/30 20:19:25 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@
 typedef enum e_token_kind t_token_kind;
 enum e_token_kind
 {
-	TK_SINGLE_QUOTES,
+	TK_REDIRECTION,
+	TK_PIPE,
 	TK_WORD,
 	TK_RESERVED,
 	TK_BUILTIN,
 	TK_NUM,
-	TK_EOF,
 };
 
 typedef struct s_token t_token;
@@ -50,12 +50,17 @@ typedef struct s_ms
 	char	*token;
 }	t_ms;
 
-int		is_space(char c);
 t_token	*lexer(char *str);
+bool	is_delimiter(char c);
+bool	is_builtin(char *str);
 char	*pwd(void);
 t_token	*new_token(char *str,t_token_kind kind);
 void	add_back(t_token **node, t_token *new);
 t_token	*token_last(t_token *cur);
+char	*token_kind(int k);
 void	tokenize(t_token **head, char *p, t_token_kind kind);
+void	lexer_quote(t_ms *ms, char *str, t_token **head);
+void	lexer_redirection(t_ms *ms, char *str, t_token **head);
+void	lexer_pipe(t_ms *ms, char *str, t_token **head);
 
 #endif
