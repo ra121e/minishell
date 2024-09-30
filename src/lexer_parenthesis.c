@@ -1,51 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_redirection.c                                :+:      :+:    :+:   */
+/*   lexer_parenthesis.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/28 15:47:42 by xlok              #+#    #+#             */
+/*   Created: 2024/10/09 19:55:28 by xlok              #+#    #+#             */
 /*   Updated: 2024/10/12 20:27:27 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	redirection_type(t_ms *ms, char *str)
+void	lexer_parenthesis(t_ms *ms, char *str)
 {
-	int	type;
-
-	type = 0;
-	if (str[ms->end] == '<' && str[ms->end + 1] != '<')
-		type = TK_REDIRECT_IN;
-	else if (str[ms->end] == '>' && str[ms->end + 1] != '>')
-		type = TK_REDIRECT_OUT;
-	else if (str[ms->end] == '<' && str[ms->end + 1] == '<')
-		type = TK_REDIRECT_HEREDOC;
-	else if (str[ms->end] == '>' && str[ms->end + 1] == '>')
-		type = TK_REDIRECT_APPEND;
-	return (type);
-}
-
-void	lexer_redirection(t_ms *ms, char *str)
-{
-	int	type;
-
 	if (ms->start != ms->end)
 	{
 		tokenize_word(ms, str, TK_WORD);
 		ms->start = --ms->end;
 	}
-	type = redirection_type(ms, str);
-	if (type == TK_REDIRECT_IN || type == TK_REDIRECT_OUT)
-		ms->token = ft_substr(str, ms->start, 1);
-	else
-		ms->token = ft_substr(str, ms->start, 2);
+	if (str[ms->end] == '(' && !ft_strchr(str + ms->end, ')'))
+	{
+		ft_dprintf(2, "Syntax error\n");
+		ms->start = ++ms->end;
+		return ;//should free & exit
+	}
+	ms->token = ft_substr(str, ms->start, 1);
 	if (!ms->token)
 		perror("token malloc error");//malloc protection
-	tokenize(ms, type);
-	if (type == TK_REDIRECT_HEREDOC || type == TK_REDIRECT_APPEND)
-		ms->end++;
+	if (str[ms->end] == '(')
+		tokenize(ms, TK_LPAREN);
+	else
+		tokenize(ms, TK_RPAREN);
 	ms->start = ++ms->end;
 }
