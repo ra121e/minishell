@@ -6,7 +6,7 @@
 #    By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/11 13:33:12 by xlok              #+#    #+#              #
-#    Updated: 2024/08/11 13:33:15 by xlok             ###   ########.fr        #
+#    Updated: 2024/10/03 22:01:50 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC := ft_atoi.c \
 	   ft_isalpha.c \
 	   ft_isascii.c \
 	   ft_isdigit.c \
+	   ft_isspace.c \
 	   ft_isprint.c \
 	   ft_itoa.c \
 	   ft_memchr.c \
