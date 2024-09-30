@@ -6,77 +6,52 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/28 19:41:25 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/11 08:23:05 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*lexer(char *str)
+//tokenize prior
+void	lexer_word(t_ms *ms, char *str, int type)
 {
-	t_ms	*ms;
-	t_token	*head;
+	ms->token = ft_substr(str, ms->start, ms->end - ms->start);
+	tokenize(ms, type);
+	ms->start = ++ms->end;
+}
 
-	ms = malloc(sizeof(t_ms));
-	if (!ms)
-		perror("ms malloc error");//malloc protection
-	head = NULL;
-	ms->start = 0;
-	ms->end = 0;
+//tokenize current char
+void	lexer_single(t_ms *ms, char *str)
+{
+	if (!ft_isspace(str[ms->end]) && str[ms->end])
+	{
+		ms->token = ft_substr(str, ms->start, 1);
+		tokenize(ms, TK_WORD);
+	}
+	ms->start = ++ms->end;
+}
+
+void	lexer(t_ms *ms, char *str)
+{
 	ms->len = (int)(ft_strlen(str));
 	while (ms->end <= ms->len)
 	{
-//	Handle quotes
-//TODO:expand $ inside "" -> tokenize separately
 		if (str[ms->end] == '\'' || str[ms->end] == '\"')
-			lexer_quote(ms, str, &head);//add str and head to struct ms?
-//	Handle redirections
-//TODO:AND &&/OR ||/asterisk *
+			lexer_quote(ms, str);
+//TODO:Handle asterisk * for current directory
+		else if (str[ms->end] == '&' || str[ms->end] == '|')
+			lexer_operator(ms, str);
 		else if (str[ms->end] == '<' || str[ms->end] == '>')
-			lexer_redirection(ms, str, &head);
-//	Handle pipes
-		else if (str[ms->end] == '|')
-			lexer_pipe(ms, str, &head);
-//	Handle others
-		else if (!is_delimiter(str[ms->end]) && ms->end < ms->len)
+			lexer_redirection(ms, str);
+		else if (str[ms->end] == '(' || str[ms->end] == ')')
+			lexer_parenthesis(ms, str);
+		else if (str[ms->end] == '$')
+			lexer_var(ms, str, TK_VAR);
+		else if (!ft_isspace(str[ms->end]) && str[ms->end])
 			ms->end++;
 		else if (ms->start == ms->end)
-		{
-/*
-1) few spaces at the end of str: str[end] comes to \0 and handled as delimiter
-  -> add \0 condition in if	statement
-2) get substr and apply tokenize() on the substr which is delimiter
-*/
-			if (str[ms->end] != ' ' && str[ms->end] != '\0')
-			{
-				ms->token = ft_substr(str, ms->start, 1);
-				if (str[ms->end] == '|')
-					tokenize(&head, ms->token, TK_PIPE);
-				else
-					tokenize(&head, ms->token, TK_RESERVED);
-			}
-			ms->start = ++ms->end;
-		}
+			lexer_single(ms, str);
 		else
-		{
-			ms->token = ft_substr(str, ms->start, ms->end - ms->start);
-			if (is_builtin(ms->token))
-				tokenize(&head, ms->token, TK_BUILTIN);
-			else
-				tokenize(&head, ms->token, TK_WORD);
-			if (ms->end < ms->len && str[ms->end] != ' ')
-			{
-/*
-get substr and apply tokenize() on the substr which is delimiter
-*/
-				ms->token = ft_substr(str, ms->end, 1);
-				if (str[ms->end] == '|')
-					tokenize(&head, ms->token, TK_PIPE);
-				else
-					tokenize(&head, ms->token, TK_RESERVED);
-			}
-			ms->start = ++ms->end;
-		}
+			lexer_word(ms, str, TK_WORD);
 	}
-	return (head);
 }
