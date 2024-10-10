@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/30 20:19:44 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/09 21:07:47 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	main()
 	char		*input;
 	char		*prompt;
 	t_token		*head;
+	t_token		*tokens;
+	t_node		*node;
 
 	prompt = ft_strjoin(ft_strjoin(getenv("USER"), "@"), ":$");
 //the following line affects history display due to length calculation
@@ -35,6 +37,7 @@ int	main()
 			head = lexer(input);
 		}
 		free(input);
+		tokens = head;
 //==========Print token(s)==========
 		if (head)
 		{
@@ -49,6 +52,20 @@ int	main()
 			printf("\n");
 		}
 //==========Print token(s)==========
+		node = parse_expr(tokens);
+		if (node)
+		{
+			printf("\033[32mAST node(s): \033[0m");
+			while (node)
+			{
+				printf("%p:%s ", node->token, node->str);
+				if (node->left)
+					printf("\033[32m -> \033[0m");
+				node = node->left;
+			}
+			printf("\n");
+		}
+
 	}
 	free(prompt);
 }
