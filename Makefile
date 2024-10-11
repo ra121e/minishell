@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/09 19:54:57 by athonda          ###   ########.fr        #
+#    Updated: 2024/10/11 10:33:49 by athonda          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,11 @@ SRC_F := minishell.c \
 		 tokenize.c \
 		 token.c \
 		 parser.c \
+		 parser_expr.c \
+		 parser_pip.c \
+		 parser_command.c \
+		 parser_subshell.c \
+		 parser_redirect.c \
 		 parser_helper.c \
 		 ast.c
 

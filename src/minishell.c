@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/09 21:07:47 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/11 10:28:30 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main()
 			printf("\n");
 		}
 //==========Print token(s)==========
-		node = parse_expr(tokens);
+		node = parser(&tokens);
 		if (node)
 		{
 			printf("\033[32mAST node(s): \033[0m");
