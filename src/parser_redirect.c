@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:19:23 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/11 10:26:51 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/11 21:26:17 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,24 +78,45 @@ t_node	*parse_redirect(t_token **token)
 	if ((*token)->str[0] == '<')
 	{
 		node = ast_newnode(ND_REDIRECT_IN);
+		*token = (*token)->next;
+		if ((*token)->kind != TK_WORD)
+		{
+			ft_dprintf(2, "Syntax error: Expected file name after redirect\n");
+			return (NULL);
+		}
 		node->str = "<";
 		return (node);
 	}
 	else if ((*token)->str[0] == '>')
 	{
 		node = ast_newnode(ND_REDIRECT_OUT);
+		*token = (*token)->next;
+		{
+			ft_dprintf(2, "Syntax error: Expected file name after redirect\n");
+			return (NULL);
+		}
 		node->str = ">";
 		return (node);
 	}
 	else if ((*token)->str[0] == '>' && (*token)->str[1] == '>')
 	{
 		node = ast_newnode(ND_REDIRECT_APPEND);
+		*token = (*token)->next;
+		{
+			ft_dprintf(2, "Syntax error: Expected file name after redirect\n");
+			return (NULL);
+		}
 		node->str = ">>";
 		return (node);
 	}
 	else if ((*token)->str[0] == '<' && (*token)->str[1] == '<')
 	{
 		node = ast_newnode(ND_REDIRECT_HEREDOC);
+		*token = (*token)->next;
+		{
+			ft_dprintf(2, "Syntax error: Expected file name after redirect\n");
+			return (NULL);
+		}
 		node->str = "<<";
 		return (node);
 	}
