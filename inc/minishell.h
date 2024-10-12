@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/12 08:28:25 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/12 13:17:15 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ enum e_node_kind
 	ND_SUBSHELL,
 	ND_AND,
 	ND_OR,
+	ND_WORD,
 };
 
 typedef struct s_node t_node;

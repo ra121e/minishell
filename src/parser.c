@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:11:36 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/12 08:25:48 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/12 18:55:59 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,14 @@
 1.	<expr>			::=  	<pip>
 						| 	<pip> '&&' <expr>
 						|	<pip> '||' <expr>
+	EBNF
+	<expr>			::=	<pip> ('&&' <pip> | '||' <pip>)*
+
 
 2.	<pip>			::=		<command>
 						|	<command> '|' <pip>
+	EBNF
+	<pip>			::=	<command> ('|' <command>)*
 
 3.	<command>		::=		<cmd_re>
 						|	<subshell>

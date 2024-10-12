@@ -6,15 +6,13 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:19:23 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/12 08:27:14 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/12 13:46:14 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
 /**
- * @fn parser_redirect_re(t_token *token)
- * @brief iterate redirections
+ * @file parser_redirect.c
+ * @brief to handle the redirects (<,>,<<,>>)
  * @note
 	<redirect_re>	::=		<redirect> <redirect_right>
 
@@ -25,14 +23,29 @@
 						|	'>' <file>
 						|	'<<' <file>
 						|	'>>' <file>
+ *
+ */
+
+#include "minishell.h"
+
+/**
+ * @fn parser_redirect_re(t_token *token)
+ * @brief iterate redirections
+ * @param[in,out]	token address
+ * @param[out]		node address
+ * @note
+	<redirect_re>	::=		<redirect> <redirect_right>
+
  */
 
 t_node	*parser_redirect_re(t_token **token)
 {
 	t_node	*node;
+	t_node	*right;
 
 	node = parser_redirect(token);
-	node = parser_redirect_right(token);
+	right = parser_redirect_right(token);
+	node->right = right;
 	return (node);
 }
 
@@ -47,6 +60,7 @@ t_node	*parser_redirect_re(t_token **token)
 t_node	*parser_redirect_right(t_token **token)
 {
 	t_node	*node;
+	t_node	*right;
 
 	if (token == NULL)
 	{
@@ -54,9 +68,10 @@ t_node	*parser_redirect_right(t_token **token)
 	}
 	else
 	{
-		parser_redirect(token);
+		node = parser_redirect(token);
 		*token = next_token(*token);
-		node = parser_redirect_right(token);
+		right = parser_redirect_right(token);
+		node->right = right;
 	}
 	return (node);
 }
@@ -74,6 +89,7 @@ t_node	*parser_redirect_right(t_token **token)
 t_node	*parser_redirect(t_token **token)
 {
 	t_node	*node;
+	t_node	*right;
 
 	if ((*token)->str[0] == '<')
 	{
@@ -84,6 +100,9 @@ t_node	*parser_redirect(t_token **token)
 			ft_dprintf(2, "Syntax error: Expected file name after redirect\n");
 			return (NULL);
 		}
+		right = ast_newnode(ND_WORD);
+		right->str = (*token)->str;
+		node->right = right;
 		node->str = "<";
 		return (node);
 	}
@@ -91,10 +110,14 @@ t_node	*parser_redirect(t_token **token)
 	{
 		node = ast_newnode(ND_REDIRECT_OUT);
 		*token = (*token)->next;
+		if ((*token)->kind != TK_WORD)
 		{
 			ft_dprintf(2, "Syntax error: Expected file name after redirect\n");
 			return (NULL);
 		}
+		right = ast_newnode(ND_WORD);
+		right->str = (*token)->str;
+		node->right = right;
 		node->str = ">";
 		return (node);
 	}
@@ -102,10 +125,14 @@ t_node	*parser_redirect(t_token **token)
 	{
 		node = ast_newnode(ND_REDIRECT_APPEND);
 		*token = (*token)->next;
+		if ((*token)->kind != TK_WORD)
 		{
 			ft_dprintf(2, "Syntax error: Expected file name after redirect\n");
 			return (NULL);
 		}
+		right = ast_newnode(ND_WORD);
+		right->str = (*token)->str;
+		node->right = right;
 		node->str = ">>";
 		return (node);
 	}
@@ -113,10 +140,14 @@ t_node	*parser_redirect(t_token **token)
 	{
 		node = ast_newnode(ND_REDIRECT_HEREDOC);
 		*token = (*token)->next;
+		if ((*token)->kind != TK_WORD)
 		{
 			ft_dprintf(2, "Syntax error: Expected file name after redirect\n");
 			return (NULL);
 		}
+		right = ast_newnode(ND_WORD);
+		right->str = (*token)->str;
+		node->right = right;
 		node->str = "<<";
 		return (node);
 	}

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:17:20 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/12 08:26:04 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/12 19:39:46 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,19 @@
 t_node	*parser_command(t_token **token)
 {
 	t_node	*node;
-	t_token	*next;
+//	t_token	*next;
+	t_node	*right;
 
 	if (*token == NULL)
 		return (NULL);
 	if ((*token)->kind == TK_LPAREN)
 	{
 		node = parser_subshell(token);
-		next = next_token(*token);
-		if (next->kind == TK_REDIRECT_IN || next->kind == TK_REDIRECT_OUT)
+		*token = (*token)->next;
+		if ((*token)->kind == TK_REDIRECT_IN || (*token)->kind == TK_REDIRECT_OUT)
 		{
-			node = parser_redirect(token);
+			right = parser_redirect_re(token);
+			node->right = right;
 		}
 	}
 	else
@@ -54,9 +56,11 @@ t_node	*parser_command(t_token **token)
 t_node	*parser_cmd_re(t_token **token)
 {
 	t_node	*node;
+	t_node	*right;
 
 	node = parser_cmd(token);
-	node = parser_cmd_right(token);
+	right = parser_cmd_right(token);
+	node->right = right;
 
 	return (node);
 }
@@ -72,12 +76,14 @@ t_node	*parser_cmd_re(t_token **token)
 t_node	*parser_cmd_right(t_token **token)
 {
 	t_node	*node;
+	t_node	*right;
 
 	if ((*token)->kind == TK_WORD || (*token)->kind == TK_REDIRECT_IN || (*token)->kind == TK_REDIRECT_OUT \
 	|| (*token)->kind == TK_REDIRECT_HEREDOC || (*token)->kind == TK_REDIRECT_APPEND)
 	{
 		node = parser_cmd(token);
-		node = parser_cmd_right(token);
+		right = parser_cmd_right(token);
+		node->right = right;
 		return (node);
 	}
 	else
@@ -107,7 +113,10 @@ t_node	*parser_cmd(t_token **token)
 	{
 		node = ast_newnode(ND_COMMAND);
 		node->str = (*token)->str;
-		*token = (*token)->next;
+		if ((*token)->next == NULL)	//TODO in case of the last token, how to handle ??
+			*token == NULL;
+		else
+			*token = (*token)->next;
 	}
 	return (node);
 }

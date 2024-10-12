@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:18:17 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/12 08:26:39 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/12 14:26:43 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 t_node	*parser_subshell(t_token **token)
 {
-	t_node	*expr_node;
+	//t_node	*expr_node;
 	t_node	*node;
 
 	if ((*token)->kind != TK_LPAREN)
@@ -30,8 +30,8 @@ t_node	*parser_subshell(t_token **token)
 		return (NULL);
 	}
 	(*token) = (*token)->next;
-	expr_node = parser_expr(token);
-	if (expr_node == NULL)
+	node = parser_expr(token);
+	if (node == NULL)
 	{
 		ft_dprintf(2, "Syntax error: invalid expression inside '()'\n");
 		return (NULL);
@@ -41,9 +41,9 @@ t_node	*parser_subshell(t_token **token)
 		ft_dprintf(2, "Syntax error: expected ')'\n");
 		return (NULL);
 	}
-	node = ast_newnode(ND_SUBSHELL);
-	*token = (*token)->next;
-	node->left = expr_node;
-	node->str = "()";
+	//node = ast_newnode(ND_SUBSHELL);
+	//*token = (*token)->next;
+	//node->left = expr_node;
+	//node->str = "()";
 	return (node);
 }
