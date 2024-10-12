@@ -6,12 +6,12 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:11:36 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/11 10:15:35 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/12 08:25:48 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
- * @file parser.c
+ * @file parserr.c
  * @brief make AST from token series
  * @param[in]	token
  * @param[out]	node of AST
@@ -20,20 +20,20 @@
 #include "minishell.h"
 
 /*	BNF
-	<expr>			::=  	<pip>
+1.	<expr>			::=  	<pip>
 						| 	<pip> '&&' <expr>
 						|	<pip> '||' <expr>
 
-	<pip>			::=		<command>
+2.	<pip>			::=		<command>
 						|	<command> '|' <pip>
 
-	<command>		::=		<cmd_re>
+3.	<command>		::=		<cmd_re>
 						|	<subshell>
 						|	<subshell> <redirect_re>
 
-	<subshell>		::=		'(' <expr> ')'
+4.	<subshell>		::=		'(' <expr> ')'
 
-	<redirect_re>	::=		<redirect>
+5.	<redirect_re>	::=		<redirect>
 						|	<redirect_re> <redirect>
 
 	<redirect>		::=		'<' <file>
@@ -41,20 +41,20 @@
 						|	'<<' <file>
 						|	'>>' <file>
 
-	<cmd_re>		::=		<cmd>
+6.	<cmd_re>		::=		<cmd>
 						|	<cmd_re> <cmd>
 
 	<cmd>			::=		<word>
 						|	<redirect>
-*
-	delete the left recursion in redirect_re adn command_re
 
-	<redirect_re>	::=		<redirect> <redirect_right>
+*	delete the left recursion in redirect_re adn command_re
+
+5.	<redirect_re>	::=		<redirect> <redirect_right>
 
 	<redirect_right>::=		ε
 						|	<redirect> <redirect_right>
 
-	<cmd_re>		::=		<cmd> <cmd_right>
+6.	<cmd_re>		::=		<cmd> <cmd_right>
 
 	<cmd_right>		::=		ε
 						|	<cmd> <cmd_right>
@@ -68,13 +68,13 @@ t_node	*parser(t_token **token)
 
 	node = NULL;
 	cur = *token;
-	node = parse_expr(&cur);
+	node = parser_expr(&cur);
 
 	return (node);
 }
 
 /*
-t_node	*parse_cmd2(t_token *token)
+t_node	*parser_cmd2(t_token *token)
 {
 	t_node	*node;
 	t_token	*next;

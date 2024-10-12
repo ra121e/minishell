@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/11 13:29:24 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/12 08:28:25 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,16 +123,16 @@ int		get_var_len(t_ms *ms, char *var);
 char	*getvar(t_ms *ms, char *var);
 
 t_node	*parser(t_token **token);
-t_node	*parse_expr(t_token **token);
-t_node	*parse_pip(t_token **token);
-t_node	*parse_command(t_token **token);
-t_node	*parse_subshell(t_token **token);
-t_node	*parse_redirect_re(t_token **token);
-t_node	*parse_redirect_right(t_token **token);
-t_node	*parse_redirect(t_token **token);
-t_node	*parse_cmd_re(t_token **token);
-t_node	*parse_cmd_right(t_token **token);
-t_node	*parse_cmd(t_token **token);
+t_node	*parser_expr(t_token **token);
+t_node	*parser_pip(t_token **token);
+t_node	*parser_command(t_token **token);
+t_node	*parser_subshell(t_token **token);
+t_node	*parser_redirect_re(t_token **token);
+t_node	*parser_redirect_right(t_token **token);
+t_node	*parser_redirect(t_token **token);
+t_node	*parser_cmd_re(t_token **token);
+t_node	*parser_cmd_right(t_token **token);
+t_node	*parser_cmd(t_token **token);
 
 t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);

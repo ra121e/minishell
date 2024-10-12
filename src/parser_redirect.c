@@ -6,14 +6,14 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:19:23 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/11 21:26:17 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/12 08:27:14 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @fn parse_redirect_re(t_token *token)
+ * @fn parser_redirect_re(t_token *token)
  * @brief iterate redirections
  * @note
 	<redirect_re>	::=		<redirect> <redirect_right>
@@ -27,24 +27,24 @@
 						|	'>>' <file>
  */
 
-t_node	*parse_redirect_re(t_token **token)
+t_node	*parser_redirect_re(t_token **token)
 {
 	t_node	*node;
 
-	node = parse_redirect(token);
-	node = parse_redirect_right(token);
+	node = parser_redirect(token);
+	node = parser_redirect_right(token);
 	return (node);
 }
 
 /**
- * @fn parse_redirect_right(t_token *token)
+ * @fn parser_redirect_right(t_token *token)
  * @brief iterate redirections
  * @note
 	<redirect_right>::=		ε
 						|	<redirect> <redirect_right>
  */
 
-t_node	*parse_redirect_right(t_token **token)
+t_node	*parser_redirect_right(t_token **token)
 {
 	t_node	*node;
 
@@ -54,15 +54,15 @@ t_node	*parse_redirect_right(t_token **token)
 	}
 	else
 	{
-		parse_redirect(token);
+		parser_redirect(token);
 		*token = next_token(*token);
-		node = parse_redirect_right(token);
+		node = parser_redirect_right(token);
 	}
 	return (node);
 }
 
 /**
- * @fn parse_redirect(t_token *token)
+ * @fn parser_redirect(t_token *token)
  * @brief simply check grammer as redirection symbols and file
  * @note
 	<redirect>		::=		'<' <file>
@@ -71,7 +71,7 @@ t_node	*parse_redirect_right(t_token **token)
 						|	'>>' <file>
  */
 
-t_node	*parse_redirect(t_token **token)
+t_node	*parser_redirect(t_token **token)
 {
 	t_node	*node;
 
