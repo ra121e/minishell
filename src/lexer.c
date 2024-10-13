@@ -6,30 +6,11 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/13 15:15:56 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/13 17:01:06 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//tokenize prior
-void	tokenize_word(t_ms *ms, char *str, int type)
-{
-	ms->token = ft_substr(str, ms->start, ms->end - ms->start);
-	tokenize(ms, type);
-	ms->start = ++ms->end;
-}
-
-//tokenize current char
-void	tokenize_char(t_ms *ms, char *str)
-{
-	if (!ft_isspace(str[ms->end]) && str[ms->end])
-	{
-		ms->token = ft_substr(str, ms->start, 1);
-		tokenize(ms, TK_WORD);
-	}
-	ms->start = ++ms->end;
-}
 
 void	lexer(t_ms *ms, char *str)
 {

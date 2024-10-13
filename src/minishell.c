@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/13 15:24:59 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/13 17:40:09 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,20 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		else if (*input)
 		{
-//			add_history(input);
-//			lexer(ms, input);
-//=====test b_env() & b_export()======
 			add_history(input);
+			lexer(ms, input);
+//=====test b_env() & b_export()======
 			if (!ft_strncmp(input, "env", 4))
 				b_env(ms->envp);
 			else if (!ft_strncmp(input, "export", 6))
 				b_export(ms, input + 7);
-			else
-				lexer(ms, input);
-//=====test b_env() & b_export()======
+////=====test b_env() & b_export()======
 		}
 		free(input);
 		tokens = ms->head;
 		print_token(ms);
 		node = parser(&tokens);
-		printf("AST: %p", node);
+		printf("AST: %p\n", node);
 	}
 	free(prompt);
 	free(ms);
