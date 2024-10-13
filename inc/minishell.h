@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/12 20:31:26 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/12 21:14:11 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,35 @@ typedef struct s_ms
 	int		eq;
 }	t_ms;
 
+typedef enum e_node_kind t_node_kind;
+enum e_node_kind
+{
+	ND_PIPE,
+	ND_COMMAND,
+	ND_REDIRECT_IN,
+	ND_REDIRECT_OUT,
+	ND_REDIRECT_HEREDOC,
+	ND_REDIRECT_APPEND,
+	ND_SUBSHELL,
+	ND_AND,
+	ND_OR,
+	ND_WORD,
+};
+
+typedef struct s_node t_node;
+struct s_node
+{
+	t_node_kind	kind;
+	char		*str;
+	char		*av;
+	t_node		*left;
+	t_node		*right;
+	char		*red_symbol;
+	char		*file_name;
+	t_node		*next;
+	t_token		*token;
+};
+
 void	lexer(t_ms *ms, char *str);
 void	tokenize_word(t_ms *ms, char *str, int type);
 void	tokenize_char(t_ms *ms, char *str);
@@ -101,4 +130,18 @@ void	update_env(t_ms *ms);
 int		get_var_len(t_ms *ms, char *var);
 char	*getvar(t_ms *ms, char *var);
 
+t_node	*parser(t_token **token);
+t_node	*parser_expr(t_token **token);
+t_node	*parser_pip(t_token **token);
+t_node	*parser_command(t_token **token);
+t_node	*parser_subshell(t_token **token);
+t_node	*parser_redirect_re(t_token **token);
+t_node	*parser_redirect_right(t_token **token);
+t_node	*parser_redirect(t_token **token);
+t_node	*parser_cmd_re(t_token **token);
+t_node	*parser_cmd_right(t_token **token);
+t_node	*parser_cmd(t_token **token);
+
+t_token	*next_token(t_token *cur);
+t_node	*ast_newnode(t_node_kind kind);
 #endif
