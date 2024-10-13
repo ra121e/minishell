@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 21:14:07 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/11 07:12:43 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/13 17:23:25 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,23 @@ void	expand_quote(t_ms *ms, char *str)
 	new_str[n] = 0;
 	ms->token = new_str;
 	free(str);
+}
+
+void	tokenize_word(t_ms *ms, char *str, int type)
+{
+	ms->token = ft_substr(str, ms->start, ms->end - ms->start);
+	tokenize(ms, type);
+	ms->start = ++ms->end;
+}
+
+void	tokenize_char(t_ms *ms, char *str)
+{
+	if (!ft_isspace(str[ms->end]) && str[ms->end])
+	{
+		ms->token = ft_substr(str, ms->start, 1);
+		tokenize(ms, TK_WORD);
+	}
+	ms->start = ++ms->end;
 }
 
 void	tokenize(t_ms *ms, t_token_kind kind)
