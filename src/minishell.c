@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/12 16:07:34 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/13 15:24:59 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	main(int argc, char **argv, char **envp)
 	char		*input;
 	char		*prompt;
 	t_ms		*ms;
+	t_token		*tokens;
+	t_node		*node;
 
 	if (argc != 1)
 		return (ft_dprintf(2, "No arguments allowed...\n"), 1);
@@ -75,7 +77,10 @@ int	main(int argc, char **argv, char **envp)
 //=====test b_env() & b_export()======
 		}
 		free(input);
+		tokens = ms->head;
 		print_token(ms);
+		node = parser(&tokens);
+		printf("AST: %p", node);
 	}
 	free(prompt);
 	free(ms);

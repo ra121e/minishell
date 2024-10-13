@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/12 18:59:19 by xlok             ###   ########.fr        #
+#    Updated: 2024/10/13 15:00:40 by athonda          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,15 @@ SRC_F := minishell.c \
 		 builtin_export.c \
 		 builtin_export_helper.c \
 		 tokenize.c \
-		 token.c
+		 token.c \
+		 parser.c \
+		 parser_expr.c \
+		 parser_pip.c \
+		 parser_command.c \
+		 parser_subshell.c \
+		 parser_redirect.c \
+		 parser_helper.c \
+		 ast.c
 
 SRC := $(SRC_F:%.c=$(SRC_DIR)/%.c)
 
