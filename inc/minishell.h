@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/13 15:22:10 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/13 17:29:29 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,4 +143,6 @@ t_node	*parser_cmd(t_token **token);
 
 t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);
+const char* getNodeKindName(t_node_kind kind);
+void printAST(t_node *node, int level, int isLeft);
 #endif

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/13 15:24:59 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/13 17:28:31 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 		tokens = ms->head;
 		print_token(ms);
 		node = parser(&tokens);
-		printf("AST: %p", node);
+		printAST(node, 0, 0);
 	}
 	free(prompt);
 	free(ms);
