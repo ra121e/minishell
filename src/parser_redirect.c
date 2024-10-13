@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:19:23 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/12 13:46:14 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/13 18:49:20 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ t_node	*parser_redirect(t_token **token)
 	{
 		node = ast_newnode(ND_REDIRECT_IN);
 		*token = (*token)->next;
-		if ((*token)->kind != TK_WORD)
+		if ((*token)->kind != TK_WORD && (*token)->kind != TK_QUOTE && \
+			(*token)->kind == TK_VAR && (*token)->kind == TK_VAR_QUOTE)
 		{
 			ft_dprintf(2, "Syntax error: Expected file name after redirect\n");
 			return (NULL);
@@ -110,7 +111,8 @@ t_node	*parser_redirect(t_token **token)
 	{
 		node = ast_newnode(ND_REDIRECT_OUT);
 		*token = (*token)->next;
-		if ((*token)->kind != TK_WORD)
+		if ((*token)->kind != TK_WORD && (*token)->kind != TK_QUOTE && \
+			(*token)->kind == TK_VAR && (*token)->kind == TK_VAR_QUOTE)
 		{
 			ft_dprintf(2, "Syntax error: Expected file name after redirect\n");
 			return (NULL);

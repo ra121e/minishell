@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/13 17:29:29 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/13 19:30:10 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ enum e_token_kind
 	TK_VAR_QUOTE,
 	TK_QUOTE,
 	TK_WORD,
+	TK_SPACE,
 	TK_EOF,
 };
 
@@ -103,8 +104,6 @@ struct s_node
 	t_token		*token;
 };
 void	lexer(t_ms *ms, char *str);
-void	tokenize_word(t_ms *ms, char *str, int type);
-void	tokenize_char(t_ms *ms, char *str);
 bool	is_builtin(char *str);
 char	*remove_quote(char *old);
 t_token	*new_token(char *str, t_token_kind kind);
@@ -112,6 +111,8 @@ void	add_back(t_token **node, t_token *new);
 t_token	*token_last(t_token *cur);
 char	*token_kind(int k);
 void	tokenize(t_ms *ms, t_token_kind kind);
+void	tokenize_word(t_ms *ms, char *str, int type);
+void	tokenize_char(t_ms *ms, char *str, int type);
 void	lexer_quote(t_ms *ms, char *str);
 void	lexer_parenthesis(t_ms *ms, char *str);
 void	lexer_wildcard(t_ms *ms, char *str);

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 19:26:33 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/13 15:14:17 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/13 19:34:01 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,3 @@ void	lexer_operator(t_ms *ms, char *str)
 	}
 	op_and_or_pipe(ms, str);
 }
-//	if (str[ms->end] == '&' && str[ms->end + 1] == '&')
-//	{
-//		ms->token = ft_substr(str, ms->start, 2);
-//		if (!ms->token)
-//			perror("token malloc error");//malloc protection
-//		tokenize(ms, TK_AND);
-//		ms->end++;
-//	}
-//	else if (str[ms->end] == '|' && str[ms->end + 1] == '|')
-//	{
-//		ms->token = ft_substr(str, ms->start, 2);
-//		if (!ms->token)
-//			perror("token malloc error");//malloc protection
-//		tokenize(ms, TK_OR);
-//		ms->end++;
-//	}
-//	else
-//	{
-//		ms->token = ft_substr(str, ms->start, 1);
-//		if (!ms->token)
-//			perror("token malloc error");//malloc protection
-//		tokenize(ms, TK_PIPE);
-//	}
-//	ms->start = ++ms->end;

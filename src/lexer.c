@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/13 17:01:06 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/13 19:37:31 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ void	lexer(t_ms *ms, char *str)
 			lexer_wildcard(ms, str);
 		else if (str[ms->end] == '$')
 			lexer_var(ms, str, TK_VAR);
+		else if (ft_isspace(str[ms->end]))
+			tokenize_char(ms, str, TK_SPACE);
 		else if (!ft_isspace(str[ms->end]) && str[ms->end])
 			ms->end++;
 		else if (ms->start == ms->end)
-			tokenize_char(ms, str);
+			tokenize_char(ms, str, TK_WORD);
 		else
 			tokenize_word(ms, str, TK_WORD);
 	}

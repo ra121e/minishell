@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 15:52:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/13 15:13:32 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/13 19:29:23 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ char	*token_kind(int k)
 		return ("quote");
 	else if (k == TK_WORD)
 		return ("word");
+	else if (k == TK_SPACE)
+		return ("space");
 	else if (k == TK_EOF)
 		return ("EOF");
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 21:14:07 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/13 17:23:25 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/13 19:42:33 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,22 @@ void	tokenize_word(t_ms *ms, char *str, int type)
 	ms->start = ++ms->end;
 }
 
-void	tokenize_char(t_ms *ms, char *str)
+void	tokenize_char(t_ms *ms, char *str, int type)
 {
-	if (!ft_isspace(str[ms->end]) && str[ms->end])
+	if (type == TK_SPACE)
+	{
+		if (ms->start != ms->end)
+		{
+			tokenize_word(ms, str, TK_WORD);
+			ms->start = --ms->end;
+		}
+		while (ft_isspace(str[ms->end]))
+			ms->end++;
+		ms->token = ft_substr(str, ms->start, 1);
+		tokenize(ms, TK_WORD);//change to TK_SPACE but need to change AST printout
+		ms->end--;
+	}
+	else if (!ft_isspace(str[ms->end]) && str[ms->end])
 	{
 		ms->token = ft_substr(str, ms->start, 1);
 		tokenize(ms, TK_WORD);
