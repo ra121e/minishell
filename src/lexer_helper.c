@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 15:52:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/13 19:29:23 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/14 22:36:26 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,8 @@ char	*token_kind(int k)
 		return ("open parenthesis");
 	else if (k == TK_RPAREN)
 		return ("close parenthesis");
-	else if (k == TK_WILDCARD)
-		return ("wildcard");
-	else if (k == TK_VAR)
-		return ("var");
-	else if (k == TK_VAR_QUOTE)
-		return ("var quote");
-	else if (k == TK_QUOTE)
-		return ("quote");
 	else if (k == TK_WORD)
 		return ("word");
-	else if (k == TK_SPACE)
-		return ("space");
 	else if (k == TK_EOF)
 		return ("EOF");
 	return (0);
@@ -129,3 +119,85 @@ char	*remove_quote(char *old)
 	free(old);
 	return (new);
 }
+
+//void	expand_quote_len(t_ms *ms, char *str)
+//{
+//	char	*var;
+//	int		s;
+//	int		e;
+//
+//	ms->var_len = 0;
+//	s = -1;
+//	while (str[++s])
+//	{
+//		if (str[s] == '\"')
+//		{
+//			while (str[++s] != '\"')
+//			{
+//				if (str[s] == '$')
+//				{
+//					e = ++s;
+//					if (!ft_isalpha(str[e]) && str[e] != '_')
+//					{
+//						dprintf(2, "Invalid variable name\n");
+//						exit (1);
+//					}
+//					while (ft_isalnum(str[e]) || str[e] == '_')
+//						e++;
+//					var = ft_substr(str, s, e - s);
+//					if (!var)
+//						perror("var malloc error\n");
+//					ms->var_len += get_var_len(ms, var);
+//					free(var);
+//				}
+//			}
+//		}
+//	}
+//	ms->var_len += s;
+//}
+//
+//void	expand_quote(t_ms *ms, char *str)
+//{
+//	char	*new_str;
+//	char	*var;
+//	char	*var_value;
+//	int		s;
+//	int		e;
+//	int		n;
+//
+//	new_str = malloc(ms->var_len + 1);
+//	if (!new_str)
+//		perror("new_str malloc error\n");
+//	n = 0;
+//	s = -1;
+//	while (str[++s])
+//	{
+//		new_str[n++] = str[s];
+//		if (str[s] == '\"')
+//		{
+//			while (str[++s] != '\"')
+//			{
+//				if (str[s] == '$')
+//				{
+//					e = ++s;
+//					while (ft_isalnum(str[e]) || str[e] == '_')
+//						e++;
+//					var = ft_substr(str, s, e - s);
+//					if (!var)
+//						perror("var malloc error\n");
+//					var_value = getvar(ms, var);
+//					while (var_value && *var_value)
+//						new_str[n++] = *var_value++;
+//					free(var);
+//					s = e - 1;
+//				}
+//				else
+//					new_str[n++] = str[s];
+//			}
+//			new_str[n++] = str[s];
+//		}
+//	}
+//	new_str[n] = 0;
+//	ms->token = new_str;
+//	free(str);
+//}

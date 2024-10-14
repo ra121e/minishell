@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/13 15:00:40 by athonda          ###   ########.fr        #
+#    Updated: 2024/10/14 22:37:41 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,12 +29,6 @@ SRC_DIR := src
 SRC_F := minishell.c \
 		 lexer.c \
 		 lexer_helper.c \
-		 lexer_operator.c \
-		 lexer_redirection.c \
-		 lexer_parenthesis.c \
-		 lexer_wildcard.c \
-		 lexer_var.c \
-		 lexer_quote.c \
 		 builtin_pwd.c \
 		 builtin_env.c \
 		 builtin_export.c \

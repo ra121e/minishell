@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/13 19:30:10 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/14 22:45:26 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ enum e_token_kind
 	TK_REDIRECT_APPEND,
 	TK_LPAREN,
 	TK_RPAREN,
-	TK_WILDCARD,
-	TK_VAR,
-	TK_VAR_QUOTE,
-	TK_QUOTE,
+//	TK_WILDCARD,
+//	TK_VAR,
+//	TK_VAR_QUOTE,
+//	TK_QUOTE,
 	TK_WORD,
-	TK_SPACE,
+//	TK_SPACE,
 	TK_EOF,
 };
 
@@ -68,6 +68,7 @@ typedef struct s_ms
 	char	*key;
 	char	*value;
 	char	*pair;
+	char	*str;
 	int		start;
 	int		end;
 	int		len;
@@ -112,13 +113,8 @@ t_token	*token_last(t_token *cur);
 char	*token_kind(int k);
 void	tokenize(t_ms *ms, t_token_kind kind);
 void	tokenize_word(t_ms *ms, char *str, int type);
-void	tokenize_char(t_ms *ms, char *str, int type);
-void	lexer_quote(t_ms *ms, char *str);
-void	lexer_parenthesis(t_ms *ms, char *str);
-void	lexer_wildcard(t_ms *ms, char *str);
-void	lexer_operator(t_ms *ms, char *str);
-void	lexer_redirection(t_ms *ms, char *str);
-void	lexer_var(t_ms *ms, char *str, int type);
+int		operator_char_count(char *str, int i);
+void	tokenize_prior_str(t_ms *ms);
 char	*b_pwd(void);
 void	init_env(t_ms *ms, char **envp);
 void	b_env(t_envp **envp);
