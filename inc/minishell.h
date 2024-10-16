@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/14 22:45:26 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/16 22:05:52 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,7 @@ enum e_token_kind
 	TK_REDIRECT_APPEND,
 	TK_LPAREN,
 	TK_RPAREN,
-//	TK_WILDCARD,
-//	TK_VAR,
-//	TK_VAR_QUOTE,
-//	TK_QUOTE,
 	TK_WORD,
-//	TK_SPACE,
 	TK_EOF,
 };
 

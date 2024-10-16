@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:19:23 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/14 22:34:43 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/16 22:15:46 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ t_node	*parser_redirect(t_token **token)
 	t_node	*node;
 	t_node	*right;
 
-	if ((*token)->str[0] == '<')
+//	if ((*token)->str[0] == '<')
+	if ((*token)->kind == TK_REDIRECT_IN)
 	{
 		node = ast_newnode(ND_REDIRECT_IN);
 		*token = (*token)->next;
@@ -106,7 +107,8 @@ t_node	*parser_redirect(t_token **token)
 		node->str = "<";
 		return (node);
 	}
-	else if ((*token)->str[0] == '>')
+//	else if ((*token)->str[0] == '>')
+	else if ((*token)->kind == TK_REDIRECT_OUT)
 	{
 		node = ast_newnode(ND_REDIRECT_OUT);
 		*token = (*token)->next;
@@ -121,7 +123,8 @@ t_node	*parser_redirect(t_token **token)
 		node->str = ">";
 		return (node);
 	}
-	else if ((*token)->str[0] == '>' && (*token)->str[1] == '>')
+//	else if ((*token)->str[0] == '>' && (*token)->str[1] == '>')
+	else if ((*token)->kind == TK_REDIRECT_APPEND)
 	{
 		node = ast_newnode(ND_REDIRECT_APPEND);
 		*token = (*token)->next;
@@ -136,7 +139,8 @@ t_node	*parser_redirect(t_token **token)
 		node->str = ">>";
 		return (node);
 	}
-	else if ((*token)->str[0] == '<' && (*token)->str[1] == '<')
+//	else if ((*token)->str[0] == '<' && (*token)->str[1] == '<')
+	else if ((*token)->kind == TK_REDIRECT_HEREDOC)
 	{
 		node = ast_newnode(ND_REDIRECT_HEREDOC);
 		*token = (*token)->next;

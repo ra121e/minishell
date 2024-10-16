@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/14 22:50:13 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/16 21:48:27 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,5 @@ void	lexer(t_ms *ms, char *str)
 	}
 	ms->token = ft_strdup("");
 	tokenize(ms, TK_EOF);
+	free(ms->str);
 }
