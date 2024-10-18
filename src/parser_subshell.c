@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:18:17 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/12 14:26:43 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/18 22:19:54 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ t_node	*parser_subshell(t_token **token)
 	if ((*token)->kind != TK_LPAREN)
 	{
 		ft_dprintf(2, "Syntax error: expected '('\n");
+		return (NULL);
+	}
+	if ((*token)->next->kind != TK_WORD)
+	{
+		ft_dprintf(2, "Syntax error: invalid expression inside '()'\n");
 		return (NULL);
 	}
 	(*token) = (*token)->next;

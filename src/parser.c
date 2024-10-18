@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:11:36 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/12 18:55:59 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/18 21:25:34 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ t_node	*parser(t_token **token)
 	t_node	*node;
 	t_token	*cur;
 
+	if (!*token || (*token)->kind == TK_EOF)
+		return (0);
 	node = NULL;
 	cur = *token;
 	node = parser_expr(&cur);

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/16 21:48:27 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/18 20:58:18 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	lexer(t_ms *ms, char *str)
 		{
 			if (!ms->end)
 				ms->start = ++ms->end;
-			else if (ms->end == ms->len || !ft_isspace(ms->str[ms->end - 1]))
+			else if (!ft_isspace(ms->str[ms->end - 1]))
 				tokenize_prior_str(ms);
 			else
 				ms->start = ++ms->end;

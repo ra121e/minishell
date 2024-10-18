@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:19:23 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/16 22:15:46 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/18 21:43:35 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ t_node	*parser_redirect_right(t_token **token)
 	t_node	*node;
 	t_node	*right;
 
-	if (token == NULL)
+	if (!*token || (*token)->kind == TK_EOF)
+//	if (token == NULL)
 	{
 		return (NULL);
 	}

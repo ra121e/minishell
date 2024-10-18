@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:17:20 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/14 22:34:20 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/18 22:11:03 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,14 @@ t_node	*parser_command(t_token **token)
 //	t_token	*next;
 	t_node	*right;
 
-	if (*token == NULL)
+	if (!*token || (*token)->kind == TK_EOF)
+//	if (*token == NULL)
 		return (NULL);
 	if ((*token)->kind == TK_LPAREN)
 	{
 		node = parser_subshell(token);
+		if (!node)
+			return (0);
 		*token = (*token)->next;
 		if ((*token)->kind == TK_REDIRECT_IN || (*token)->kind == TK_REDIRECT_OUT)
 		{
