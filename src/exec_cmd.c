@@ -6,12 +6,12 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/19 18:09:11 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/19 20:27:50 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <fcntl.h>
+
 
 void	init_cmd(t_ms *ms, t_node *cur)
 {
@@ -95,4 +95,36 @@ void	exec_cmd(t_node *cur, t_ms *ms)
 		}
 		cur = cur->right;
 	}
+
+}
+
+int	execute(t_ms *ms)
+{
+	pid_t	pid;
+	int		wstatus;
+	char	*cmd_exe;
+
+	cmd_envp(ms);
+	if (is_builtin(ms->cmd[0]) == true)
+	{
+		printf("built in command: %s\n", ms->cmd[0]);
+		return (0);
+	}
+	pid = fork();
+	if (pid < 0)
+		error_exit("fork error!");
+	else if (pid == 0)
+	{
+		execve(ms->cmd[0], ms->cmd, ms->cmd_envp);
+		cmd_exe = get_fullpath(ms->cmd[0], ms);
+		if (cmd_exe == NULL)
+			error_wrong_cmd(ms);
+		execve(cmd_exe, ms->cmd, ms->cmd_envp);
+		perror(ms->cmd[0]);
+		free(cmd_exe);
+		free(ms->cmd);
+		exit(EXIT_FAILURE);
+	}
+	waitpid(pid, &wstatus, 0);
+	return (WEXITSTATUS(wstatus));
 }
