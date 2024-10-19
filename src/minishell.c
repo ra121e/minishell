@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/16 22:11:15 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/19 15:15:05 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,29 @@ void	print_token(t_ms *ms)
 	}
 }
 
+void	strjoin_loop(t_ms *ms, char *str)
+{
+	char	*tmp;
+
+	tmp = ms->prompt;
+	if (!tmp)
+		tmp = ft_strdup("");
+	ms->prompt = ft_strjoin(tmp, str); 
+	if (!ms->prompt)
+		perror("ms->prompt malloc error");//malloc protection
+	free(tmp);
+}
+
+void	get_prompt(t_ms *ms)
+{
+	ms->prompt = 0;
+	strjoin_loop(ms, "\001\033[35m\002");
+	strjoin_loop(ms, getvar(ms, "USER"));
+	strjoin_loop(ms, "@");
+	strjoin_loop(ms, "minishell:$");
+	strjoin_loop(ms, "\001\033[0m\002");
+}
+
 void	init(t_ms *ms)
 {
 	ms->head = 0;
@@ -36,12 +59,12 @@ void	init(t_ms *ms)
 	ms->len = 0;
 	ms->end = 0;
 	ms->key = 0;
+	get_prompt(ms);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	char		*input;
-	char		*prompt;
 	t_ms		*ms;
 	t_token		*tokens;
 	t_node		*node;
@@ -49,18 +72,15 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		return (ft_dprintf(2, "No arguments allowed...\n"), 1);
 	(void)argv;
+	ft_signal();
 	ms = malloc(sizeof(t_ms));
 	if (!ms)
 		perror("ms malloc error");//malloc protection
 	init_env(ms, envp);
-	prompt = ft_strjoin(ft_strjoin(getvar(ms, "USER"), "@"), "minishell:$");
-	prompt = ft_strjoin(ft_strjoin("\001\033[35m\002", prompt), "\001\033[0m\002");
-	if (!prompt)
-		perror("prompt malloc error");//malloc protection
 	while (1)
 	{
 		init(ms);
-		input = readline(prompt);
+		input = readline(ms->prompt);
 		if (!input)
 			break ;
 		else if (*input)
@@ -75,6 +95,6 @@ int	main(int argc, char **argv, char **envp)
 		printAST(node, 0, 0);
 //TODO:free tokens here or in init()
 	}
-	free(prompt);
+	free(ms->prompt);
 	free(ms);
 }

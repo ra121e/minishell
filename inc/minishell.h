@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/16 22:05:52 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/19 14:59:58 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <signal.h>
 # include "libft.h"
 
 typedef enum e_token_kind t_token_kind;
@@ -59,6 +60,7 @@ typedef struct s_ms
 {
 	t_envp	**envp;
 	t_token	*head;
+	char	*prompt;
 	char	*token;
 	char	*key;
 	char	*value;
@@ -99,6 +101,7 @@ struct s_node
 	t_node		*next;
 	t_token		*token;
 };
+
 void	lexer(t_ms *ms, char *str);
 bool	is_builtin(char *str);
 char	*remove_quote(char *old);
@@ -120,6 +123,7 @@ void	export_add(t_ms *ms, t_envp **envp);
 void	update_env(t_ms *ms);
 int		get_var_len(t_ms *ms, char *var);
 char	*getvar(t_ms *ms, char *var);
+void	ft_signal(void);
 
 t_node	*parser(t_token **token);
 t_node	*parser_expr(t_token **token);
