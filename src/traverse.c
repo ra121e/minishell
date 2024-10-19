@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:16:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/19 16:26:42 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/19 20:43:08 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	traverse(t_node *head, t_ms *ms)
 		}
 	}
 	else
-	{
 		exec_cmd(cur, ms);
-	}
 	return (0);
 }

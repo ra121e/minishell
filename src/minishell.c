@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/19 17:23:27 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/19 20:53:14 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,6 @@ int	main(int argc, char **argv, char **envp)
 		node = parser(&tokens);
 		printAST(node, 0, 0);
 		traverse(node, ms);
-		int i = 0;
-		while (ms->cmd[i])
-			printf("%s\n", ms->cmd[i++]);
 //TODO:free tokens here or in init()
 	}
 	free(ms->prompt);
