@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/19 16:14:12 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/19 17:16:08 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_ms
 	int		var_len;
 	int		eq;
 	int		fd;
+	char	**cmd;
 }	t_ms;
 
 typedef enum e_node_kind t_node_kind;
