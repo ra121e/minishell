@@ -6,19 +6,18 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/19 15:50:29 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/19 16:43:18 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
 
-void	exec_cmd(t_node *cur)
+void	exec_cmd(t_node *cur, t_ms *ms)
 {
-	char	*cmd;
-	char	*arg;
+	char	**cmd;
 	char	*file_name;
-	int		fd;
+	int		i;
 
 	while (!cur)
 	{
@@ -31,18 +30,19 @@ void	exec_cmd(t_node *cur)
 			{
 				file_name = cur->right->str;
 				ms->fd = open("file_name", O_RDONLY); // make file here
-				dprint(1, "redirect file name is %s\n", file_name);
+				dprintf(1, "redirect file name is %s\n", file_name);
 				cur = cur->right;
 			}
 		}
 		else
 		{
-			if (check_cmd == 0)
-			{
-				dprintf(2, "needs command\n");
-				return (NULL);
-			}
-			cmd = cur->str;
+			//if (check_cmd == 0)
+			//{
+			//	dprintf(2, "needs command\n");
+			//	return (NULL);
+			//}
+			cmd[0] = cur->str;
+			i = 1;
 			while (cur != NULL)
 			{
 				if (cur->kind == ND_REDIRECT_IN || \
@@ -53,21 +53,18 @@ void	exec_cmd(t_node *cur)
 					if (cur->right->kind == ND_COMMAND)
 					{
 						file_name = cur->right->str;
-						dprint(1, "redirect file name is %s\n", file_name);
+						dprintf(1, "redirect file name is %s\n", file_name);
 						ms->fd = open("file_name", O_RDONLY); // make file here
 						cur = cur->right;
 					}
 				}
 				else
+				{
+					cmd[i++] = cur->str;
+				}
 			}
-
+			cmd[i] = NULL;
 		}
 		cur = cur->right;
 	}
-}
-
-int	check_cmd(char	*str)
-{
-	// TODO: check the str is shell command or not
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/19 14:59:58 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/19 16:14:12 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_ms
 	int		len;
 	int		var_len;
 	int		eq;
+	int		fd;
 }	t_ms;
 
 typedef enum e_node_kind t_node_kind;
@@ -141,4 +142,6 @@ t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);
 const char* getNodeKindName(t_node_kind kind);
 void printAST(t_node *node, int level, int isLeft);
+int	traverse(t_node *head, t_ms *ms);
+void	exec_cmd(t_node *cur, t_ms *ms);
 #endif

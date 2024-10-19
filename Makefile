@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/19 12:39:45 by xlok             ###   ########.fr        #
+#    Updated: 2024/10/19 16:20:04 by athonda          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ SRC_F := minishell.c \
 		 parser_redirect.c \
 		 parser_helper.c \
 		 ast.c \
-		 signal.c
+		 traverse.c \
+		 exec_cmd.c
 
 SRC := $(SRC_F:%.c=$(SRC_DIR)/%.c)
 
