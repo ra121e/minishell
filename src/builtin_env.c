@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:34:39 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/04 20:03:47 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/19 20:09:12 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@
  * @brief to display the list of Environment variables
  * @param[in] envp passed from main()
  */
+
+void	cmd_envp(t_ms *ms)
+{
+	int	i;
+
+	i = -1;
+	while (ms->envp[++i])
+		ms->cmd_envp[i] = ms->envp[i]->pair;
+}
 
 void	init_env(t_ms *ms, char **envp)
 {
