@@ -6,11 +6,13 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/19 16:15:02 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/19 16:54:12 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		ms_sig;
 
 //TODO:To delete later; test print tokens
 void	print_token(t_ms *ms)
@@ -36,7 +38,7 @@ void	strjoin_loop(t_ms *ms, char *str)
 	tmp = ms->prompt;
 	if (!tmp)
 		tmp = ft_strdup("");
-	ms->prompt = ft_strjoin(tmp, str);
+	ms->prompt = ft_strjoin(tmp, str); 
 	if (!ms->prompt)
 		perror("ms->prompt malloc error");//malloc protection
 	free(tmp);
@@ -59,7 +61,6 @@ void	init(t_ms *ms)
 	ms->len = 0;
 	ms->end = 0;
 	ms->key = 0;
-	ms->fd = 0;
 	get_prompt(ms);
 }
 
@@ -73,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		return (ft_dprintf(2, "No arguments allowed...\n"), 1);
 	(void)argv;
-	//ft_signal();
+//	ft_signal();
 	ms = malloc(sizeof(t_ms));
 	if (!ms)
 		perror("ms malloc error");//malloc protection
@@ -94,7 +95,6 @@ int	main(int argc, char **argv, char **envp)
 		print_token(ms);
 		node = parser(&tokens);
 		printAST(node, 0, 0);
-		traverse(node, ms);
 //TODO:free tokens here or in init()
 	}
 	free(ms->prompt);
