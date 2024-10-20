@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/19 20:01:59 by athonda          ###   ########.fr        #
+#    Updated: 2024/10/20 13:25:58 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ BONUS_DEP := inc/minishell_bonus.h
 
 SRC_DIR := src
 SRC_F := minishell.c \
+		 init.c \
+		 cleanup.c \
 		 lexer.c \
 		 lexer_helper.c \
 		 builtin_pwd.c \
@@ -47,7 +49,8 @@ SRC_F := minishell.c \
 		 exec_cmd.c \
 		 get_fullpath.c \
 		 free_split.c \
-		 error.c
+		 error.c \
+		 ft_strsjoin.c
 
 SRC := $(SRC_F:%.c=$(SRC_DIR)/%.c)
 

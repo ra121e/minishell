@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/19 20:26:46 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/20 13:28:38 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,6 @@ struct s_envp
 	char	*pair;
 };
 
-typedef struct s_ms
-{
-	t_envp	**envp;
-	t_token	*head;
-	char	*prompt;
-	char	*token;
-	char	*key;
-	char	*value;
-	char	*pair;
-	char	*str;
-	int		start;
-	int		end;
-	int		len;
-	int		var_len;
-	int		eq;
-	int		fd;
-	char	**cmd;
-	char	**cmd_envp;
-}	t_ms;
-
 typedef enum e_node_kind t_node_kind;
 enum e_node_kind
 {
@@ -107,8 +87,32 @@ struct s_node
 	t_token		*token;
 };
 
+typedef struct s_ms
+{
+	t_envp	**envp;
+	t_token	*head;
+	char	*prompt;
+	char	*input;
+	char	*token;
+	char	*key;
+	char	*value;
+	char	*pair;
+	char	*str;
+	int		start;
+	int		end;
+	int		len;
+	int		var_len;
+	int		eq;
+	int		fd;
+	char	**cmd;
+	char	**cmd_envp;
+}	t_ms;
+
+void	init(t_ms *ms);
+void	cleanup(t_ms *ms);
 void	lexer(t_ms *ms, char *str);
 bool	is_builtin(char *str);
+char	*ft_strsjoin(int count, ...);
 char	*remove_quote(char *old);
 t_token	*new_token(char *str, t_token_kind kind);
 void	add_back(t_token **node, t_token *new);

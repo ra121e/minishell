@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 21:14:07 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/14 22:44:49 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/20 13:30:21 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ void	tokenize(t_ms *ms, t_token_kind kind)
 	t_token	*cur;
 
 	cur = new_token(ms->token, kind);
-	printf("\033[31mtoken: \033[0m%s, \033[34mkind: \033[0m%s\n", \
-			cur->str, token_kind(kind));
 	add_back(&ms->head, cur);
 	return ;
 }
