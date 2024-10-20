@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/20 20:53:56 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:41:15 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	print_token(t_ms *ms)
 int	main(int argc, char **argv, char **envp)
 {
 	t_ms		*ms;
-//	t_token		*tokens;
-	t_node		*start_node;
 
 	if (argc != 1)
 		return (ft_dprintf(2, "No arguments allowed...\n"), 1);
@@ -55,14 +53,10 @@ int	main(int argc, char **argv, char **envp)
 			lexer(ms, ms->input);
 		}
 		free(ms->input);
-//		tokens = ms->head;
 //		print_token(ms);
-//		start_node = parser(&tokens);
-		start_node = parser(&ms->head);
-//		printAST(start_node, 0, 0);
-		traverse(start_node, ms, -1, NULL);
-
-//TODO:free tokens here or in init()
+		ms->start_node = parser(&ms->head);
+//		printAST(ms->start_node, 0, 0);
+		traverse_start(ms->start_node, ms);
 	}
 	cleanup(ms);
 }

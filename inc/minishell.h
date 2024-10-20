@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/20 20:53:01 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:52:43 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <signal.h>
+# include <errno.h>
 # include "libft.h"
 
 typedef enum e_token_kind t_token_kind;
@@ -103,8 +104,9 @@ typedef struct s_ms
 	int		len;
 	int		var_len;
 	int		eq;
-	int		fd;
+	t_node	*start_node;
 	int		fd_r;
+	int		pid;
 	char	**cmd;
 	char	**cmd_envp;
 }	t_ms;
@@ -151,9 +153,8 @@ t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);
 const char* getNodeKindName(t_node_kind kind);
 void 	printAST(t_node *node, int level, int isLeft);
-int		traverse(t_node *head, t_ms *ms, int fd_r, int fd_w[2]);
-int		execute(t_ms *ms, int fd_r, int fd_w[2]);
-int		exec_cmd(t_node *cur, t_ms *ms, int fd_r, int fd_w[2]);
+int		traverse_start(t_node *head, t_ms *ms);
+int		exec_cmd(t_node *cur, t_ms *ms, int fd_w[2]);
 int		*exec_pip(t_ms *ms);
 void	cmd_envp(t_ms *ms);
 char	**find_envpath(t_ms *ms);

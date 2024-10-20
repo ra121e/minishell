@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:34:39 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/19 20:24:07 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/21 02:28:27 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	cmd_envp(t_ms *ms)
 	i = 0;
 	while (ms->envp[i])
 		i++;
-	ms->cmd_envp = malloc(sizeof (char *) * i + 1);
+	ms->cmd_envp = malloc(sizeof (char *) * (i + 1));
 	if (ms->cmd_envp == NULL)
 		return ;
 	i = -1;
