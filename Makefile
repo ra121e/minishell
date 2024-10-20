@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/20 13:25:58 by xlok             ###   ########.fr        #
+#    Updated: 2024/10/20 16:44:12 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ SRC_F := minishell.c \
 		 get_fullpath.c \
 		 free_split.c \
 		 error.c \
-		 ft_strsjoin.c
+		 ft_strsjoin.c \
+		 signal.c
 
 SRC := $(SRC_F:%.c=$(SRC_DIR)/%.c)
 

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/20 13:36:51 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/20 16:43:43 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		return (ft_dprintf(2, "No arguments allowed...\n"), 1);
 	(void)argv;
-//	ft_signal();
+	ft_signal();
 	ms = malloc(sizeof(t_ms));
 	if (!ms)
 		perror("ms malloc error");//malloc protection
