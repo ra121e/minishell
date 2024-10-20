@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/20 13:28:38 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/20 20:53:01 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_ms
 	int		var_len;
 	int		eq;
 	int		fd;
+	int		fd_r;
 	char	**cmd;
 	char	**cmd_envp;
 }	t_ms;
@@ -149,9 +150,11 @@ t_node	*parser_cmd(t_token **token);
 t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);
 const char* getNodeKindName(t_node_kind kind);
-void printAST(t_node *node, int level, int isLeft);
-int	traverse(t_node *head, t_ms *ms);
-void	exec_cmd(t_node *cur, t_ms *ms);
+void 	printAST(t_node *node, int level, int isLeft);
+int		traverse(t_node *head, t_ms *ms, int fd_r, int fd_w[2]);
+int		execute(t_ms *ms, int fd_r, int fd_w[2]);
+int		exec_cmd(t_node *cur, t_ms *ms, int fd_r, int fd_w[2]);
+int		*exec_pip(t_ms *ms);
 void	cmd_envp(t_ms *ms);
 char	**find_envpath(t_ms *ms);
 char	*join_cmd_path(char *cmd, char *path);
