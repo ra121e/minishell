@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/21 22:58:43 by xlok             ###   ########.fr        #
+#    Updated: 2024/10/23 06:48:34 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC_F := minishell.c \
 		 cleanup.c \
 		 lexer.c \
 		 lexer_helper.c \
+		 builtin.c \
 		 builtin_pwd.c \
 		 builtin_env.c \
 		 builtin_export.c \

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/22 21:55:36 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/23 07:35:47 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,18 @@ void	execute(t_ms *ms, int fd_w[2])
 	cmd_envp(ms);
 	if (is_builtin(ms->cmd[0]) == true)
 	{
-		printf("built in command: %s\nfunction WIP\n", ms->cmd[0]);
-		return ;
+		builtin(ms);
+//		printf("built in command: %s\nfunction WIP\n", ms->cmd[0]);
 	}
-	pid = fork();
-	if (pid < 0)
-		error_exit("fork error!");
-	ms->pid = pid;
-	if (pid == 0)
-		execute_child(ms, fd_w);
+	else
+	{
+		pid = fork();
+		if (pid < 0)
+			error_exit("fork error!");
+		ms->pid = pid;
+		if (pid == 0)
+			execute_child(ms, fd_w);
+	}
 	if (ms->fd_r > 2)
 		close(ms->fd_r);
 	if (fd_w[1] > 2)
@@ -125,6 +128,7 @@ void	exec_cmd(t_node *cur, t_ms *ms, int fd_w[2])
 		cur = cur->right;
 	}
 	execute(ms, fd_w);
+//TODO:	free ms->cmd, ms->fd_w (if malloced)
 	if (ms->fd_w_malloc)
 		free(ms->fd_w);
 }

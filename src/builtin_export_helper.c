@@ -6,27 +6,27 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:58:26 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/12 18:59:00 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/23 07:13:51 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	display_if_no_arg(t_ms *ms, char c)
+int	display_if_no_arg(t_ms *ms)
 {
-	int	k;
+	int	i;
 
-	if (!c)
+	if (!ms->cmd[1])
 	{
-		k = -1;
-		while (ms->envp[++k])
+		i = -1;
+		while (ms->envp[++i])
 		{
-			if (!ms->envp[k]->value)
-				printf("declare -x %s\n", ms->envp[k]->key);
-			else if (!ft_strncmp(ms->envp[k]->value, "", 1))
-				printf("declare -x %s=\"\"\n", ms->envp[k]->key);
+			if (!ms->envp[i]->value)
+				printf("declare -x %s\n", ms->envp[i]->key);
+			else if (!ft_strncmp(ms->envp[i]->value, "", 1))
+				printf("declare -x %s=\"\"\n", ms->envp[i]->key);
 			else
-				printf("declare -x %s=\"%s\"\n", ms->envp[k]->key, ms->envp[k]->value);
+				printf("declare -x %s=\"%s\"\n", ms->envp[i]->key, ms->envp[i]->value);
 		}
 		return (1);
 	}

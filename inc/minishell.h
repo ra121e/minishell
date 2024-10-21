@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/22 21:42:05 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/23 07:28:33 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct s_ms
 void	init(t_ms *ms);
 void	cleanup(t_ms *ms);
 void	lexer(t_ms *ms, char *str);
+void	builtin(t_ms *ms);
 bool	is_builtin(char *str);
 char	*ft_strsjoin(int count, ...);
 char	*remove_quote(char *old);
@@ -133,15 +134,15 @@ void	tokenize(t_ms *ms, t_token_kind kind);
 void	tokenize_word(t_ms *ms, char *str, int type);
 int		operator_char_count(char *str, int i);
 void	tokenize_prior_str(t_ms *ms);
-char	*b_pwd(void);
+char	*builtin_pwd(void);
 void	init_env(t_ms *ms, char **envp);
-void	b_env(t_envp **envp);
-void	b_export(t_ms *ms, char *str);
-void	b_export_add(t_ms *ms, t_envp **envp);
-int		display_if_no_arg(t_ms *ms, char c);
+void	builtin_env(t_envp **envp);
+void	builtin_export(t_ms *ms);
+void	builtin_export_add(t_ms *ms, t_envp **envp);
+int		display_if_no_arg(t_ms *ms);
 void	export_add(t_ms *ms, t_envp **envp);
 void	update_env(t_ms *ms);
-int		get_var_len(t_ms *ms, char *var);
+int		getvar_len(t_ms *ms, char *var);
 char	*getvar(t_ms *ms, char *var);
 void	ft_signal(void);
 

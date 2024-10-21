@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:34:39 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/21 02:28:27 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/23 06:52:08 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	init_env(t_ms *ms, char **envp)
 	ms->envp[i] = 0;
 }
 
-void	b_env(t_envp **envp)
+void	builtin_env(t_envp **envp)
 {
 	int	i;
 

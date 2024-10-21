@@ -6,15 +6,16 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:03:23 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/13 15:06:57 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/23 08:06:32 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_invalid(t_ms *ms, int i)
+int	invalid(t_ms *ms)
 {
 	int	invalid;
+	int	i;
 
 	invalid = 0;
 	if (!ms->key || (ms->key[0] != '_' && !ft_isalpha(ms->key[0])))
@@ -34,87 +35,54 @@ int	is_invalid(t_ms *ms, int i)
 		free(ms->key);
 		free(ms->value);
 		free(ms->pair);
-		return (1);
 	}
-	return (0);
+	return (invalid);
 }
 
-int	end_of_quote(t_ms *ms, char *str, int s, int i)
+void	init_export(t_ms *ms)
 {
-	ms->eq = i;
-	if (ms->eq != s)
-		ms->key = ft_substr(str, s, i - s);
-	i++;
-	while (str[i] && !ft_isspace(str[i]))
-	{
-		if (str[i] == '\'')
-		{
-			i++;
-			while (str[i] != '\'')
-				i++;
-		}
-		else if (str[i] == '\"')
-		{
-			i++;
-			while (str[i] != '\"')
-				i++;
-		}
-		i++;
-	}
-	ms->value = remove_quote(ft_substr(str, ms->eq + 1, i - ms->eq - 1));
-	ms->pair = ft_strjoin(ft_strjoin(ms->key, "="), ms->value);
-	return (i);
-}
-
-int	update_if_valid(t_ms *ms, char *str, int i)
-{
-	int	s;
-
-	s = i;
+	ms->eq = 0;
 	ms->key = 0;
 	ms->value = 0;
 	ms->pair = 0;
-	while (str[i] && !ft_isspace(str[i]))
-	{
-		if (str[i] == '=')
-			i = end_of_quote(ms, str, s, i);
-		else
-			i++;
-	}
-	if (!ms->key)
-	{
-		ms->key = ft_substr(str, s, i - s);
-		ms->value = 0;
-		ms->pair = ft_strjoin(ms->key, "");
-	}
-	if (is_invalid(ms, i))
-		return (i);
-	update_env(ms);
-	return (i);
 }
 
-//	take in 1 whole str. $ should be already expanded via tokenization
-//	so if testing with $ will not work
-//	should code with the execve() args below...
-//	otherwise strjoin all the args before running
-//int execve(const char *pathname, char *const argv[], char *const envp[]);
-
-void	b_export(t_ms *ms, char *str)
+void	update_if_valid(t_ms *ms, char *str)
 {
 	int	i;
 
-	i = 0;
-	while (ft_isspace(str[i]))
-		i++;
-	if (display_if_no_arg(ms, str[i]))
-		return ;
-	while (1)
+	init_export(ms);
+	i = -1;
+	while (str[++i])
 	{
-		if (ft_isspace(str[i]))
-			i++ ;
-		else if (!str[i])
-			break ;
-		else
-			i = update_if_valid(ms, str, i);
+		if (str[i] == '=')
+			ms->eq = i;
 	}
+	if (ms->eq)
+	{
+		ms->key = ft_substr(str, 0, ms->eq);
+		ms->value = ft_strdup(str + ms->eq + 1);
+		ms->pair = ft_strsjoin(3, ms->key, "=", ms->value);
+	}
+	else
+	{
+		ms->key = ft_strdup(str);
+		ms->value = 0;
+		ms->pair = ft_strdup(str);
+	}
+	if (invalid(ms))
+		return ;
+	update_env(ms);
+}
+
+void	builtin_export(t_ms *ms)
+{
+	int	i;
+
+
+	if (display_if_no_arg(ms))
+		return ;
+	i = 0;
+	while (ms->cmd[++i])
+		update_if_valid(ms, ms->cmd[i]);
 }

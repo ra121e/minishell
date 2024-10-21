@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:08:56 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/02 20:34:20 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/23 06:52:35 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //if dir is rm by another process while current process is in it
 //current code returns error while pwd in bash returns dir from PCB/fd
 //but current code is not in a running state like bash yet so...
-char	*b_pwd(void)
+char	*builtin_pwd(void)
 {
 	char	*cwd;
 
