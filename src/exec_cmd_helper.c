@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_wildcard.c                                   :+:      :+:    :+:   */
+/*   exec_cmd_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 19:55:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/12 20:27:27 by xlok             ###   ########.fr       */
+/*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
+/*   Updated: 2024/10/21 22:47:26 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	lexer_wildcard(t_ms *ms, char *str)
+void	init_cmd(t_ms *ms, t_node *cur)
 {
-	if (ms->start != ms->end)
+	int	i;
+
+	i = 0;
+	while (cur)
 	{
-		tokenize_word(ms, str, TK_WORD);
-		ms->start = --ms->end;
+		i++;
+		cur = cur->right;
 	}
-	ms->token = ft_substr(str, ms->start, 1);
-	if (!ms->token)
-		perror("token malloc error");//malloc protection
-	tokenize(ms, TK_WILDCARD);
-	ms->start = ++ms->end;
+	ms->cmd = malloc(sizeof(char *) * (i + 1));
+	if (!ms->cmd)
+		perror("ms->cmd malloc error");//malloc error
+}
+
+void	dup2_and_close(pid_t old_fd, pid_t new_fd)
+{
+	if (dup2(old_fd, new_fd) < 0)
+		error_exit("dup2 error");
+	close(old_fd);
 }

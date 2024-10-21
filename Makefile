@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/20 19:06:23 by athonda          ###   ########.fr        #
+#    Updated: 2024/10/21 22:58:43 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC_F := minishell.c \
 		 ast.c \
 		 traverse.c \
 		 exec_cmd.c \
+		 exec_cmd_helper.c \
 		 get_fullpath.c \
 		 free_split.c \
 		 error.c \
