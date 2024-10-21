@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/21 18:52:43 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/22 21:42:05 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # include <signal.h>
 # include <errno.h>
 # include "libft.h"
+
+# define READ O_RDONLY
+# define WRITE O_CREAT | O_WRONLY | O_TRUNC
+# define APPEND O_CREAT | O_WRONLY | O_APPEND
 
 typedef enum e_token_kind t_token_kind;
 enum e_token_kind
@@ -64,14 +68,14 @@ enum e_node_kind
 {
 	ND_PIPE,
 	ND_COMMAND,
-	ND_REDIRECT_IN,
-	ND_REDIRECT_OUT,
-	ND_REDIRECT_HEREDOC,
-	ND_REDIRECT_APPEND,
 	ND_SUBSHELL,
 	ND_AND,
 	ND_OR,
 	ND_WORD,
+	ND_REDIRECT_IN = 101,
+	ND_REDIRECT_OUT,
+	ND_REDIRECT_HEREDOC,
+	ND_REDIRECT_APPEND,
 };
 
 typedef struct s_node t_node;
@@ -106,9 +110,13 @@ typedef struct s_ms
 	int		eq;
 	t_node	*start_node;
 	int		fd_r;
+	int		*fd_w;
+	int		fd_w_malloc;
+	int		cmd_error;
 	int		pid;
 	char	**cmd;
 	char	**cmd_envp;
+	int		exit_status;
 }	t_ms;
 
 void	init(t_ms *ms);
@@ -153,8 +161,12 @@ t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);
 const char* getNodeKindName(t_node_kind kind);
 void 	printAST(t_node *node, int level, int isLeft);
-int		traverse_start(t_node *head, t_ms *ms);
-int		exec_cmd(t_node *cur, t_ms *ms, int fd_w[2]);
+void	traverse_start(t_node *head, t_ms *ms);
+void	exec_cmd(t_node *cur, t_ms *ms, int fd_w[2]);
+void	init_cmd(t_ms *ms, t_node *cur);
+int		*init_fd_w(t_ms *ms);
+void	dup2_and_close(pid_t old_fd, pid_t new_fd);
+pid_t	get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode);
 int		*exec_pip(t_ms *ms);
 void	cmd_envp(t_ms *ms);
 char	**find_envpath(t_ms *ms);
