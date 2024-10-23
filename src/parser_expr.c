@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:03:37 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/23 08:28:55 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:01:48 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 t_node	*parser_expr(t_token **token)
 {
 	t_node	*left;
+	t_node	*right;
 	t_node	*node;
 
 	if ((*token)->kind == TK_AND || (*token)->kind == TK_OR)
@@ -44,10 +45,13 @@ t_node	*parser_expr(t_token **token)
 			*token = (*token)->next;
 			if ((*token)->kind == TK_EOF)
 			{
-				error_expr_right(*token);
+				error_right(*token);
 				return (NULL);
 			}
-			node->right = parser_pip(token);
+			right = parser_pip(token);
+			if (right == NULL)
+				return (NULL);
+			node->right = right;
 		//	*token = (*token)->next;
 			node->str = "&&";
 			left = node;
@@ -59,10 +63,13 @@ t_node	*parser_expr(t_token **token)
 			*token = (*token)->next;
 			if ((*token)->kind == TK_EOF)
 			{
-				error_expr_right(*token);
+				error_right(*token);
 				return (NULL);
 			}
-			node->right = parser_pip(token);
+			right = parser_pip(token);
+			if (right == NULL)
+				return (NULL);
+			node->right = right;
 		//	*token = (*token)->next;
 			node->str = "||";
 			left = node;

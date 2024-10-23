@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/23 09:08:13 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:01:06 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ t_node	*parser_cmd_re(t_token **token);
 t_node	*parser_cmd_right(t_token **token);
 t_node	*parser_cmd(t_token **token);
 void	error_expr(t_token *token);
-void	error_expr_right(t_token *token);
+void	error_right(t_token *token);
 void	error_pip(t_token *token);
 void	error_subshell(t_token *token);
 
