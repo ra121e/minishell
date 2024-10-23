@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/23 11:01:06 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/25 06:59:13 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,25 @@ typedef struct s_ms
 	char	*str;
 	int		start;
 	int		end;
+	int		i;
+	int		n;
+	char	c;
 	int		len;
 	int		var_len;
+	char	*var;
+	char	*var_value;
+	int		expand_var;
+	char	*new_str;
 	int		eq;
 	t_node	*start_node;
+	t_node	*tmp_node;
+	t_node	*front;
+	t_node	*back;
 	int		fd_r;
 	int		*fd_w;
 	int		fd_w_malloc;
 	int		cmd_error;
+	int		builtin_cmd;
 	int		pid;
 	char	**cmd;
 	char	**cmd_envp;
@@ -121,6 +132,7 @@ typedef struct s_ms
 
 void	init(t_ms *ms);
 void	cleanup(t_ms *ms);
+void	syntax_checker(char *str);
 void	lexer(t_ms *ms, char *str);
 void	builtin(t_ms *ms);
 bool	is_builtin(char *str);
@@ -134,6 +146,8 @@ void	tokenize(t_ms *ms, t_token_kind kind);
 void	tokenize_word(t_ms *ms, char *str, int type);
 int		operator_char_count(char *str, int i);
 void	tokenize_prior_str(t_ms *ms);
+void	expansion(t_ms *ms, t_node *cur);
+void	expansion_var(t_ms *ms, t_node *cur);
 char	*builtin_pwd(void);
 void	init_env(t_ms *ms, char **envp);
 void	builtin_env(t_envp **envp);
@@ -142,8 +156,8 @@ void	builtin_export_add(t_ms *ms, t_envp **envp);
 int		display_if_no_arg(t_ms *ms);
 void	export_add(t_ms *ms, t_envp **envp);
 void	update_env(t_ms *ms);
-int		getvar_len(t_ms *ms, char *var);
-char	*getvar(t_ms *ms, char *var);
+int		get_var_len(t_ms *ms, char *var);
+char	*get_var(t_ms *ms, char *var);
 void	ft_signal(void);
 
 t_node	*parser(t_token **token);

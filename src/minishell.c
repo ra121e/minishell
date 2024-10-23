@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/21 18:41:15 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/25 07:05:04 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ int	main(int argc, char **argv, char **envp)
 		ms->input = readline(ms->prompt);
 		if (!ms->input)
 			break ;
-		else if (*ms->input)
+		else if (!*ms->input)
+			continue ;
+		else
 		{
 			add_history(ms->input);
 			lexer(ms, ms->input);

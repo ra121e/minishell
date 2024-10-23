@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:16:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/22 21:56:37 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/24 21:21:07 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	traverse_cmd(t_node *cur, t_ms *ms, int fd_w[2])
 {
 	int	status;
 
+	expansion(ms, cur);
 	exec_cmd(cur, ms, fd_w);
 	waitpid(ms->pid, &status, 0);
 	while (1)
@@ -28,7 +29,7 @@ void	traverse_cmd(t_node *cur, t_ms *ms, int fd_w[2])
 	}
 	if (ms->cmd_error)
 		ms->exit_status = 1;
-	else
+	else if (!ms->builtin_cmd)
 		ms->exit_status = WEXITSTATUS(status);
 }
 
