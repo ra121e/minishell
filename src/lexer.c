@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/18 20:58:18 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/24 22:17:38 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,20 @@
 
 void	new_str_len(t_ms *ms, char *str)
 {
+	char	c;
 	int		i;
 
 	i = -1;
 	while (str[++i])
 	{
-		if (operator_char_count(str, i) > 20)
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			c = str[i];
+			ms->len++;
+			while (str[++i] != c)
+				ms->len++;
+		}
+		else if (operator_char_count(str, i) > 20)
 		{
 			ms->len += 3;
 			i++;
@@ -35,6 +43,7 @@ void	new_str_len(t_ms *ms, char *str)
 
 void	new_str(t_ms *ms, char *str)
 {
+	char	c;
 	int		i;
 	int		n;
 
@@ -43,6 +52,13 @@ void	new_str(t_ms *ms, char *str)
 	i = -1;
 	while (str[++i])
 	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			c = str[i];
+			ms->str[n++] = str[i];
+			while (str[++i] != c)
+				ms->str[n++] = str[i];
+		}
 		if (operator_char_count(str, i) > 20)
 		{
 			ms->str[n++] = ' ';
@@ -70,6 +86,7 @@ void	quote(t_ms *ms, char c)
 
 void	lexer(t_ms *ms, char *str)
 {
+	syntax_checker(str);
 	new_str(ms, str);
 	ms->end = 0;
 	while (ms->end <= ms->len)
