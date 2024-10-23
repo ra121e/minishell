@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:17:20 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/18 22:11:03 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/23 21:06:55 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ t_node	*parser_command(t_token **token)
 		if ((*token)->kind == TK_REDIRECT_IN || (*token)->kind == TK_REDIRECT_OUT)
 		{
 			right = parser_redirect_re(token);
+			if (right == NULL)
+				return (NULL);
 			node->right = right;
 		}
 	}
@@ -63,6 +65,8 @@ t_node	*parser_cmd_re(t_token **token)
 
 	node = parser_cmd(token);
 	right = parser_cmd_right(token);
+	if (right == NULL)
+		return (NULL);
 	node->right = right;
 
 	return (node);
@@ -86,6 +90,8 @@ t_node	*parser_cmd_right(t_token **token)
 	|| (*token)->kind == TK_REDIRECT_HEREDOC || (*token)->kind == TK_REDIRECT_APPEND)
 	{
 		node = parser_cmd(token);
+		if (node == NULL)
+			return (NULL);
 		right = parser_cmd_right(token);
 		node->right = right;
 		return (node);
@@ -112,6 +118,8 @@ t_node	*parser_cmd(t_token **token)
 		(*token)->kind == TK_REDIRECT_HEREDOC|| (*token)->kind == TK_REDIRECT_APPEND)
 	{
 		node = parser_redirect(token);
+		if (node == NULL)
+			return (NULL);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:03:37 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/23 11:01:48 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/23 20:29:23 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_node	*parser_expr(t_token **token)
 			node = ast_newnode(ND_AND);
 			node->left = left;
 			*token = (*token)->next;
-			if ((*token)->kind == TK_EOF)
+			if ((*token)->kind == TK_EOF || (*token)->kind == TK_AND || (*token)->kind == TK_OR)
 			{
 				error_right(*token);
 				return (NULL);
@@ -61,7 +61,7 @@ t_node	*parser_expr(t_token **token)
 			node = ast_newnode(ND_OR);
 			node->left = left;
 			*token = (*token)->next;
-			if ((*token)->kind == TK_EOF)
+			if ((*token)->kind == TK_EOF || (*token)->kind == TK_AND || (*token)->kind == TK_OR)
 			{
 				error_right(*token);
 				return (NULL);
