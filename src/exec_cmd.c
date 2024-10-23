@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/23 07:35:47 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/24 07:39:48 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	execute(t_ms *ms, int fd_w[2])
 	cmd_envp(ms);
 	if (is_builtin(ms->cmd[0]) == true)
 	{
+		ms->builtin_cmd = 1;
 		builtin(ms);
 //		printf("built in command: %s\nfunction WIP\n", ms->cmd[0]);
 	}
@@ -106,6 +107,7 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 void	exec_cmd(t_node *cur, t_ms *ms, int fd_w[2])
 {
 	ms->cmd_error = 0;
+	ms->builtin_cmd = 0;
 	ms->fd_w_malloc = 0;
 	if (!fd_w)
 		fd_w = init_fd_w(ms);

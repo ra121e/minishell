@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/18 20:58:18 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/25 20:01:39 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,20 @@
 
 void	new_str_len(t_ms *ms, char *str)
 {
+	char	c;
 	int		i;
 
 	i = -1;
 	while (str[++i])
 	{
-		if (operator_char_count(str, i) > 20)
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			c = str[i];
+			ms->len++;
+			while (str[++i] != c)
+				ms->len++;
+		}
+		else if (operator_char_count(str, i) > 20)
 		{
 			ms->len += 3;
 			i++;
@@ -33,44 +41,45 @@ void	new_str_len(t_ms *ms, char *str)
 		perror("ms->new_str malloc error");//malloc protection
 }
 
-void	new_str(t_ms *ms, char *str)
+void	optimize_str(t_ms *ms, char *str)
 {
-	int		i;
-	int		n;
-
 	new_str_len(ms, str);
-	n = 0;
-	i = -1;
-	while (str[++i])
+	ms->n = 0;
+	ms->i = -1;
+	while (str[++ms->i])
 	{
-		if (operator_char_count(str, i) > 20)
+		if (str[ms->i] == '\'' || str[ms->i] == '\"')
 		{
-			ms->str[n++] = ' ';
-			ms->str[n++] = str[i++];
-			ms->str[n++] = str[i];
-			ms->str[n++] = ' ';
+			ms->c = str[ms->i];
+			ms->str[ms->n++] = str[ms->i];
+			while (str[++ms->i] != ms->c)
+				ms->str[ms->n++] = str[ms->i];
 		}
-		else if (operator_char_count(str, i) > 10)
+		else if (operator_char_count(str, ms->i) > 10)
 		{
-			ms->str[n++] = ' ';
-			ms->str[n++] = str[i];
-			ms->str[n++] = ' ';
+			ms->str[ms->n++] = ' ';
+			if (operator_char_count(str, ms->i) > 20)
+				ms->str[ms->n++] = str[ms->i++];
+			ms->str[ms->n++] = str[ms->i];
+			ms->str[ms->n++] = ' ';
 		}
-		else
-			ms->str[n++] = str[i];
+		ms->str[ms->n++] = str[ms->i];
 	}
-	ms->str[n] = 0;
+	ms->str[ms->n] = 0;
 }
 
 void	quote(t_ms *ms, char c)
 {
-	while (ms->str[++ms->end] != c);
+	ms->end++;
+	while (ms->str[ms->end] != c)
+		ms->end++;
 	ms->end++;
 }
 
 void	lexer(t_ms *ms, char *str)
 {
-	new_str(ms, str);
+	syntax_checker(str);
+	optimize_str(ms, str);
 	ms->end = 0;
 	while (ms->end <= ms->len)
 	{
