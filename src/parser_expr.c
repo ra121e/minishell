@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:03:37 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/12 19:13:50 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/23 08:28:55 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,25 @@ t_node	*parser_expr(t_token **token)
 	t_node	*left;
 	t_node	*node;
 
-	left = parser_pip(token);
+	if ((*token)->kind == TK_AND || (*token)->kind == TK_OR)
+	{
+		error_expr(*token);
+		return (NULL);
+	}
+	else
+		left = parser_pip(token);
 	while (1)
 	{
 		if ((*token)->kind == TK_AND)
 		{
 			node = ast_newnode(ND_AND);
-			*token = (*token)->next;
 			node->left = left;
+			*token = (*token)->next;
+			if ((*token)->kind == TK_EOF)
+			{
+				error_expr_right(*token);
+				return (NULL);
+			}
 			node->right = parser_pip(token);
 		//	*token = (*token)->next;
 			node->str = "&&";
@@ -44,8 +55,13 @@ t_node	*parser_expr(t_token **token)
 		else if ((*token)->kind == TK_OR)
 		{
 			node = ast_newnode(ND_OR);
-			*token = (*token)->next;
 			node->left = left;
+			*token = (*token)->next;
+			if ((*token)->kind == TK_EOF)
+			{
+				error_expr_right(*token);
+				return (NULL);
+			}
 			node->right = parser_pip(token);
 		//	*token = (*token)->next;
 			node->str = "||";

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:16:23 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/18 20:51:53 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/23 09:10:28 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@ t_node	*parser_pip(t_token **token)
 	t_node	*left;
 	t_node	*node;
 
-	left = parser_command(token);
+	if ((*token)->kind == TK_PIPE)
+	{
+		error_pip(*token);
+		return (NULL);
+	}
+	else
+		left = parser_command(token);
 	while (1)
 	{
 		if ((*token)->kind == TK_PIPE)
