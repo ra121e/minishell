@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/24 07:39:48 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/25 22:45:39 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	execute(t_ms *ms, int fd_w[2])
 	{
 		ms->builtin_cmd = 1;
 		builtin(ms);
-//		printf("built in command: %s\nfunction WIP\n", ms->cmd[0]);
 	}
 	else
 	{

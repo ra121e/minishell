@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/25 06:59:13 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/25 22:49:18 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ int		operator_char_count(char *str, int i);
 void	tokenize_prior_str(t_ms *ms);
 void	expansion(t_ms *ms, t_node *cur);
 void	expansion_var(t_ms *ms, t_node *cur);
+void	get_new_len(t_ms *ms, char *str, int i);
 char	*builtin_pwd(void);
 void	init_env(t_ms *ms, char **envp);
 void	builtin_env(t_envp **envp);
