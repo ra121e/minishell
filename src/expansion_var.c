@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/24 07:30:28 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/25 21:59:16 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	get_newlen(t_ms *ms, char *str, int i)
 	}
 }
 
-int	expand_var_found_var(t_ms *ms, char *str, int i)
+int	expand_var_found_var(t_ms *ms, char *str, int i, int quote)
 {
 	ms->start = ++i;
 	while (str[i] == '_' || ft_isalnum(str[i]))
@@ -73,7 +73,8 @@ int	expand_var_found_var(t_ms *ms, char *str, int i)
 		ms->end = 0;
 		while (ms->var_value[ms->end])
 			ms->new_str[ms->n++] = ms->var_value[ms->end++];
-		ms->expand_var = 1;
+		if (!quote)
+			ms->expand_var = 1;
 	}
 	return (--i);
 }
@@ -93,13 +94,13 @@ void	expand_var(t_ms *ms, char *str, int i)
 			while (str[++i] != '\"')
 			{
 				if (str[i] == '$')
-					i = expand_var_found_var(ms, str, i);
+					i = expand_var_found_var(ms, str, i, 1);
 				else
 					ms->new_str[ms->n++] = str[i];
 			}
 		}
 		else if (str[i] == '$')
-			i = expand_var_found_var(ms, str, i);
+			i = expand_var_found_var(ms, str, i, 0);
 		else
 			ms->new_str[ms->n++] = str[i];
 	}

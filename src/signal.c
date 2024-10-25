@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:25:44 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/23 18:34:46 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/25 21:40:57 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	ft_signal(void)
 //	sa.sa_handler = SIG_IGN;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
-	signal(SIGQUIT, SIG_IGN);
-//	if (sigaction(SIGQUIT, &sa, 0) == -1)
-//		perror("signal handler error");//
+//	signal(SIGQUIT, SIG_IGN);
+	if (sigaction(SIGQUIT, &sa, 0) == -1)
+		perror("signal handler error");//
 //	if (sigaction(SIGINT, &sa, 0) == -1)
 //		perror("signal handler error");//
 }

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/25 20:01:39 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/25 20:33:07 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	optimize_str(t_ms *ms, char *str)
 			ms->str[ms->n++] = str[ms->i];
 			while (str[++ms->i] != ms->c)
 				ms->str[ms->n++] = str[ms->i];
+			ms->str[ms->n++] = str[ms->i];
 		}
 		else if (operator_char_count(str, ms->i) > 10)
 		{
@@ -63,7 +64,8 @@ void	optimize_str(t_ms *ms, char *str)
 			ms->str[ms->n++] = str[ms->i];
 			ms->str[ms->n++] = ' ';
 		}
-		ms->str[ms->n++] = str[ms->i];
+		else
+			ms->str[ms->n++] = str[ms->i];
 	}
 	ms->str[ms->n] = 0;
 }
