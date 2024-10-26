@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/26 20:22:32 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/26 21:25:06 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,10 @@ void	tokenize_prior_str(t_ms *ms);
 void	expansion(t_ms *ms, t_node *cur);
 void	expansion_var(t_ms *ms, t_node *cur);
 void	get_new_len(t_ms *ms, char *str, int i);
+void	expand_var(t_ms *ms, char *str, int i);
+int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
+void	expand_var_replace(t_ms *ms, int quote);
+char	*remove_quote(char *old);
 char	*builtin_pwd(void);
 void	init_env(t_ms *ms, char **envp);
 void	builtin_env(t_envp **envp);
