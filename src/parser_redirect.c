@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:19:23 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/18 21:43:35 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/26 15:10:38 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ t_node	*parser_redirect(t_token **token)
 	if ((*token)->kind == TK_REDIRECT_IN)
 	{
 		node = ast_newnode(ND_REDIRECT_IN);
+		node->str = (*token)->str;
 		*token = (*token)->next;
 		if ((*token)->kind != TK_WORD)
 		{
@@ -105,13 +106,13 @@ t_node	*parser_redirect(t_token **token)
 		right = ast_newnode(ND_WORD);
 		right->str = (*token)->str;
 		node->right = right;
-		node->str = "<";
 		return (node);
 	}
 //	else if ((*token)->str[0] == '>')
 	else if ((*token)->kind == TK_REDIRECT_OUT)
 	{
 		node = ast_newnode(ND_REDIRECT_OUT);
+		node->str = (*token)->str;
 		*token = (*token)->next;
 		if ((*token)->kind != TK_WORD)
 		{
@@ -121,13 +122,13 @@ t_node	*parser_redirect(t_token **token)
 		right = ast_newnode(ND_WORD);
 		right->str = (*token)->str;
 		node->right = right;
-		node->str = ">";
 		return (node);
 	}
 //	else if ((*token)->str[0] == '>' && (*token)->str[1] == '>')
 	else if ((*token)->kind == TK_REDIRECT_APPEND)
 	{
 		node = ast_newnode(ND_REDIRECT_APPEND);
+		node->str = (*token)->str;
 		*token = (*token)->next;
 		if ((*token)->kind != TK_WORD)
 		{
@@ -137,13 +138,13 @@ t_node	*parser_redirect(t_token **token)
 		right = ast_newnode(ND_WORD);
 		right->str = (*token)->str;
 		node->right = right;
-		node->str = ">>";
 		return (node);
 	}
 //	else if ((*token)->str[0] == '<' && (*token)->str[1] == '<')
 	else if ((*token)->kind == TK_REDIRECT_HEREDOC)
 	{
 		node = ast_newnode(ND_REDIRECT_HEREDOC);
+		node->str = (*token)->str;
 		*token = (*token)->next;
 		if ((*token)->kind != TK_WORD)
 		{
@@ -153,7 +154,6 @@ t_node	*parser_redirect(t_token **token)
 		right = ast_newnode(ND_WORD);
 		right->str = (*token)->str;
 		node->right = right;
-		node->str = "<<";
 		return (node);
 	}
 	ft_dprintf(2, "Syntax error: Expected file name after redirect\n");

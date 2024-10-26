@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/25 22:45:39 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/26 16:20:46 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	execute(t_ms *ms, int fd_w[2])
 	if (fd_w[1] > 2)
 		close(fd_w[1]);
 	ms->fd_r = fd_w[0];
+	free(ms->cmd);
 }
 
 void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
@@ -83,7 +84,6 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 {
 	int		i;
 
-	init_cmd(ms, cur);
 	ms->cmd[0] = cur->str;
 	cur = cur->right;
 	i = 1;
@@ -105,12 +105,10 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 
 void	exec_cmd(t_node *cur, t_ms *ms, int fd_w[2])
 {
-	ms->cmd_error = 0;
-	ms->builtin_cmd = 0;
-	ms->fd_w_malloc = 0;
+	init_cmd(ms, cur);
 	if (!fd_w)
 		fd_w = init_fd_w(ms);
-	while (cur->kind)
+	while (cur && cur->kind)
 	{
 		if (cur->kind > 100)
 		{
@@ -128,8 +126,8 @@ void	exec_cmd(t_node *cur, t_ms *ms, int fd_w[2])
 		}
 		cur = cur->right;
 	}
-	execute(ms, fd_w);
-//TODO:	free ms->cmd, ms->fd_w (if malloced)
+	if (ms->cmd[0])
+		execute(ms, fd_w);
 	if (ms->fd_w_malloc)
 		free(ms->fd_w);
 }

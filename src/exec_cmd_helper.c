@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/22 21:44:45 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/26 16:16:19 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ void	init_cmd(t_ms *ms, t_node *cur)
 	ms->cmd = malloc(sizeof(char *) * (i + 1));
 	if (!ms->cmd)
 		perror("ms->cmd malloc error");//malloc error
+	ms->cmd[0] = 0;
+	ms->cmd_error = 0;
+	ms->builtin_cmd = 0;
+	ms->fd_w_malloc = 0;
 }
 
 int	*init_fd_w(t_ms *ms)
