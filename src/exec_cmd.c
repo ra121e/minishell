@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/26 16:20:46 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/26 20:09:13 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 	*cur = (*cur)->right;
 	if (kind == ND_REDIRECT_IN)
 		ms->fd_r = get_filename_fd(ms, (*cur)->str, ms->fd_r, READ);
+	else if (kind == ND_REDIRECT_HEREDOC)
+		heredoc(ms, (*cur)->str);
 	else if (kind == ND_REDIRECT_OUT || kind == ND_REDIRECT_APPEND)
 	{
 		if (fd_w)

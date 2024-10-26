@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
+/*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:25:44 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/25 21:40:57 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/26 20:24:07 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,26 @@ int	sig;
 void	handler(int signum)
 {
 	sig = signum;
-	if (sig == SIGQUIT)
+	if (sig == SIGINT)
 	{
-//		write(1, "\n", 1);
+//		rl_on_new_line();
+		rl_replace_line("", 0);
+		write(1, "\n", 1);
 		rl_on_new_line();
-//		rl_replace_line("", 0);
+//		rl_replace_line("This is a new line", 18);
+		dprintf(2, "%d", signum + 128);
 		rl_redisplay();
 //		return ;
 	}
-	else if (sig == SIGINT)
-		write(1, "SIGINT\n", 7);
+//	else if (sig == SIGINT)
+//		write(1, "SIGINT\n", 7);
 //		code;
 
 //	rl_on_new_line();
 //	rl_replace_line("hello", 0);
 //	rl_redisplay();
 }
+
 
 void	ft_signal(void)
 {
@@ -41,10 +45,10 @@ void	ft_signal(void)
 	sa.sa_handler = handler;
 //	sa.sa_handler = SIG_IGN;
 	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-//	signal(SIGQUIT, SIG_IGN);
-	if (sigaction(SIGQUIT, &sa, 0) == -1)
+//	sigemptyset(&sa.sa_mask);
+	if (sigaction(SIGINT, &sa, 0) == -1)
 		perror("signal handler error");//
+	signal(SIGQUIT, SIG_IGN);
 //	if (sigaction(SIGINT, &sa, 0) == -1)
 //		perror("signal handler error");//
 }

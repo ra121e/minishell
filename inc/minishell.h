@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/25 22:49:18 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/26 20:22:32 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ void 	printAST(t_node *node, int level, int isLeft);
 void	traverse_start(t_node *head, t_ms *ms);
 void	exec_cmd(t_node *cur, t_ms *ms, int fd_w[2]);
 void	init_cmd(t_ms *ms, t_node *cur);
+void	heredoc(t_ms *ms, char *delimiter);
 int		*init_fd_w(t_ms *ms);
 void	dup2_and_close(pid_t old_fd, pid_t new_fd);
 pid_t	get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode);
