@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/27 14:27:15 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/27 19:20:54 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ struct s_node
 	t_token		*token;
 };
 
+extern int	sig;
+
 typedef struct s_ms
 {
 	t_envp	**envp;
@@ -131,6 +133,7 @@ typedef struct s_ms
 	char	**cmd;
 	char	**cmd_envp;
 	int		exit_status;
+	int		sig;
 }	t_ms;
 
 void	init(t_ms *ms);
@@ -167,6 +170,7 @@ void	update_env(t_ms *ms);
 int		get_var_len(t_ms *ms, char *var);
 char	*get_var(t_ms *ms, char *var);
 void	ft_signal(void);
+void	ft_signal_heredoc(void);
 
 t_node	*parser(t_token **token);
 t_node	*parser_expr(t_token **token);

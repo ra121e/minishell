@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/27 10:33:29 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/27 17:57:36 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 			if (cur->right->kind == ND_COMMAND || \
 					cur->right->kind == ND_HEREDOC_DELIMITER)
 				redirect(ms, &cur, fd_w);
-			if (ms->cmd_error)
+			if (ms->cmd_error || ms->sig == 2)
 				return ;
 		}
 		else
@@ -118,7 +118,7 @@ void	exec_cmd(t_node *cur, t_ms *ms, int fd_w[2])
 			if (cur->right->kind == ND_COMMAND || \
 					cur->right->kind == ND_HEREDOC_DELIMITER)
 				redirect(ms, &cur, fd_w);
-			if (ms->cmd_error)
+			if (ms->cmd_error || ms->sig == 2)
 				return ;
 		}
 		else

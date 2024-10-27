@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/27 12:20:21 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/27 19:21:15 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,23 @@
 
 void	heredoc_loop(t_ms *ms, char *delimiter, int quote, int len)
 {
-	char	*input;
+	char		*input;
 
 	while (1)
 	{
 		input = readline(">");
-		if (!input || !ft_strncmp(input, delimiter, len + 1))
+		if (sig == 2)
+		{
+			ms->sig = sig;
+			sig = 0;
+			break ;
+		}
+		if (!input)
+		{
+			dprintf(2, "minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
+			break ;
+		}	
+		else if (!ft_strncmp(input, delimiter, len + 1))
 			break ;
 		if (quote == 0)
 		{
@@ -54,7 +65,9 @@ void	heredoc(t_ms *ms, char *delimiter)
 		perror("heredoc tmp file open error\n");
 	ms->heredoc_tmp = 1;
 	len = ft_strlen(delimiter);
+	ft_signal_heredoc();
 	heredoc_loop(ms, delimiter, quote, len);
+	ft_signal();
 	close(ms->fd_r);
 	ms->fd_r = open("tmp", READ);
 	if (!ms->fd_r)

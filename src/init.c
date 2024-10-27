@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/27 11:55:24 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/27 18:04:39 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init(t_ms *ms)
 	ms->heredoc_tmp = 0;
 	ms->fd_r = 0;
 	ms->pid = 0;
+	ms->sig = 0;
 	ms->prompt = ft_strsjoin(5, "\001\033[35m\002", get_var(ms, "USER"), \
 			"@", "minishell:$", "\001\033[0m\002");
 	if (!ms->prompt)

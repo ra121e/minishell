@@ -45,7 +45,10 @@ int	main(int argc, char **argv, char **envp)
 		init(ms);
 		ms->input = readline(ms->prompt);
 		if (!ms->input)
+		{
+			dprintf(2, "exit\n");
 			break ;
+		}
 		else if (!*ms->input)
 			continue ;
 		else
