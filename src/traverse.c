@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:16:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/27 19:29:37 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/28 00:04:03 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	traverse_cmd(t_node *cur, t_ms *ms, int fd_w[2])
 				break ;
 		}
 	}
+	ft_signal();
 	if (ms->cmd_error)
 		ms->exit_status = 1;
 	else if (!ms->builtin_cmd)
