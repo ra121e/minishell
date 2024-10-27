@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/27 17:57:36 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/27 22:04:21 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,12 @@ void	execute(t_ms *ms, int fd_w[2])
 		if (pid < 0)
 			error_exit("fork error!");
 		ms->pid = pid;
+		ft_signal_int_ign();
 		if (pid == 0)
+		{
+			ft_signal_cmd();
 			execute_child(ms, fd_w);
+		}
 	}
 	if (ms->fd_r > 2)
 		close(ms->fd_r);

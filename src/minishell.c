@@ -35,13 +35,13 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		return (ft_dprintf(2, "No arguments allowed...\n"), 1);
 	(void)argv;
-	ft_signal();
 	ms = malloc(sizeof(t_ms));
 	if (!ms)
 		perror("ms malloc error");//malloc protection
 	init_env(ms, envp);
 	while (1)
 	{
+		ft_signal();
 		init(ms);
 		ms->input = readline(ms->prompt);
 		if (!ms->input)

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:03:23 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/27 13:57:53 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/27 15:13:12 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,4 @@ void	builtin_export(t_ms *ms)
 	i = 0;
 	while (ms->cmd[++i])
 		update_if_valid(ms, ms->cmd[i]);
-	ms->exit_status = 0;
 }

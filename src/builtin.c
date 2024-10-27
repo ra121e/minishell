@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 06:24:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/27 14:01:16 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/27 14:43:43 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	builtin(t_ms *ms)
 //		builtin_echo(ms);
 //	else if (!ft_strncmp(ms->cmd[0], "cd", 3))
 //		builtin_cd(ms);
-//	else if (!ft_strncmp(ms->cmd[0], "pwd", 4))
-//		builtin_pwd(ms);
+	else if (!ft_strncmp(ms->cmd[0], "pwd", 4))
+		builtin_pwd();
 //	else if (!ft_strncmp(ms->cmd[0], "export", 7))
 //		builtin_export(ms);
 //	else if (!ft_strncmp(ms->cmd[0], "unset", 6))
