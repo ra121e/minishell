@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 20:25:17 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/25 06:47:08 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/27 10:05:50 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	word_split(t_ms *ms, t_node *cur)
 	}
 	word_split_loop(ms, cur, split);
 	free(split);
+	ms->expand_var = 0;
 }
 
 void	expansion(t_ms *ms, t_node *cur)
@@ -72,7 +73,8 @@ void	expansion(t_ms *ms, t_node *cur)
 
 	while (cur)
 	{
-		expansion_var(ms, cur);
+		if (cur->kind != ND_HEREDOC_DELIMITER)
+			expansion_var(ms, cur);
 		tmp = cur->right;
 		if (ms->expand_var && cur)
 			word_split(ms, cur);

@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/26 11:45:41 by athonda          ###   ########.fr        #
+#    Updated: 2024/10/26 23:48:32 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,7 +97,7 @@ $(BONUS_NAME): $(LIB) $(BONUS_OBJ)
 	$(CC) $(CFLAGS) $(BONUS_OBJ) $(LINK) -o $@
 
 $(LIB):
-	$(MAKE) -C $(LIB_DIR)
+	$(MAKE) -C $(LIB_DIR) CFLAGS=$(CFLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(DEP)
 	@mkdir -p $(OBJ_DIR)

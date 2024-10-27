@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/26 20:24:07 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/27 12:17:27 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ pid_t	get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode)
 		filename = ft_strsjoin(3, getcwd(0, 0), "/", str);
 	if (fd > 2)
 		close(fd);
-	file_fd = open(filename, mode, 0644);
+	if (mode == READ)
+		file_fd = open(filename, mode);
+	else
+		file_fd = open(filename, mode, 0644);
 	if (file_fd == -1)
 	{
 		perror("minishell");

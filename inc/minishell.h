@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/26 21:25:06 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/27 11:55:03 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ enum e_token_kind
 	TK_REDIRECT_IN,
 	TK_REDIRECT_OUT,
 	TK_REDIRECT_HEREDOC,
+	TK_HEREDOC_DELIMITER,
 	TK_REDIRECT_APPEND,
 	TK_LPAREN,
 	TK_RPAREN,
@@ -76,6 +77,7 @@ enum e_node_kind
 	ND_REDIRECT_OUT,
 	ND_REDIRECT_HEREDOC,
 	ND_REDIRECT_APPEND,
+	ND_HEREDOC_DELIMITER,
 };
 
 typedef struct s_node t_node;
@@ -119,6 +121,7 @@ typedef struct s_ms
 	t_node	*tmp_node;
 	t_node	*front;
 	t_node	*back;
+	int		heredoc_tmp;
 	int		fd_r;
 	int		*fd_w;
 	int		fd_w_malloc;
