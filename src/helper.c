@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 15:52:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/26 21:46:03 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/27 14:22:04 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*remove_quote(char *old)
 	i = -1;
 	while (old[++i])
 	{
-		if (!quote && old[i] == '\"')
+		if (!quote && (old[i] == '\'' || old[i] == '\"'))
 			quote = old[i];
 		else if (quote && old[i] == quote)
 			quote = 0;

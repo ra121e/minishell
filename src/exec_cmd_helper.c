@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/27 12:17:27 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/27 13:46:13 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_cmd(t_ms *ms, t_node *cur)
 	if (!ms->cmd)
 		perror("ms->cmd malloc error");//malloc error
 	ms->cmd[0] = 0;
+	ms->exit_status = 0;
 	ms->cmd_error = 0;
 	ms->builtin_cmd = 0;
 	ms->fd_w_malloc = 0;

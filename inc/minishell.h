@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/27 11:55:03 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/27 14:27:15 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void	expand_var_replace(t_ms *ms, int quote);
 char	*remove_quote(char *old);
 char	*builtin_pwd(void);
 void	init_env(t_ms *ms, char **envp);
-void	builtin_env(t_envp **envp);
+void	builtin_env(t_ms *ms);
 void	builtin_export(t_ms *ms);
 void	builtin_export_add(t_ms *ms, t_envp **envp);
 int		display_if_no_arg(t_ms *ms);
