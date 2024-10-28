@@ -11,23 +11,6 @@
 
 #include "minishell.h"
 
-//TODO:To delete later; test print tokens
-void	print_token(t_ms *ms)
-{
-	if (ms->head)
-	{
-		printf("\033[32mtoken(s): \033[0m");
-		while (ms->head)
-		{
-			printf("%s", ms->head->str);
-			if (ms->head->next)
-				printf("\033[32m -> \033[0m");
-			ms->head = ms->head->next;
-		}
-		printf("\n");
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_ms		*ms;
@@ -39,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 	ms = malloc(sizeof(t_ms));
 	if (!ms)
 		perror("ms malloc error");//malloc protection
-	init_env(ms, envp);
+	init_envp(ms, envp);
 	while (1)
 	{
 		init(ms);

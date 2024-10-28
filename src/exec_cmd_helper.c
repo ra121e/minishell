@@ -6,11 +6,27 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/27 13:46:13 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 06:23:31 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	cmd_envp(t_ms *ms)
+{
+	int	i;
+
+	i = 0;
+	while (ms->envp[i])
+		i++;
+	ms->cmd_envp = malloc(sizeof (char *) * (i + 1));
+	if (ms->cmd_envp == NULL)
+		return ;
+	i = -1;
+	while (ms->envp[++i])
+		ms->cmd_envp[i] = ms->envp[i]->pair;
+	ms->cmd_envp[i] = NULL;
+}
 
 void	init_cmd(t_ms *ms, t_node *cur)
 {

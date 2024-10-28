@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/27 21:54:40 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 00:32:07 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ enum e_token_kind
 	TK_AND,
 	TK_OR,
 	TK_PIPE,
+	TK_HEREDOC_DELIMITER,
 	TK_REDIRECT_IN,
 	TK_REDIRECT_OUT,
 	TK_REDIRECT_HEREDOC,
-	TK_HEREDOC_DELIMITER,
 	TK_REDIRECT_APPEND,
 	TK_LPAREN,
 	TK_RPAREN,
@@ -73,11 +73,11 @@ enum e_node_kind
 	ND_AND,
 	ND_OR,
 	ND_WORD,
+	ND_HEREDOC_DELIMITER,
 	ND_REDIRECT_IN = 101,
 	ND_REDIRECT_OUT,
 	ND_REDIRECT_HEREDOC,
 	ND_REDIRECT_APPEND,
-	ND_HEREDOC_DELIMITER,
 };
 
 typedef struct s_node t_node;
@@ -137,6 +137,7 @@ typedef struct s_ms
 }	t_ms;
 
 void	init(t_ms *ms);
+void	init_envp(t_ms *ms, char **envp);
 void	cleanup(t_ms *ms);
 void	syntax_checker(char *str);
 void	lexer(t_ms *ms, char *str);
@@ -147,7 +148,6 @@ char	*remove_quote(char *old);
 t_token	*new_token(char *str, t_token_kind kind);
 void	add_back(t_token **node, t_token *new);
 t_token	*token_last(t_token *cur);
-char	*token_kind(int k);
 void	tokenize(t_ms *ms, t_token_kind kind);
 void	tokenize_word(t_ms *ms, char *str, int type);
 int		operator_char_count(char *str, int i);
@@ -159,16 +159,18 @@ void	expand_var(t_ms *ms, char *str, int i);
 int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
 void	expand_var_replace(t_ms *ms, int quote);
 char	*remove_quote(char *old);
+
 void	builtin_pwd(void);
-void	init_env(t_ms *ms, char **envp);
 void	builtin_env(t_ms *ms);
 void	builtin_export(t_ms *ms);
 void	builtin_export_add(t_ms *ms, t_envp **envp);
+void	builtin_unset(t_ms *ms);
 int		display_if_no_arg(t_ms *ms);
 void	export_add(t_ms *ms, t_envp **envp);
 void	update_env(t_ms *ms);
 int		get_var_len(t_ms *ms, char *var);
 char	*get_var(t_ms *ms, char *var);
+
 void	ft_signal(void);
 void	ft_signal_heredoc(void);
 void	ft_signal_cmd(void);
@@ -209,4 +211,7 @@ char	*get_fullpath(char *cmd, t_ms *ms);
 void	free_split(char **str);
 void	error_exit(char *str);
 void	error_wrong_cmd(t_ms *ms);
+
+void	print_token(t_ms *ms);
+char	*token_kind(int k);
 #endif

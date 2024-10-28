@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/27 14:04:58 by xlok             ###   ########.fr        #
+#    Updated: 2024/10/29 06:24:45 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ SRC_F := minishell.c \
 		 init.c \
 		 cleanup.c \
 		 helper.c \
-		 helper_env.c \
 		 syntax_checker.c \
 		 lexer.c \
 		 expansion.c \
@@ -41,6 +40,7 @@ SRC_F := minishell.c \
 		 builtin_env.c \
 		 builtin_export.c \
 		 builtin_export_helper.c \
+		 builtin_unset.c \
 		 tokenize.c \
 		 token.c \
 		 parser.c \
@@ -60,7 +60,8 @@ SRC_F := minishell.c \
 		 free_split.c \
 		 error.c \
 		 ft_strsjoin.c \
-		 signal.c
+		 signal.c \
+		 to_remove_test_print.c
 
 SRC := $(SRC_F:%.c=$(SRC_DIR)/%.c)
 
