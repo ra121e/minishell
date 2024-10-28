@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/27 19:20:54 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/27 20:43:16 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ int		get_var_len(t_ms *ms, char *var);
 char	*get_var(t_ms *ms, char *var);
 void	ft_signal(void);
 void	ft_signal_heredoc(void);
+void	ft_signal_cmd(void);
 
 t_node	*parser(t_token **token);
 t_node	*parser_expr(t_token **token);
