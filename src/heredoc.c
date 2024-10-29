@@ -6,11 +6,29 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/27 19:21:15 by athonda          ###   ########.fr       */
+/*   Updated: 2024/10/29 07:44:13 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	expand_if_unquoted(t_ms *ms, char *input, int quote)
+{
+	if (quote == 0)
+	{
+		ms->len = 0;
+		ms->expand_var = 0;
+		get_new_len(ms, input, -1);
+		ms->new_str = malloc(ms->len + 1);
+		if (!ms->new_str)
+			perror("ms->new_str for heredoc malloc error\n");//malloc protection
+		expand_var(ms, input, -1);
+		dprintf(ms->fd_r, "%s\n", ms->new_str);
+		free(ms->new_str);
+	}
+	else
+		dprintf(ms->fd_r, "%s\n", input);
+}
 
 void	heredoc_loop(t_ms *ms, char *delimiter, int quote, int len)
 {
@@ -32,20 +50,7 @@ void	heredoc_loop(t_ms *ms, char *delimiter, int quote, int len)
 		}	
 		else if (!ft_strncmp(input, delimiter, len + 1))
 			break ;
-		if (quote == 0)
-		{
-			ms->len = 0;
-			ms->expand_var = 0;
-			get_new_len(ms, input, -1);
-			ms->new_str = malloc(ms->len + 1);
-			if (!ms->new_str)
-				perror("ms->new_str for heredoc malloc error\n");//malloc protection
-			expand_var(ms, input, -1);
-			dprintf(ms->fd_r, "%s\n", ms->new_str);
-			free(ms->new_str);
-		}
-		else
-			dprintf(ms->fd_r, "%s\n", input);
+		expand_if_unquoted(ms, input, quote);
 		free(input);
 	}
 }
@@ -56,7 +61,7 @@ void	heredoc(t_ms *ms, char *delimiter)
 	int		quote;
 
 	quote = 0;
-	if (*delimiter == '\"')
+	if (*delimiter == '\"' || *delimiter == '\'')
 		quote = 1;
 	delimiter = remove_quote(delimiter);
 	if (ms->fd_r > 2)
