@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 21:03:37 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 21:15:29 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,15 @@ void	cmd_envp(t_ms *ms)
 
 void	init_cmd(t_ms *ms, t_node *cur, int fd_w[2])
 {
-	int	i;
+	t_node	*tmp;
+	int		i;
 
+	tmp = cur;
 	i = 0;
-	while (cur)
+	while (tmp)
 	{
 		i++;
-		cur = cur->right;
+		tmp = tmp->right;
 	}
 	ms->cmd = malloc(sizeof(char *) * (i + 1));
 	if (!ms->cmd)
