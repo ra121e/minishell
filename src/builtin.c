@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
+/*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 06:24:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/27 14:43:43 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/28 22:11:26 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	builtin(t_ms *ms)
 		builtin_export(ms);
 //	if (!ft_strncmp(ms->cmd[0], "echo", 5))
 //		builtin_echo(ms);
-//	else if (!ft_strncmp(ms->cmd[0], "cd", 3))
-//		builtin_cd(ms);
+	else if (!ft_strncmp(ms->cmd[0], "cd", 3))
+		builtin_cd(ms);
 	else if (!ft_strncmp(ms->cmd[0], "pwd", 4))
 		builtin_pwd();
 //	else if (!ft_strncmp(ms->cmd[0], "export", 7))
