@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:17:20 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/27 10:30:25 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 21:55:46 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ t_node	*parser_cmd_re(t_token **token)
 	t_node	*right;
 
 	node = parser_cmd(token);
+	if (node == NULL)
+		return (NULL);
 	right = parser_cmd_right(token);
 	node->right = right;
 
