@@ -6,13 +6,13 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/29 07:44:13 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 21:39:07 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_if_unquoted(t_ms *ms, char *input, int quote)
+void	expand_if_unquoted(t_ms *ms, char *input, int quote, int fd[2])
 {
 	if (quote == 0)
 	{
@@ -23,16 +23,16 @@ void	expand_if_unquoted(t_ms *ms, char *input, int quote)
 		if (!ms->new_str)
 			perror("ms->new_str for heredoc malloc error\n");//malloc protection
 		expand_var(ms, input, -1);
-		dprintf(ms->fd_r, "%s\n", ms->new_str);
+		dprintf(fd[1], "%s\n", ms->new_str);
 		free(ms->new_str);
 	}
 	else
-		dprintf(ms->fd_r, "%s\n", input);
+		dprintf(fd[1], "%s\n", input);
 }
 
-void	heredoc_loop(t_ms *ms, char *delimiter, int quote, int len)
+void	heredoc_loop(t_ms *ms, char *delimiter, int quote, int fd[2])
 {
-	char		*input;
+	char	*input;
 
 	while (1)
 	{
@@ -48,17 +48,17 @@ void	heredoc_loop(t_ms *ms, char *delimiter, int quote, int len)
 			dprintf(2, "minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
 			break ;
 		}	
-		else if (!ft_strncmp(input, delimiter, len + 1))
+		else if (!ft_strncmp(input, delimiter, ms->len + 1))
 			break ;
-		expand_if_unquoted(ms, input, quote);
+		expand_if_unquoted(ms, input, quote, fd);
 		free(input);
 	}
 }
 
 void	heredoc(t_ms *ms, char *delimiter)
 {
-	int		len;
-	int		quote;
+	int	quote;
+	int	fd[2];
 
 	quote = 0;
 	if (*delimiter == '\"' || *delimiter == '\'')
@@ -66,15 +66,12 @@ void	heredoc(t_ms *ms, char *delimiter)
 	delimiter = remove_quote(delimiter);
 	if (ms->fd_r > 2)
 		close(ms->fd_r);
-	if ((ms->fd_r = open("tmp", WRITE, 0644)) == -1)
-		perror("heredoc tmp file open error\n");
-	ms->heredoc_tmp = 1;
-	len = ft_strlen(delimiter);
+	if (pipe(fd) == -1)
+		perror("pipe error for heredoc");
+	ms->len = ft_strlen(delimiter);
 	ft_signal_heredoc();
-	heredoc_loop(ms, delimiter, quote, len);
+	heredoc_loop(ms, delimiter, quote, fd);
 	ft_signal();
-	close(ms->fd_r);
-	ms->fd_r = open("tmp", READ);
-	if (!ms->fd_r)
-		perror("heredoc open error");
+	ms->fd_r = fd[0];
+	close(fd[1]);
 }
