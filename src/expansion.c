@@ -6,29 +6,29 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 20:25:17 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 18:00:17 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 21:08:45 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//static t_node	*newnode(char *str)
-//{
-//	t_node	*node;
-//
-//	node = (t_node *)malloc(sizeof (t_node) * 1);
-//	if (node == NULL)
-//		return (NULL);
-//	node->kind = ND_COMMAND;
-//	node->str = str;
-//	node->av = NULL;
-//	node->left = NULL;
-//	node->right = NULL;
-//	node->red_symbol = NULL;
-//	node->file_name = NULL;
-//	return (node);
-//}
-//
+static t_node	*newnode(char *str)
+{
+	t_node	*node;
+
+	node = (t_node *)malloc(sizeof (t_node) * 1);
+	if (node == NULL)
+		return (NULL);
+	node->kind = ND_COMMAND;
+	node->str = str;
+	node->left = NULL;
+	node->right = NULL;
+	node->cmd = 0;
+	node->fd_r = 0;
+	node->fd_w[2] = 0;
+	return (node);
+}
+
 void	word_split_loop(t_ms *ms, t_node *cur, char **split)
 {
 	int		i;
@@ -46,7 +46,7 @@ void	word_split_loop(t_ms *ms, t_node *cur, char **split)
 		}
 		else
 			ms->front = ms->back;
-		ms->back = ast_newnode(split[i]);
+		ms->back = newnode(split[i]);
 		ms->front->right = ms->back;
 	}
 	ms->back->right = ms->tmp_node;

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 18:46:43 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 21:01:52 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ struct s_node
 	char		*str;
 	char		**cmd;
 	int			fd_r;
-	int			fd_w;
+	int			fd_w[2];
 	t_node		*left;
 	t_node		*right;
 	t_node		*next;
@@ -128,8 +128,7 @@ typedef struct s_ms
 	int		heredoc_tmp;
 	int		info;
 	int		fd_r;
-	int		fd_w;
-//	int		fd_w_malloc;
+	int		fd_w[2];
 	int		cmd_error;
 	int		builtin_cmd;
 	int		pid;
@@ -200,13 +199,14 @@ t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);
 const char* getNodeKindName(t_node_kind kind);
 void 	printAST(t_node *node, int level, int isLeft);
-void	traverse_start(t_node *head, t_ms *ms);
-void	exec_cmd(t_node *cur, t_ms *ms, int fd_w[2]);
-void	init_cmd(t_ms *ms, t_node *cur);
+void	traverse_start(t_node *head, t_ms *ms, int action);
+void	cmd_info(t_ms *ms, t_node *cur, int fd_w[2]);
+void	exec_cmd(t_ms *ms, t_node *cur);
+void	init_cmd(t_ms *ms, t_node *cur, int fd_w[2]);
 void	heredoc(t_ms *ms, char *delimiter);
 int		*init_fd_w(t_ms *ms);
 void	dup2_and_close(pid_t old_fd, pid_t new_fd);
-pid_t	get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode);
+int		get_filename_fd(char *str, pid_t fd, int mode);
 int		*exec_pip(t_ms *ms);
 void	cmd_envp(t_ms *ms);
 char	**find_envpath(t_ms *ms);

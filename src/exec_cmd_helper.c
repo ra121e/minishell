@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 18:31:29 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 21:03:37 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	cmd_envp(t_ms *ms)
 	ms->cmd_envp[i] = NULL;
 }
 
-void	init_cmd(t_ms *ms, t_node *cur)
+void	init_cmd(t_ms *ms, t_node *cur, int fd_w[2])
 {
 	int	i;
 
@@ -45,16 +45,16 @@ void	init_cmd(t_ms *ms, t_node *cur)
 	ms->exit_status = 0;
 	ms->cmd_error = 0;
 	ms->builtin_cmd = 0;
-	ms->fd_w_malloc = 0;
 	ms->cmd_node = cur;
+	ms->cmd_node->fd_r = ms->fd_r;
+	ms->cmd_node->fd_w[0] = fd_w[0];
+	ms->cmd_node->fd_w[1] = fd_w[1];
 }
 
 int	*init_fd_w(t_ms *ms)
 {
-	ms->fd_w = malloc(sizeof(int) * 2);
 	ms->fd_w[0] = 0;
 	ms->fd_w[1] = 1;
-	ms->fd_w_malloc = 1;
 	return (ms->fd_w);
 }
 
@@ -65,7 +65,7 @@ void	dup2_and_close(pid_t old_fd, pid_t new_fd)
 	close(old_fd);
 }
 
-pid_t	get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode)
+int	get_filename_fd(char *str, pid_t fd, int mode)
 {
 	char	*filename;
 	pid_t	file_fd;
@@ -81,12 +81,7 @@ pid_t	get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode)
 	else
 		file_fd = open(filename, mode, 0644);
 	if (file_fd == -1)
-	{
 		perror("minishell");
-		ms->cmd_error = 1;
-		if (ms->fd_w_malloc)
-			free(ms->fd_w);
-	}
 	free(filename);
 	return (file_fd);
 }

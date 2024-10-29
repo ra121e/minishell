@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:05:30 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/29 18:05:27 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 21:02:11 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_node	*ast_newnode(t_node_kind kind)
 	node->right = NULL;
 	node->cmd = 0;
 	node->fd_r = 0;
-	node->fd_w = 0;
+	node->fd_w[2] = 0;
 	return (node);
 }
 
@@ -73,9 +73,6 @@ void printAST(t_node *node, int level, int isLeft) {
     printf("Node Kind: %s", getNodeKindName(node->kind));
     if (node->str) {
         printf(", Str: %s", node->str);
-    }
-    if (node->av) {
-        printf(", Arg: %s", node->av);
     }
     printf("\n\n");
 

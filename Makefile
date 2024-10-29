@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/29 06:24:45 by xlok             ###   ########.fr        #
+#    Updated: 2024/10/29 20:54:10 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRC_F := minishell.c \
 		 error_parser.c \
 		 ast.c \
 		 traverse.c \
+		 cmd_info.c \
 		 exec_cmd.c \
 		 exec_cmd_helper.c \
 		 heredoc.c \
