@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 06:57:43 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 21:54:05 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	init(t_ms *ms)
 	ms->len = 0;
 	ms->end = 0;
 	ms->key = 0;
-	ms->heredoc_tmp = 0;
 	ms->fd_r = 0;
 	ms->pid = 0;
 	ms->sig = 0;

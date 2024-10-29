@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/29 21:39:07 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 21:42:26 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	heredoc_loop(t_ms *ms, char *delimiter, int quote, int fd[2])
 		}
 		if (!input)
 		{
-			dprintf(2, "minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
+			dprintf(2, "minishell: warning: here-document delimited \
+					by end-of-file (wanted `%s')\n", delimiter);
 			break ;
 		}	
 		else if (!ft_strncmp(input, delimiter, ms->len + 1))

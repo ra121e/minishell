@@ -47,6 +47,7 @@ int	main(int argc, char **argv, char **envp)
 		traverse_start(ms->start_node, ms, INFO);
 		if (!ms->sig)
 			traverse_start(ms->start_node, ms, EXECUTE);
+		cleanup(ms);
 	}
-	cleanup(ms);
+	cleanup_final(ms);
 }

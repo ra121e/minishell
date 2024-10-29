@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/29 21:03:23 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 21:44:19 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	exec_cmd(t_ms *ms, t_node *cur)
 	if (is_builtin(cur->cmd[0]) == true)
 	{
 		ms->builtin_cmd = 1;
-		builtin(ms);//TODO
+		builtin(ms);
 	}
 	else
 	{
