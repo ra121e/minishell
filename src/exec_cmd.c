@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/28 00:03:07 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 18:10:05 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	execute_child(t_ms *ms, int fd_w[2])
 	exit(EXIT_FAILURE);
 }
 
-void	execute(t_ms *ms, int fd_w[2])
+void	exec_cmd(t_ms *ms, int fd_w[2])
 {
 	pid_t	pid;
 
@@ -59,80 +59,4 @@ void	execute(t_ms *ms, int fd_w[2])
 		close(fd_w[1]);
 	ms->fd_r = fd_w[0];
 	free(ms->cmd);
-}
-
-void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
-{
-	int		kind;
-
-	kind = (*cur)->kind;
-	*cur = (*cur)->right;
-	if (kind == ND_REDIRECT_IN)
-		ms->fd_r = get_filename_fd(ms, (*cur)->str, ms->fd_r, READ);
-	else if (kind == ND_REDIRECT_HEREDOC)
-		heredoc(ms, (*cur)->str);
-	else if (kind == ND_REDIRECT_OUT || kind == ND_REDIRECT_APPEND)
-	{
-		if (fd_w)
-		{
-			if (kind == ND_REDIRECT_OUT)
-				fd_w[1] = get_filename_fd(ms, (*cur)->str, fd_w[1], WRITE);
-			else
-				fd_w[1] = get_filename_fd(ms, (*cur)->str, fd_w[1], APPEND);
-		}
-	}
-}
-
-void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
-{
-	int		i;
-
-	ms->cmd[0] = cur->str;
-	cur = cur->right;
-	i = 1;
-	while (cur != NULL)
-	{
-		if (cur->kind > 100)
-		{
-			if (cur->right->kind == ND_COMMAND || \
-					cur->right->kind == ND_HEREDOC_DELIMITER)
-				redirect(ms, &cur, fd_w);
-			if (ms->cmd_error || ms->sig == 2)
-				return ;
-		}
-		else
-			ms->cmd[i++] = cur->str;
-		cur = cur->right;
-	}
-	ms->cmd[i] = NULL;
-}
-
-void	exec_cmd(t_node *cur, t_ms *ms, int fd_w[2])
-{
-	init_cmd(ms, cur);
-	if (!fd_w)
-		fd_w = init_fd_w(ms);
-	while (cur && cur->kind)
-	{
-		if (cur->kind > 100)
-		{
-			if (cur->right->kind == ND_COMMAND || \
-					cur->right->kind == ND_HEREDOC_DELIMITER)
-				redirect(ms, &cur, fd_w);
-			if (ms->cmd_error || ms->sig == 2)
-				return ;
-		}
-		else
-		{
-			cmd_found(ms, cur, fd_w);
-			if (ms->cmd_error)
-				return ;
-			break ;
-		}
-		cur = cur->right;
-	}
-	if (ms->cmd[0])
-		execute(ms, fd_w);
-	if (ms->fd_w_malloc)
-		free(ms->fd_w);
 }

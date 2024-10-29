@@ -43,7 +43,9 @@ int	main(int argc, char **argv, char **envp)
 //		print_token(ms);
 		ms->start_node = parser(&ms->head);
 //		printAST(ms->start_node, 0, 0);
-		traverse_start(ms->start_node, ms);
+		expansion(ms, ms->start_node);
+		traverse_start(ms->start_node, ms, INFO);
+		traverse_start(ms->start_node, ms, EXECUTE);
 	}
 	cleanup(ms);
 }

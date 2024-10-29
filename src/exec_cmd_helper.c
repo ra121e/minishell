@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 06:23:31 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 18:31:29 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	init_cmd(t_ms *ms, t_node *cur)
 	ms->cmd_error = 0;
 	ms->builtin_cmd = 0;
 	ms->fd_w_malloc = 0;
+	ms->cmd_node = cur;
 }
 
 int	*init_fd_w(t_ms *ms)

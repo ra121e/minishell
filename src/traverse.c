@@ -6,18 +6,24 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:16:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/28 00:04:03 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 18:15:55 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	traverse_cmd(t_node *cur, t_ms *ms, int fd_w[2])
+void	traverse_cmd(t_node *cur, t_ms *ms, int fd_w[2], int action)
 {
 	int	status;
 
-	expansion(ms, cur);
-	exec_cmd(cur, ms, fd_w);
+	if (action == INFO)
+		cmd_info();
+	else
+		exec_cmd(cur, ms, fd_w);
+
+
+
+
 	if (ms->heredoc_tmp)
 	{
 		if (unlink("tmp") == -1)

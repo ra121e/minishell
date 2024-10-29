@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 00:32:07 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/29 18:46:43 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 # define READ O_RDONLY
 # define WRITE O_CREAT | O_WRONLY | O_TRUNC
 # define APPEND O_CREAT | O_WRONLY | O_APPEND
+# define IS_REDIRECT > 100
+# define INFO 0
+# define EXECUTE 1 
 
 typedef enum e_token_kind t_token_kind;
 enum e_token_kind
@@ -85,13 +88,12 @@ struct s_node
 {
 	t_node_kind	kind;
 	char		*str;
-	char		*av;
+	char		**cmd;
+	int			fd_r;
+	int			fd_w;
 	t_node		*left;
 	t_node		*right;
-	char		*red_symbol;
-	char		*file_name;
 	t_node		*next;
-	t_token		*token;
 };
 
 extern int	sig;
@@ -124,12 +126,14 @@ typedef struct s_ms
 	t_node	*front;
 	t_node	*back;
 	int		heredoc_tmp;
+	int		info;
 	int		fd_r;
-	int		*fd_w;
-	int		fd_w_malloc;
+	int		fd_w;
+//	int		fd_w_malloc;
 	int		cmd_error;
 	int		builtin_cmd;
 	int		pid;
+	t_node	*cmd_node;
 	char	**cmd;
 	char	**cmd_envp;
 	int		exit_status;
