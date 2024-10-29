@@ -45,7 +45,8 @@ int	main(int argc, char **argv, char **envp)
 //		printAST(ms->start_node, 0, 0);
 		expansion(ms, ms->start_node);
 		traverse_start(ms->start_node, ms, INFO);
-		traverse_start(ms->start_node, ms, EXECUTE);
+		if (!ms->sig)
+			traverse_start(ms->start_node, ms, EXECUTE);
 	}
 	cleanup(ms);
 }
