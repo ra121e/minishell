@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 06:24:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/30 08:33:29 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/30 18:12:12 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	builtin(t_ms *ms, t_node *cur)
 //	else if (!ft_strncmp(cur->cmd[0], "cd", 3))
 //		builtin_cd(ms);
 	else if (!ft_strncmp(cur->cmd[0], "pwd", 4))
-		builtin_pwd();
+		builtin_pwd(cur);
 	else if (!ft_strncmp(cur->cmd[0], "export", 7))
-		builtin_export(ms);
+		builtin_export(ms, cur);
 	else if (!ft_strncmp(cur->cmd[0], "unset", 6))
-		builtin_unset(ms);
+		builtin_unset(ms, cur);
 	else if (!ft_strncmp(cur->cmd[0], "env", 4))
-		builtin_env(ms);
+		builtin_env(ms, cur);
 //	else if (!ft_strncmp(cur->cmd[0], "exit", 5))
 //		builtin_exit(ms);
 }

@@ -6,27 +6,28 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:58:26 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/28 20:14:41 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/30 17:53:50 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	display_if_no_arg(t_ms *ms)
+int	display_if_no_arg(t_ms *ms, t_node *cur)
 {
 	int	i;
 
-	if (!ms->cmd[1])
+	if (!cur->cmd[1])
 	{
 		i = -1;
 		while (ms->envp[++i])
 		{
 			if (!ms->envp[i]->value)
-				printf("declare -x %s\n", ms->envp[i]->key);
+				dprintf(cur->fd_w[1], "declare -x %s\n", ms->envp[i]->key);
 			else if (!ft_strncmp(ms->envp[i]->value, "", 1))
-				printf("declare -x %s=\"\"\n", ms->envp[i]->key);
+				dprintf(cur->fd_w[1], "declare -x %s=\"\"\n", ms->envp[i]->key);
 			else
-				printf("declare -x %s=\"%s\"\n", ms->envp[i]->key, ms->envp[i]->value);
+				dprintf(cur->fd_w[1], "declare -x %s=\"%s\"\n", \
+						ms->envp[i]->key, ms->envp[i]->value);
 		}
 		return (1);
 	}

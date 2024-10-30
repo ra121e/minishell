@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:03:23 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/27 15:13:12 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/30 17:57:59 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ void	update_if_valid(t_ms *ms, char *str)
 	update_env(ms);
 }
 
-void	builtin_export(t_ms *ms)
+void	builtin_export(t_ms *ms, t_node *cur)
 {
 	int	i;
 
-	if (display_if_no_arg(ms))
+	if (display_if_no_arg(ms, cur))
 		return ;
 	i = 0;
-	while (ms->cmd[++i])
-		update_if_valid(ms, ms->cmd[i]);
+	while (cur->cmd[++i])
+		update_if_valid(ms, cur->cmd[i]);
 }

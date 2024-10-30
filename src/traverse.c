@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:16:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/29 21:04:33 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/30 17:45:17 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@ void	traverse_cmd(t_node *cur, t_ms *ms, int fd_w[2], int action)
 		cmd_info(ms, cur, fd_w);
 	else
 		exec_cmd(ms, cur);
-
-//	if (ms->heredoc_tmp)
-//	{
-//		if (unlink("tmp") == -1)
-//			dprintf(2, "error deleting heredoc tmp file\n");
-//		ms->heredoc_tmp = 0;
-//	}
 }
 
 void	traverse(t_node *cur, t_ms *ms, int fd_w[2], int action)
