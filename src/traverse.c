@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:16:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/30 17:45:17 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 07:49:42 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	traverse(t_node *cur, t_ms *ms, int fd_w[2], int action)
 
 	if (cur->kind == ND_PIPE)
 	{
+		ms->in_pipe = 1;
 		if (action == INFO)
 		{
 			if (pipe(pipfd) == -1)
@@ -46,7 +47,9 @@ void	traverse(t_node *cur, t_ms *ms, int fd_w[2], int action)
 	else if (cur->kind == ND_OR)
 	{
 		traverse(cur->left, ms, fd_w, action);
-		if (ms->exit_status && ms->sig == 0)
+		if (action == INFO)
+			traverse(cur->right, ms, fd_w, action);
+		else if (ms->exit_status && ms->sig == 0)
 			traverse(cur->right, ms, fd_w, action);
 	}
 	else
