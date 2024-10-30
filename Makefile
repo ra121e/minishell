@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/29 21:19:26 by xlok             ###   ########.fr        #
+#    Updated: 2024/10/30 08:34:22 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC_F := minishell.c \
 		 expansion_var.c \
 		 expansion_var_helper.c \
 		 builtin.c \
+		 builtin_echo.c \
 		 builtin_pwd.c \
 		 builtin_env.c \
 		 builtin_export.c \
@@ -56,6 +57,7 @@ SRC_F := minishell.c \
 		 cmd_info.c \
 		 cmd_info_helper.c \
 		 exec_cmd.c \
+		 exec_cmd_helper.c \
 		 heredoc.c \
 		 get_fullpath.c \
 		 free_split.c \

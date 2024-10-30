@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 21:01:52 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/30 08:28:58 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ void	init_envp(t_ms *ms, char **envp);
 void	cleanup(t_ms *ms);
 void	syntax_checker(char *str);
 void	lexer(t_ms *ms, char *str);
-void	builtin(t_ms *ms);
 bool	is_builtin(char *str);
 char	*ft_strsjoin(int count, ...);
 char	*remove_quote(char *old);
@@ -163,6 +162,8 @@ int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
 void	expand_var_replace(t_ms *ms, int quote);
 char	*remove_quote(char *old);
 
+void	builtin(t_ms *ms, t_node *cur);
+void	builtin_echo(t_node *cur);
 void	builtin_pwd(void);
 void	builtin_env(t_ms *ms);
 void	builtin_export(t_ms *ms);
@@ -215,6 +216,12 @@ char	*get_fullpath(char *cmd, t_ms *ms);
 void	free_split(char **str);
 void	error_exit(char *str);
 void	error_wrong_cmd(t_ms *ms);
+
+void	cleanup(t_ms *ms);
+void	cleanup_final(t_ms *ms);
+void	close_fd(t_node *cur);
+void	free_cmd(t_node *cur);
+void	free_cmd_envp(char **cmd_envp);
 
 void	print_token(t_ms *ms);
 char	*token_kind(int k);

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/29 21:44:19 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/30 08:33:12 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	exec_child(t_ms *ms, t_node *cur)
 	execve(cmd_exe, cur->cmd, ms->cmd_envp);
 	perror(cur->cmd[0]);
 	free(cmd_exe);
-//	free(ms->cmd);//run clean up of ms->cmd (**char)
+	free_cmd(cur);
+	free_cmd_envp(ms->cmd_envp);
 	exit(EXIT_FAILURE);
 }
 
@@ -66,7 +67,7 @@ void	exec_cmd(t_ms *ms, t_node *cur)
 	if (is_builtin(cur->cmd[0]) == true)
 	{
 		ms->builtin_cmd = 1;
-		builtin(ms);
+		builtin(ms, cur);
 	}
 	else
 	{
@@ -78,10 +79,7 @@ void	exec_cmd(t_ms *ms, t_node *cur)
 		if (pid == 0)
 			exec_child(ms, cur);
 	}
-	if (cur->fd_r > 2)
-		close(cur->fd_r);
-	if (cur->fd_w[1] > 2)
-		close(cur->fd_w[1]);
-	free(cur->cmd);
+	close_fd(cur);
+	free_cmd(cur);
 	exec_parent_wait(ms);
 }
