@@ -6,13 +6,13 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/25 22:53:05 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 00:26:36 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_var_replace(t_ms *ms, int quote)
+void	replace_var(t_ms *ms, int quote)
 {
 	ms->end = 0;
 	while (ms->var_value[ms->end])
@@ -23,7 +23,7 @@ void	expand_var_replace(t_ms *ms, int quote)
 		ms->expand_var = 1;
 }
 
-int	expand_var_found_var(t_ms *ms, char *str, int i, int quote)
+int	found_var(t_ms *ms, char *str, int i, int quote)
 {
 	ms->start = ++i;
 	if (str[i] == '?')
@@ -43,7 +43,7 @@ int	expand_var_found_var(t_ms *ms, char *str, int i, int quote)
 		perror("ms->var malloc error\n");
 	ms->var_value = get_var(ms, ms->var);
 	if (ms->var_value)
-		expand_var_replace(ms, quote);
+		replace_var(ms, quote);
 	free(ms->var);
 	return (--i);
 }
@@ -63,13 +63,13 @@ void	expand_var(t_ms *ms, char *str, int i)
 			while (str[++i] != '\"')
 			{
 				if (str[i] == '$')
-					i = expand_var_found_var(ms, str, i, 1);
+					i = found_var(ms, str, i, 1);
 				else
 					ms->new_str[ms->n++] = str[i];
 			}
 		}
 		else if (str[i] == '$')
-			i = expand_var_found_var(ms, str, i, 0);
+			i = found_var(ms, str, i, 0);
 		else
 			ms->new_str[ms->n++] = str[i];
 	}

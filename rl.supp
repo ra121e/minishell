@@ -3,6 +3,4 @@
 	Memcheck:Leak
 	...
 	obj:*/libreadline.so*
-	fun:rl_malloc
-	fun:rl_free
 }

@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 20:25:17 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 21:08:45 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 00:27:51 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	expansion(t_ms *ms, t_node *cur)
 {
 	t_node	*tmp;
 
+	ms->expand_var = 0;
 	while (cur)
 	{
 		if (cur->kind == ND_COMMAND || cur->kind == ND_WORD)

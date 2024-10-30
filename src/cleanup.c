@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:24:39 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/30 05:39:43 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 00:08:31 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ void	cleanup_envp(t_ms *ms)
 {
 	int	i;
 
-	i = 0;
-	while (ms->envp[i])
+	i = -1;
+	while (ms->envp[++i])
 	{
 		free(ms->envp[i]->key);
 		free(ms->envp[i]->value);
 		free(ms->envp[i]->pair);
+		free(ms->envp[i]);
 	}
 	free(ms->envp);
 }
@@ -48,7 +49,7 @@ void	cleanup(t_ms *ms)
 
 void	cleanup_final(t_ms *ms)
 {
-	cleanup(ms);
+//	cleanup(ms);
 	cleanup_envp(ms);
 	free(ms->prompt);
 	free(ms);

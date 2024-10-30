@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:25:44 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/28 00:26:22 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 00:26:56 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ void	ft_signal(void)
 	struct sigaction	sa;
 
 	sa.sa_handler = handler;
-//	sa.sa_handler = SIG_IGN;
 	sa.sa_flags = 0;
-//	sigemptyset(&sa.sa_mask);
+	sigemptyset(&sa.sa_mask);
 	if (sigaction(SIGINT, &sa, 0) == -1)
 		perror("signal handler error");//
 	signal(SIGQUIT, SIG_IGN);
@@ -69,6 +68,7 @@ void	ft_signal_cmd(void)
 
 	sa.sa_handler = handler_cmd;
 	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
 	if (sigaction(SIGINT, &sa, 0) == -1)
 		perror("signal handler error");//
 	if (sigaction(SIGQUIT, &sa, 0) == -1)
@@ -85,6 +85,7 @@ void	ft_signal_heredoc(void)
 
 	sa.sa_handler = handler_heredoc;
 	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
 	if (sigaction(SIGINT, &sa, 0) == -1)
 		perror("signal handler heredoc error");//
 	signal(SIGQUIT, SIG_IGN);

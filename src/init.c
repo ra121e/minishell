@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 21:54:05 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 00:29:02 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,5 @@ void	init_envp(t_ms *ms, char **envp)
 		ms->envp[i]->pair = ft_strdup(envp[i]);
 		i++;
 	}
-	ms->envp[i] = malloc(sizeof(t_envp));
-	if (!ms->envp[i])
-		perror("malloc error for init_env\n");
 	ms->envp[i] = 0;
 }
