@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:19:23 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/31 15:41:25 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 19:24:00 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,16 +155,9 @@ t_node	*parser_redirect(t_token **token)
 			ft_dprintf(2, "Syntax error: Expected file name after redirect\n");
 			return (NULL);
 		}
-//		(*token)->kind = TK_HEREDOC_DELIMITER;
 		right = ast_newnode(ND_HEREDOC_DELIMITER);
 		right->str = (*token)->str;
 		node->right = right;
-		heredoc(node, right->str);
-		if (sig)
-		{
-			ft_dprintf(2, "Signal error %i\n", sig);
-			return (0);
-		}
 		return (node);
 	}
 	ft_dprintf(2, "Syntax error: Expected file name after redirect\n");

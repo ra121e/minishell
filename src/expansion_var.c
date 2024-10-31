@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 12:44:08 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 20:10:39 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,13 @@ void	expand_var(t_ms *ms, char *str, int i)
 	ms->new_str[ms->n] = 0;
 }
 
-void	expansion_var(t_ms *ms, t_node *cur)
+void	expansion_var(t_ms *ms, char *str)
 {
-	char	*tmp;
-
 	ms->len = 0;
 	ms->expand_var = 0;
-	get_new_len(ms, cur->str, -1);
+	get_new_len(ms, str, -1);
 	ms->new_str = malloc(ms->len + 1);
 	if (!ms->new_str)
 		perror("ms->new_str malloc error\n");//malloc protection
-	expand_var(ms, cur->str, -1);
-	tmp = cur->str;
-	cur->str = ms->new_str;
-	free(tmp);
-	cur = cur->right;
+	expand_var(ms, str, -1);
 }

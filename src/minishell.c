@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 12:57:05 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 20:16:55 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	main(int argc, char **argv, char **envp)
 //		print_token(ms);
 		ms->start_node = parser(&ms->head);
 //		printAST(ms->start_node, 0, 0);
-		traverse_start(ms->start_node, ms);
-//		if (!ms->sig)
-//			traverse_start(ms->start_node, ms, EXECUTE);
+		traverse_start(ms->start_node, ms, HEREDOC);
+		if (!ms->sig)
+			traverse_start(ms->start_node, ms, EXECUTE);
 //		cleanup(ms);
 	}
 	cleanup_final(ms);

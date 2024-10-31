@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 15:44:22 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 21:12:15 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define WRITE O_CREAT | O_WRONLY | O_TRUNC
 # define APPEND O_CREAT | O_WRONLY | O_APPEND
 # define IS_REDIRECT > 100
-# define INFO 0
+# define HEREDOC 0
 # define EXECUTE 1 
 
 extern int	sig;
@@ -196,11 +196,11 @@ t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);
 const char* getNodeKindName(t_node_kind kind);
 void 	printAST(t_node *node, int level, int isLeft);
-void	traverse_start(t_node *head, t_ms *ms);
-void	traverse(t_node *cur, t_ms *ms, int fd_w[2]);
-void	heredoc(t_node *node, char *delimiter);
+void	traverse_start(t_node *head, t_ms *ms, int action);
+void	traverse(t_node *cur, t_ms *ms, int fd_w[2], int action);
+void	heredoc(t_ms *ms, t_node *cur);
 void	expansion(t_ms *ms, t_node *cur);
-void	expansion_var(t_ms *ms, t_node *cur);
+void	expansion_var(t_ms *ms, char *str);
 void	get_new_len(t_ms *ms, char *str, int i);
 void	expand_var(t_ms *ms, char *str, int i);
 int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
