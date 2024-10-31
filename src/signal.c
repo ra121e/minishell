@@ -6,13 +6,13 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:25:44 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 00:26:56 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 09:57:17 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			sig;
+int	sig;
 
 void	handler(int signum)
 {
@@ -37,7 +37,7 @@ void	handler_cmd(int signum)
 	}
 	else if (sig == SIGQUIT)
 	{
-		dprintf(2, "Quit (core dumped)\n");
+		ft_dprintf(2, "Quit (core dumped)\n");
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}

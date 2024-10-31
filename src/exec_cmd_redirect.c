@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_info.c                                         :+:      :+:    :+:   */
+/*   exec_cmd_redirect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 21:21:52 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 16:21:57 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
+static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 {
+	t_node	*redirect_node;
 	int		kind;
 
+	redirect_node = *cur;
 	kind = (*cur)->kind;
 	*cur = (*cur)->right;
 	if (kind == ND_REDIRECT_IN)
 		ms->fd_r = get_filename_fd((*cur)->str, ms->fd_r, READ);
 	else if (kind == ND_REDIRECT_HEREDOC)
-		heredoc(ms, (*cur)->str);
+	{
+		ms->fd_r = redirect_node->fd_w[0];
+		fd_w[1] = redirect_node->fd_w[1];
+	}
+//		ms->fd_r = heredoc_expand(ms, redirect_node);
 	else if (kind == ND_REDIRECT_OUT || kind == ND_REDIRECT_APPEND)
 	{
 		if (fd_w)
@@ -32,9 +38,6 @@ void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 				fd_w[1] = get_filename_fd((*cur)->str, fd_w[1], APPEND);
 		}
 	}
-	ms->cmd_node->fd_r = ms->fd_r;
-	ms->cmd_node->fd_w[0] = fd_w[0];
-	ms->cmd_node->fd_w[1] = fd_w[1];
 }
 
 void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
@@ -48,9 +51,7 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 	{
 		if (cur->kind IS_REDIRECT)
 		{
-			if (cur->right->kind == ND_COMMAND || \
-					cur->right->kind == ND_HEREDOC_DELIMITER)
-				redirect(ms, &cur, fd_w);
+			redirect(ms, &cur, fd_w);
 			if (ms->cmd_error || ms->sig == 2)
 				return ;
 		}
@@ -59,21 +60,18 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 		cur = cur->right;
 	}
 	ms->cmd[i] = NULL;
-	ms->cmd_node->cmd = ms->cmd;
 }
 
-void	cmd_info(t_ms *ms, t_node *cur, int fd_w[2])
+void	redirection(t_ms *ms, t_node *cur, int fd_w[2])
 {
 	if (!fd_w)
 		fd_w = init_fd_w(ms);
-	init_cmd(ms, cur, fd_w);
+	init_cmd(ms, cur);
 	while (cur && cur->kind)
 	{
 		if (cur->kind IS_REDIRECT)
 		{
-			if (cur->right->kind == ND_COMMAND || \
-					cur->right->kind == ND_HEREDOC_DELIMITER)
-				redirect(ms, &cur, fd_w);
+			redirect(ms, &cur, fd_w);
 			if (ms->cmd_error || ms->sig == 2)
 				return ;
 		}
@@ -86,5 +84,6 @@ void	cmd_info(t_ms *ms, t_node *cur, int fd_w[2])
 		}
 		cur = cur->right;
 	}
-	ms->fd_r = fd_w[0];
+	ms->fd_w[0] = fd_w[0];
+	ms->fd_w[1] = fd_w[1];
 }

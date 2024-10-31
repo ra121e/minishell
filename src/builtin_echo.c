@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 05:18:17 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/30 08:21:04 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 15:06:49 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,34 +30,34 @@ int	is_n_opt(char *str)
 		return (0);
 }
 
-void	print_loop(t_node *cur, int n_opt, int i)
+void	print_loop(t_ms *ms, int n_opt, int i)
 {
-	while (cur->cmd[i])
+	while (ms->cmd[i])
 	{
-		dprintf(cur->fd_w[1], "%s", cur->cmd[i]);
-		if (cur->cmd[i + 1])
-			dprintf(cur->fd_w[1], " ");
+		ft_dprintf(ms->fd_w[1], "%s", ms->cmd[i]);
+		if (ms->cmd[i + 1])
+			ft_dprintf(ms->fd_w[1], " ");
 		i++;
 	}
 	if (!n_opt)
-		dprintf(cur->fd_w[1], "\n");
+		ft_dprintf(ms->fd_w[1], "\n");
 }
 
-void	builtin_echo(t_node *cur)
+void	builtin_echo(t_ms *ms)
 {
 	int	n_opt;
 	int	i;
 
-	if (!cur->cmd[1])
+	if (!ms->cmd[1])
 		return ;
-	n_opt = is_n_opt(cur->cmd[1]);
+	n_opt = is_n_opt(ms->cmd[1]);
 	i = 1;
 	if (!n_opt)
-		print_loop(cur, n_opt, i);
+		print_loop(ms, n_opt, i);
 	else
 	{
-		while (is_n_opt(cur->cmd[i]))
+		while (is_n_opt(ms->cmd[i]))
 			i++;
-		print_loop(cur, n_opt, i);
+		print_loop(ms, n_opt, i);
 	}
 }

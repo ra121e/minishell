@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 15:52:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 00:27:50 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 09:57:14 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	get_var_len(t_ms *ms, char *var)
 	{
 		var = ft_itoa(ms->exit_status);
 		if (!var)
-			dprintf(2, "$? malloc error\n");//cleanup & return to prompt
+			ft_dprintf(2, "$? malloc error\n");//cleanup & return to prompt
 		i = ft_strlen(var);
 		free(var);
 		return (i);
@@ -42,7 +42,7 @@ char	*get_var(t_ms *ms, char *var)
 	{
 		var = ft_itoa(ms->exit_status);
 		if (!var)
-			dprintf(2, "$? malloc error\n");//cleanup & return to prompt
+			ft_dprintf(2, "$? malloc error\n");//cleanup & return to prompt
 		return (var);
 	}
 	i = -1;

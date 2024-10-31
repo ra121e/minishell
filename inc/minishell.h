@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/30 23:29:38 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 15:44:22 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define IS_REDIRECT > 100
 # define INFO 0
 # define EXECUTE 1 
+
+extern int	sig;
 
 typedef enum e_token_kind t_token_kind;
 enum e_token_kind
@@ -127,11 +129,13 @@ typedef struct s_ms
 	t_node	*back;
 	int		heredoc_tmp;
 	int		info;
+	int		pipfd[2];
 	int		fd_r;
 	int		fd_w[2];
 	int		cmd_error;
 	int		builtin_cmd;
 	int		pid;
+	int		in_pipe;
 	t_node	*cmd_node;
 	char	**cmd;
 	char	**cmd_envp;
@@ -154,21 +158,14 @@ void	tokenize(t_ms *ms, t_token_kind kind);
 void	tokenize_word(t_ms *ms, char *str, int type);
 int		operator_char_count(char *str, int i);
 void	tokenize_prior_str(t_ms *ms);
-void	expansion(t_ms *ms, t_node *cur);
-void	expansion_var(t_ms *ms, t_node *cur);
-void	get_new_len(t_ms *ms, char *str, int i);
-void	expand_var(t_ms *ms, char *str, int i);
-int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
-void	expand_var_replace(t_ms *ms, int quote);
-char	*remove_quote(char *old);
 
-void	builtin(t_ms *ms, t_node *cur);
-void	builtin_echo(t_node *cur);
-void	builtin_pwd(t_node *cur);
-void	builtin_env(t_ms *ms, t_node *cur);
-void	builtin_export(t_ms *ms, t_node *cur);
-void	builtin_unset(t_ms *ms, t_node *cur);
-int		display_if_no_arg(t_ms *ms, t_node *cur);
+void	builtin(t_ms *ms);
+void	builtin_echo(t_ms *ms);
+void	builtin_pwd(t_ms *ms);
+void	builtin_env(t_ms *ms);
+void	builtin_export(t_ms *ms);
+void	builtin_unset(t_ms *ms);
+int		display_if_no_arg(t_ms *ms);
 void	export_add(t_ms *ms, t_envp **envp);
 void	update_env(t_ms *ms);
 int		get_var_len(t_ms *ms, char *var);
@@ -199,11 +196,20 @@ t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);
 const char* getNodeKindName(t_node_kind kind);
 void 	printAST(t_node *node, int level, int isLeft);
-void	traverse_start(t_node *head, t_ms *ms, int action);
-void	cmd_info(t_ms *ms, t_node *cur, int fd_w[2]);
-void	exec_cmd(t_ms *ms, t_node *cur);
-void	init_cmd(t_ms *ms, t_node *cur, int fd_w[2]);
-void	heredoc(t_ms *ms, char *delimiter);
+void	traverse_start(t_node *head, t_ms *ms);
+void	traverse(t_node *cur, t_ms *ms, int fd_w[2]);
+void	heredoc(t_node *node, char *delimiter);
+void	expansion(t_ms *ms, t_node *cur);
+void	expansion_var(t_ms *ms, t_node *cur);
+void	get_new_len(t_ms *ms, char *str, int i);
+void	expand_var(t_ms *ms, char *str, int i);
+int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
+void	expand_var_replace(t_ms *ms, int quote);
+char	*remove_quote(char *old);
+void	redirection(t_ms *ms, t_node *cur, int fd_w[2]);
+int		heredoc_expand(t_ms *ms, t_node *node);
+void	exec_cmd(t_ms *ms);
+void	init_cmd(t_ms *ms, t_node *cur);
 int		*init_fd_w(t_ms *ms);
 void	dup2_and_close(pid_t old_fd, pid_t new_fd);
 int		get_filename_fd(char *str, pid_t fd, int mode);
@@ -219,7 +225,7 @@ void	error_wrong_cmd(t_ms *ms);
 void	cleanup_envp(t_ms *ms);
 void	cleanup(t_ms *ms);
 void	cleanup_final(t_ms *ms);
-void	close_fd(t_node *cur);
+void	close_fd(t_ms *ms);
 void	free_cmd(t_node *cur);
 void	free_cmd_envp(char **cmd_envp);
 

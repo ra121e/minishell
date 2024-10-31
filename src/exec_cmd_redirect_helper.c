@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd_helper.c                                  :+:      :+:    :+:   */
+/*   cmd_info_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/29 21:15:29 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 14:48:40 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	cmd_envp(t_ms *ms)
 	ms->cmd_envp[i] = NULL;
 }
 
-void	init_cmd(t_ms *ms, t_node *cur, int fd_w[2])
+void	init_cmd(t_ms *ms, t_node *cur)
 {
 	t_node	*tmp;
 	int		i;
@@ -47,10 +47,6 @@ void	init_cmd(t_ms *ms, t_node *cur, int fd_w[2])
 	ms->exit_status = 0;
 	ms->cmd_error = 0;
 	ms->builtin_cmd = 0;
-	ms->cmd_node = cur;
-	ms->cmd_node->fd_r = ms->fd_r;
-	ms->cmd_node->fd_w[0] = fd_w[0];
-	ms->cmd_node->fd_w[1] = fd_w[1];
 }
 
 int	*init_fd_w(t_ms *ms)

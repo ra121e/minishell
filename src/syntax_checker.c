@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 22:12:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/24 22:33:35 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 09:57:17 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	syntax_check_quote(char *str)
 				i++;
 			if (!str[i])
 			{
-				dprintf(2, "Syntax error...no closing quote\n");
+				ft_dprintf(2, "Syntax error...no closing quote\n");
 				exit(1);//cleanup before exit
 			}
 		}
@@ -48,7 +48,7 @@ void	syntax_check_parenthesis(char *str)
 				i++;
 			if (!str[i])
 			{
-				dprintf(2, "Syntax error...no closing quote\n");
+				ft_dprintf(2, "Syntax error...no closing quote\n");
 				exit(1);//cleanup before exit
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 00:29:02 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 07:25:49 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init(t_ms *ms)
 	ms->key = 0;
 	ms->fd_r = 0;
 	ms->pid = 0;
+	ms->in_pipe = 0;
 	ms->sig = 0;
 	ms->prompt = ft_strsjoin(3, "\001\033[35m\002",	
 			"minishell~Powered by Honda:$", "\001\033[0m\002");

@@ -6,18 +6,18 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 08:33:50 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/30 08:33:59 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 14:54:59 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	close_fd(t_node *cur)
+void	close_fd(t_ms *ms)
 {
-	if (cur->fd_r > 2)
-		close(cur->fd_r);
-	if (cur->fd_w[1] > 2)
-		close(cur->fd_w[1]);
+	if (ms->fd_r > 2)
+		close(ms->fd_r);
+	if (ms->fd_w[1] > 2)
+		close(ms->fd_w[1]);
 }
 
 void	free_cmd(t_node *cur)

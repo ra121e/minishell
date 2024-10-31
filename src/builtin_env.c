@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:34:39 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/30 17:48:30 by xlok             ###   ########.fr       */
+/*   Updated: 2024/10/31 15:10:32 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@
  * @param[in] envp passed from main()
  */
 
-void	builtin_env(t_ms *ms, t_node *cur)
+void	builtin_env(t_ms *ms)
 {
 	int	i;
 
-	if (cur->cmd[1])
+	if (ms->cmd[1])
 	{
-		dprintf(2, "Subject requirement: env with no options or arguments\n");
+		ft_dprintf(2, "Subject requirement: env with no options or arguments\n");
 		return ;
 	}
 	i = 0;
 	while (ms->envp[i])
 	{
 		if (ms->envp[i]->value)
-			dprintf(cur->fd_w[1], "%s\n", ms->envp[i]->pair);
+			ft_dprintf(ms->fd_w[1], "%s\n", ms->envp[i]->pair);
 		i++;
 	}
 }
