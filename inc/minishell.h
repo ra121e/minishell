@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/01 08:43:20 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/01 21:42:48 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ struct s_node
 {
 	t_node_kind	kind;
 	char		*str;
-	char		**cmd;
-	int			fd_r;
 	int			fd_w[2];
 	t_node		*left;
 	t_node		*right;
@@ -226,7 +224,6 @@ void	cleanup_envp(t_ms *ms);
 void	cleanup(t_ms *ms);
 void	cleanup_final(t_ms *ms);
 void	close_fd(t_ms *ms);
-void	free_cmd(t_node *cur);
 void	free_cmd_envp(char **cmd_envp);
 
 void	print_token(t_ms *ms);

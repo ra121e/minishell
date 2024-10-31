@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 15:52:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 09:57:14 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/01 21:28:14 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,5 @@ char	*remove_quote(char *old)
 			new[j++] = old[i];
 	}
 	new[j] = 0;
-	free(old);
 	return (new);
 }

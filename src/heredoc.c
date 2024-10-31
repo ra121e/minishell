@@ -6,54 +6,55 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/01 08:47:29 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/01 22:09:54 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	heredoc_expand_child(t_ms *ms, int fd[2], char *buf)
+{
+	char	**buf_split;
+	int		i;
+
+	buf_split = ft_split(buf, '\n');
+	i = -1;
+	while (buf_split[++i])
+	{
+		ms->len = 0;
+		ms->expand_var = 0;
+		get_new_len(ms, buf_split[i], -1);
+		ms->new_str = malloc(ms->len + 1);
+		if (!ms->new_str)
+			perror("ms->new_str for heredoc malloc error\n");//malloc protection
+		expand_var(ms, buf_split[i], -1);
+		ft_dprintf(fd[1], "%s\n", ms->new_str);
+		free(buf_split[i]);
+		free(ms->new_str);
+	}
+	free(buf_split);
+	close(fd[0]);
+	close(fd[1]);
+	exit(0);
+}
+
 int	heredoc_expand(t_ms *ms, t_node *node)
 {
 	char	buf[65536];
-	char	**buf_split;
 	int		pid;
-	int		i;
-	int		fd[2];
 
-	if (*node->str == '\"' || *node->str == '\'')
-		return (node->fd_w[0]);
+	if (ft_strchr(node->right->str, '\'') || ft_strchr(node->right->str, '\"'))
+		return (close(node->fd_w[1]), node->fd_w[0]);
+	ft_memset(buf, 0, sizeof(buf));
 	if (read(node->fd_w[0], buf, sizeof(buf)) == -1)
 		perror("read error on heredoc fd");//
-	if (pipe(fd) == -1)
-		perror("pipe error for heredoc expansion");
-	close(node->fd_w[0]);
-	buf_split = ft_split(buf, '\n');
 	if ((pid = fork()) == -1)
 		perror("fork error for heredoc_expansion");
 	if (!pid)
-	{
-		i = -1;
-		while (buf_split[++i])
-		{
-			ms->len = 0;
-			ms->expand_var = 0;
-			get_new_len(ms, buf_split[i], -1);
-			ms->new_str = malloc(ms->len + 1);
-			if (!ms->new_str)
-				perror("ms->new_str for heredoc malloc error\n");//malloc protection
-			expand_var(ms, buf_split[i], -1);
-			ft_dprintf(fd[1], "%s\n", ms->new_str);
-			free(buf_split[i]);
-			free(ms->new_str);
-		}
-		ft_dprintf(fd[1], 0); 
-		close(fd[0]);
-		close(fd[1]);
-	}
+		heredoc_expand_child(ms, node->fd_w, buf);
 	waitpid(pid, 0, 0);
-	free(buf_split);
-	close(fd[1]);
-	return (fd[0]);
+	close(node->fd_w[1]);
+	return (node->fd_w[0]);
 }
 
 static void	read_loop(t_ms *ms, char *delimiter, int fd[2], int len)
@@ -108,7 +109,6 @@ void	child_loop(t_ms *ms, t_node *cur, int fd[2])
 	waitpid(pid, 0, 0);
 	cur->fd_w[0] = fd[0];
 	cur->fd_w[1] = fd[1];
-	close(fd[1]);
 }
 
 void	heredoc(t_ms *ms, t_node *cur)

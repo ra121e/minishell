@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/01 08:44:17 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/01 22:01:58 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	exec_builtin_in_child(t_ms *ms)
 	if (ms->fd_w[1] > 2)
 		dup2_and_close(ms->fd_w[1], STDOUT_FILENO);
 	builtin(ms);
-//	free_cmd(cur);
-	free_cmd_envp(ms->cmd_envp);
 	exit(EXIT_SUCCESS);
 }
 
@@ -43,8 +41,6 @@ void	exec_child(t_ms *ms)
 	execve(cmd_exe, ms->cmd, ms->cmd_envp);
 	perror(ms->cmd[0]);
 	free(cmd_exe);
-//	free_cmd(cur);
-	free_cmd_envp(ms->cmd_envp);
 	exit(EXIT_FAILURE);
 }
 
@@ -105,8 +101,6 @@ void	exec_cmd(t_ms *ms)
 	else
 		fork_process(ms);
 	close_fd(ms);
-//	free_cmd(cur);
-//	free_cmd_envp(ms->cmd_envp);
 	ms->fd_r = ms->fd_w[0];
 	exec_parent_wait(ms);
 }

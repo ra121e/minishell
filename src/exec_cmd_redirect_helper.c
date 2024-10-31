@@ -6,27 +6,11 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/01 08:43:00 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/01 22:03:19 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	cmd_envp(t_ms *ms)
-{
-	int	i;
-
-	i = 0;
-	while (ms->envp[i])
-		i++;
-	ms->cmd_envp = malloc(sizeof (char *) * (i + 1));
-	if (ms->cmd_envp == NULL)
-		return ;
-	i = -1;
-	while (ms->envp[++i])
-		ms->cmd_envp[i] = ms->envp[i]->pair;
-	ms->cmd_envp[i] = NULL;
-}
 
 void	init_cmd(t_ms *ms, t_node *cur)
 {
@@ -54,13 +38,6 @@ int	*init_fd_w(t_ms *ms)
 	ms->fd_w[0] = 0;
 	ms->fd_w[1] = 1;
 	return (ms->fd_w);
-}
-
-void	dup2_and_close(pid_t old_fd, pid_t new_fd)
-{
-	if (dup2(old_fd, new_fd) < 0)
-		error_exit("dup2 error");
-	close(old_fd);
 }
 
 int	get_filename_fd(char *str, pid_t fd, int mode)

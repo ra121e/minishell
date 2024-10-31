@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:24:39 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 00:08:31 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/01 22:03:49 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ void	cleanup(t_ms *ms)
 //	char	*prompt;
 //	char	*input;
 //	char	*token;
-//	char	*key;
-//	char	*value;
-//	char	*pair;
 //	char	*str;
 //	char	*var;
 //	char	*var_value;
@@ -43,7 +40,6 @@ void	cleanup(t_ms *ms)
 //	t_node	*start_node;
 //	t_node	*cmd_node;
 //	char	**cmd;
-//	char	**cmd_envp;
 	(void)ms;
 }
 

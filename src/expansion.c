@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 20:25:17 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 20:10:12 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/01 21:38:54 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static t_node	*newnode(char *str)
 	node->str = str;
 	node->left = NULL;
 	node->right = NULL;
-	node->cmd = 0;
-	node->fd_r = 0;
 	node->fd_w[2] = 0;
 	return (node);
 }
