@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:05:30 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/29 21:02:11 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/01 20:53:44 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ t_node	*ast_newnode(t_node_kind kind)
 	return (node);
 }
 
+void	ast_free(t_node *node)
+{
+	if (node == NULL)
+		return ;
+	ast_free(node->left);
+	ast_free(node->right);
+	free(node);
+}
 
 // ノードの種類を文字列に変換する関数
 const char* getNodeKindName(t_node_kind kind) {
