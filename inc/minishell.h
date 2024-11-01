@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/01 21:42:48 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/02 13:27:44 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void	tokenize_prior_str(t_ms *ms);
 
 void	builtin(t_ms *ms);
 void	builtin_echo(t_ms *ms);
+void	builtin_cd(t_ms *ms);
 void	builtin_pwd(t_ms *ms);
 void	builtin_env(t_ms *ms);
 void	builtin_export(t_ms *ms);

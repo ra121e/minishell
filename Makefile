@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/10/31 15:33:47 by xlok             ###   ########.fr        #
+#    Updated: 2024/11/02 13:28:09 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC_F := minishell.c \
 		 expansion_var_helper.c \
 		 builtin.c \
 		 builtin_echo.c \
+		 builtin_cd.c \
 		 builtin_pwd.c \
 		 builtin_env.c \
 		 builtin_export.c \
