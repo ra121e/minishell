@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/02 18:53:34 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/02 19:57:14 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,29 @@ static void	word_split(t_ms *ms)
 {
 	char	*str;
 	int		i;
-	int		s;
 
 	str = ms->new_str;
-	s = 0;
+	ms->start = 0;
 	i = -1;
 	while (str[++i])
 	{
-		if (str[i] == '\'')
-			while (str[++i] != '\'');
-		else if (str[i] == '\"')
-			while (str[++i] != '\"');
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			ms->c = str[i++];
+			while (str[i] != ms->c)
+				i++;
+		}
 		else if (ft_isspace(str[i]))
 		{
-			if (i > s)
-				add_cmd_arg(ms, str, s, i);
-			while (ft_isspace(str[++i]));
-			s = i;
+			if (i > ms->start)
+				add_cmd_arg(ms, str, ms->start, i);
+			i++;
+			while (ft_isspace(str[i]))
+				i++;
+			ms->start = i;
 		}
 	}
-	add_cmd_arg(ms, str, s, i);
+	add_cmd_arg(ms, str, ms->start, i);
 }
 
 void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])

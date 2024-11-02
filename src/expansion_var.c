@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/02 17:34:27 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/02 19:54:21 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,6 @@ void	expand_var(t_ms *ms, char *str, int i)
 	ms->n = 0;
 	while (str[++i])
 	{
-//		if (str[i] == '\'')
-//		{
-//			while (str[++i] != '\'')
-//				ms->new_str[ms->n++] = str[i];
-//		}
-//		else if (str[i] == '\"')
-//		{
-//			while (str[++i] != '\"')
-//			{
-//				if (str[i] == '$')
-//					i = found_var(ms, str, i);
-//				else
-//					ms->new_str[ms->n++] = str[i];
-//			}
-//		}
-//		else if (str[i] == '$')
 		if (str[i] == '$')
 			i = found_var(ms, str, i);
 		else
