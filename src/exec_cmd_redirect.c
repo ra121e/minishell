@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/01 21:49:24 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/02 13:49:54 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 {
 	int		i;
 
-	ms->cmd[0] = cur->str;
-	cur = cur->right;
-	i = 1;
+	i = 0;
 	while (cur != NULL)
 	{
 		if (cur->kind IS_REDIRECT)
