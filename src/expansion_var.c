@@ -6,24 +6,20 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 20:10:39 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/02 17:34:27 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	replace_var(t_ms *ms, int quote)
+void	replace_var(t_ms *ms)
 {
 	ms->end = 0;
 	while (ms->var_value[ms->end])
 		ms->new_str[ms->n++] = ms->var_value[ms->end++];
-	if (!ft_strncmp(ms->var, "$?", 3))
-		free(ms->var_value);
-	if (!quote)
-		ms->expand_var = 1;
 }
 
-int	found_var(t_ms *ms, char *str, int i, int quote)
+int	found_var(t_ms *ms, char *str, int i)
 {
 	ms->start = ++i;
 	if (str[i] == '?')
@@ -43,7 +39,7 @@ int	found_var(t_ms *ms, char *str, int i, int quote)
 		perror("ms->var malloc error\n");
 	ms->var_value = get_var(ms, ms->var);
 	if (ms->var_value)
-		replace_var(ms, quote);
+		replace_var(ms);
 	free(ms->var);
 	return (--i);
 }
@@ -53,23 +49,24 @@ void	expand_var(t_ms *ms, char *str, int i)
 	ms->n = 0;
 	while (str[++i])
 	{
-		if (str[i] == '\'')
-		{
-			while (str[++i] != '\'')
-				ms->new_str[ms->n++] = str[i];
-		}
-		else if (str[i] == '\"')
-		{
-			while (str[++i] != '\"')
-			{
-				if (str[i] == '$')
-					i = found_var(ms, str, i, 1);
-				else
-					ms->new_str[ms->n++] = str[i];
-			}
-		}
-		else if (str[i] == '$')
-			i = found_var(ms, str, i, 0);
+//		if (str[i] == '\'')
+//		{
+//			while (str[++i] != '\'')
+//				ms->new_str[ms->n++] = str[i];
+//		}
+//		else if (str[i] == '\"')
+//		{
+//			while (str[++i] != '\"')
+//			{
+//				if (str[i] == '$')
+//					i = found_var(ms, str, i);
+//				else
+//					ms->new_str[ms->n++] = str[i];
+//			}
+//		}
+//		else if (str[i] == '$')
+		if (str[i] == '$')
+			i = found_var(ms, str, i);
 		else
 			ms->new_str[ms->n++] = str[i];
 	}

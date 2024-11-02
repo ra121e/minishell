@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/02 13:27:44 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/02 18:54:03 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct s_ms
 	char	*var;
 	char	*var_value;
 	int		expand_var;
+	char	*old_str;
 	char	*new_str;
 	int		eq;
 	t_node	*start_node;
@@ -205,10 +206,11 @@ void	expand_var(t_ms *ms, char *str, int i);
 int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
 void	expand_var_replace(t_ms *ms, int quote);
 char	*remove_quote(char *old);
+void	add_cmd_arg(t_ms *ms, char *str, int s, int i);
 void	redirection(t_ms *ms, t_node *cur, int fd_w[2]);
 int		heredoc_expand(t_ms *ms, t_node *node);
 void	exec_cmd(t_ms *ms);
-void	init_cmd(t_ms *ms, t_node *cur);
+void	init_cmd(t_ms *ms);
 int		*init_fd_w(t_ms *ms);
 void	dup2_and_close(pid_t old_fd, pid_t new_fd);
 int		get_filename_fd(char *str, pid_t fd, int mode);

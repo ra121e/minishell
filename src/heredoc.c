@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/01 22:09:54 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/02 18:02:51 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	child_loop(t_ms *ms, t_node *cur, int fd[2])
 	waitpid(pid, 0, 0);
 	cur->fd_w[0] = fd[0];
 	cur->fd_w[1] = fd[1];
+	free(delimiter);
 }
 
 void	heredoc(t_ms *ms, t_node *cur)

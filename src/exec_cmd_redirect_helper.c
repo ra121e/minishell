@@ -6,29 +6,16 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/01 22:03:19 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/02 18:53:10 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_cmd(t_ms *ms, t_node *cur)
+void	init_cmd(t_ms *ms)
 {
-	t_node	*tmp;
-	int		i;
-
-	tmp = cur;
-	i = 0;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->right;
-	}
-	ms->cmd = malloc(sizeof(char *) * (i + 1));
-	if (!ms->cmd)
-		perror("ms->cmd malloc error");//malloc error
-	ms->cmd[0] = 0;
-	ms->exit_status = 0;
+	ms->cmd = 0;
+	ms->i = 0;
 	ms->cmd_error = 0;
 	ms->builtin_cmd = 0;
 }
@@ -38,6 +25,32 @@ int	*init_fd_w(t_ms *ms)
 	ms->fd_w[0] = 0;
 	ms->fd_w[1] = 1;
 	return (ms->fd_w);
+}
+
+static void	add_cmd_arg2(t_ms *ms, int i)
+{
+	char	**tmp;
+	int		j;
+
+	tmp = ms->cmd;
+	ms->cmd = malloc(sizeof(char *) * (i + 2));
+	if (!ms->cmd)
+		perror("malloc error for ms->cmd");
+	j = -1;
+	while (++j < i)
+		ms->cmd[j] = tmp[j];
+	ms->cmd[j++] = ms->new_str;
+	ms->cmd[j] = 0;
+	free(tmp);
+}
+
+void	add_cmd_arg(t_ms *ms, char *str, int s, int i)
+{
+	ms->new_str = ft_substr(str, s, i - s);
+	ms->old_str = ms->new_str;
+	ms->new_str = remove_quote(ms->old_str);
+	add_cmd_arg2(ms, ms->i++);
+	free(ms->old_str);
 }
 
 int	get_filename_fd(char *str, pid_t fd, int mode)

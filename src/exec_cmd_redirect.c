@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/02 13:49:54 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/02 18:53:34 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,34 @@ static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 	}
 }
 
+static void	word_split(t_ms *ms)
+{
+	char	*str;
+	int		i;
+	int		s;
+
+	str = ms->new_str;
+	s = 0;
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == '\'')
+			while (str[++i] != '\'');
+		else if (str[i] == '\"')
+			while (str[++i] != '\"');
+		else if (ft_isspace(str[i]))
+		{
+			if (i > s)
+				add_cmd_arg(ms, str, s, i);
+			while (ft_isspace(str[++i]));
+			s = i;
+		}
+	}
+	add_cmd_arg(ms, str, s, i);
+}
+
 void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 {
-	int		i;
-
-	i = 0;
 	while (cur != NULL)
 	{
 		if (cur->kind IS_REDIRECT)
@@ -52,18 +75,17 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 		else
 		{
 			expansion_var(ms, cur->str);
-			ms->cmd[i++] = ms->new_str;
+			word_split(ms);
 		}
 		cur = cur->right;
 	}
-	ms->cmd[i] = NULL;
 }
 
 void	redirection(t_ms *ms, t_node *cur, int fd_w[2])
 {
 	if (!fd_w)
 		fd_w = init_fd_w(ms);
-	init_cmd(ms, cur);
+	init_cmd(ms);
 	while (cur && cur->kind)
 	{
 		if (cur->kind IS_REDIRECT)
