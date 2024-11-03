@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 20:28:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 15:14:59 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 21:28:33 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	unset_if_found(t_ms *ms, t_envp **envp, int i)
 	{
 		if (!ft_strncmp(envp[i]->key, ms->cmd[j], ft_strlen(ms->cmd[j]) + 1))
 		{
-			free(envp[i]->key);
-			free(envp[i]->value);
-			free(envp[i]->pair);
+			free_str(envp[i]->key);
+			free_str(envp[i]->value);
+			free_str(envp[i]->pair);
 			free(envp[i]);
 			envp[i] = 0;
 			break ;

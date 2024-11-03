@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 19:24:18 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 21:15:58 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	process_flow(t_ms *ms)
 		traverse_start(ms->start_node, ms, HEREDOC);
 		if (!g_sig)
 			traverse_start(ms->start_node, ms, EXECUTE);
-//		cleanup(ms);
+		cleanup(ms);
 }
 static void	loop(t_ms *ms)
 {

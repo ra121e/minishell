@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 19:14:53 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 21:32:37 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	add_cmd_arg(t_ms *ms, char *str, int s, int i)
 	ms->new_str = remove_quote(ms->old_str);
 	add_cmd_arg2(ms, ms->i++);
 	free(ms->old_str);
+	ms->old_str = 0;
 }
 
 int	get_filename_fd(char *str, pid_t fd, int mode)

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 20:11:25 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 21:23:39 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,11 +223,12 @@ void	free_split(char **str);
 void	error_exit(char *str);
 void	error_wrong_cmd(t_ms *ms);
 
+void	free_str(char *str);
+void	free_cmd_envp(char **cmd_envp);
 void	cleanup_envp(t_ms *ms);
 void	cleanup(t_ms *ms);
 void	cleanup_final(t_ms *ms);
 void	close_fd(t_ms *ms);
-void	free_cmd_envp(char **cmd_envp);
 
 void	print_token(t_ms *ms);
 char	*token_kind(int k);

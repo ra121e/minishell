@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/03 21:10:58 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 21:37:15 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	heredoc_expand_child(t_ms *ms, int fd[2], char *buf)
 			perror("ms->new_str for heredoc malloc error\n");//malloc protection
 		expand_var(ms, buf_split[i], -1);
 		ft_dprintf(fd[1], "%s\n", ms->new_str);
-		free(buf_split[i]);
-		free(ms->new_str);
+		free_str(buf_split[i]);
+		free_str(ms->new_str);
 	}
 	free(buf_split);
 	close(fd[0]);

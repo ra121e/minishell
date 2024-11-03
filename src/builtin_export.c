@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:03:23 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 18:36:52 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 21:24:15 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	invalid(t_ms *ms)
 	{
 		ft_dprintf(2, "export: `%s': not a valid identifier\n", ms->pair);
 		ms->exit_status = 1;
-		free(ms->key);
-		free(ms->value);
-		free(ms->pair);
+		free_str(ms->key);
+		free_str(ms->value);
+		free_str(ms->pair);
 	}
 	return (invalid);
 }
