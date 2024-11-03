@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:25:44 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 15:39:47 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 16:46:42 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ void	handler_heredoc(int signum)
 	sig = signum;
 	if (sig == SIGINT)
 		rl_done = 1;
+}
+
+void	ft_signal_non(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	ft_signal(void)

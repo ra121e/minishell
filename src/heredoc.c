@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/03 15:46:09 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 17:05:38 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ static void	read_loop(char *delimiter, int fd[2], int len)
 
 void	child_loop(t_node *cur, int fd[2])
 {
+	int		status;
 	int		pid;
 	int		len;
 	char	*delimiter;
@@ -92,16 +93,20 @@ void	child_loop(t_node *cur, int fd[2])
 	len = ft_strlen(delimiter);
 	if ((pid = fork()) == -1)
 		perror("fork error for heredoc");
-//	ft_signal_heredoc();
+	ft_signal_non();
 	if (!pid)
 	{
+		rl_event_hook = check_rl_done;
+		rl_done = 0;
+		ft_signal();
 		read_loop(delimiter, fd, len);
 		close(fd[0]);
 		close(fd[1]);
-		exit(0);
+		exit(128 + sig);
 	}
-	waitpid(pid, 0, 0);
-//	ft_signal();
+	waitpid(pid, &status, 0);
+	ft_signal();
+	sig = WEXITSTATUS(status) % 128;
 	cur->fd_w[0] = fd[0];
 	cur->fd_w[1] = fd[1];
 	free(delimiter);

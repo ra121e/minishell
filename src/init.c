@@ -6,13 +6,13 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 15:44:49 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 16:37:43 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_rl_done(void)
+int	check_rl_done(void)
 {
 	return (0);
 }
