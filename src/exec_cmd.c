@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/03 18:09:15 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 19:20:34 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void	exec_parent_wait(t_ms *ms)
 		ms->exit_status = 1;
 	else if (!ms->builtin_cmd || ms->in_pipe)
 		ms->exit_status = WEXITSTATUS(status);
-	if (sig)
+	if (g_sig)
 	{
-		if (sig > 128)
-			ms->exit_status = sig;
+		if (g_sig > 128)
+			ms->exit_status = g_sig;
 		else
-			ms->exit_status = 128 + sig;
+			ms->exit_status = 128 + g_sig;
 	}
 }
 

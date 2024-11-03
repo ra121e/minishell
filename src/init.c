@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 17:11:15 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 18:48:26 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	init(t_ms *ms)
 	ms->end = 0;
 	ms->key = 0;
 	ms->pid = 0;
-	ms->prompt = ft_strsjoin(3, "\001\033[35m\002",	
-			"minishell~Powered by Honda:$", "\001\033[0m\002");
+	ms->prompt = ft_strsjoin(3, "\001\033[35m\002" \
+			, "minishell~Powered by Honda:$", "\001\033[0m\002");
 	if (!ms->prompt)
-		perror("ms->prompt malloc error");//malloc protection
+		perror("ms->prompt malloc error");
 	rl_event_hook = check_rl_done;
 }
 
@@ -53,7 +53,7 @@ void	init_envp(t_ms *ms, char **envp)
 		if (!ms->envp[i])
 			perror("malloc error for init_env\n");
 		ms->envp[i]->key = ft_substr(envp[i], 0, j);
-		ms->envp[i]->value= ft_substr(envp[i], j + 1, ft_strlen(envp[i]) - j);
+		ms->envp[i]->value = ft_substr(envp[i], j + 1, ft_strlen(envp[i]) - j);
 		ms->envp[i]->pair = ft_strdup(envp[i]);
 		i++;
 	}

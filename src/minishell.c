@@ -6,12 +6,25 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 18:13:07 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 19:24:18 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	process_flow(t_ms *ms)
+{
+		add_history(ms->input);
+		lexer(ms, ms->input);
+		free(ms->input);
+//		print_token(ms);
+		ms->start_node = parser(&ms->head);
+//		printAST(ms->start_node, 0, 0);
+		traverse_start(ms->start_node, ms, HEREDOC);
+		if (!g_sig)
+			traverse_start(ms->start_node, ms, EXECUTE);
+//		cleanup(ms);
+}
 static void	loop(t_ms *ms)
 {
 	while (1)
@@ -19,9 +32,9 @@ static void	loop(t_ms *ms)
 		init(ms);
 		ft_signal();
 		ms->input = readline(ms->prompt);
-		if (sig)
+		if (g_sig)
 		{
-			ms->exit_status = 128 + sig;
+			ms->exit_status = 128 + g_sig;
 			continue ;
 		}
 		if (!ms->input)
@@ -32,18 +45,7 @@ static void	loop(t_ms *ms)
 		else if (!*ms->input)
 			continue ;
 		else
-		{
-			add_history(ms->input);
-			lexer(ms, ms->input);
-		}
-		free(ms->input);
-//		print_token(ms);
-		ms->start_node = parser(&ms->head);
-//		printAST(ms->start_node, 0, 0);
-		traverse_start(ms->start_node, ms, HEREDOC);
-		if (!sig)
-			traverse_start(ms->start_node, ms, EXECUTE);
-//		cleanup(ms);
+			process_flow(ms);
 	}
 }
 

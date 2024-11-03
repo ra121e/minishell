@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/03 18:02:01 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 21:10:58 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	heredoc_expand(t_ms *ms, t_node *node)
 	ft_memset(buf, 0, sizeof(buf));
 	if (read(node->fd_w[0], buf, sizeof(buf)) == -1)
 		perror("read error on heredoc fd");//
-	if ((pid = fork()) == -1)
+	pid = fork();
+	if (pid == -1)
 		perror("fork error for heredoc_expansion");
 	if (!pid)
 		heredoc_expand_child(ms, node->fd_w, buf);
@@ -64,7 +65,7 @@ static void	read_loop(char *delimiter, int fd[2], int len)
 	while (1)
 	{
 		input = readline("> ");
-		if (sig == 2)
+		if (g_sig == 2)
 			return ;
 		if (!input)
 		{
@@ -80,42 +81,41 @@ static void	read_loop(char *delimiter, int fd[2], int len)
 	free(input);
 }
 
-void	child_loop(t_node *cur, int fd[2])
+void	child_loop(t_ms *ms, t_node *cur, int fd[2])
 {
-	int		status;
-	int		pid;
 	char	*delimiter;
 
 	if (pipe(fd) == -1)
 		perror("pipe error for heredoc");
 	delimiter = remove_quote(cur->right->str);
-	if ((pid = fork()) == -1)
+	ms->pid = fork();
+	if (ms->pid == -1)
 		perror("fork error for heredoc");
 	ft_signal_non();
-	if (!pid)
+	if (!ms->pid)
 	{
 		ft_signal();
 		read_loop(delimiter, fd, ft_strlen(delimiter));
 		close(fd[0]);
 		close(fd[1]);
-		exit(128 + sig);
+		exit(128 + g_sig);
 	}
-	waitpid(pid, &status, 0);
+	waitpid(ms->pid, &ms->pid_status, 0);
 	ft_signal();
-	sig = WEXITSTATUS(status) % 128;
+	g_sig = WEXITSTATUS(ms->pid_status) % 128;
 	cur->fd_w[0] = fd[0];
 	cur->fd_w[1] = fd[1];
 	free(delimiter);
 }
 
-void	heredoc(t_node *cur)
+void	heredoc(t_ms *ms, t_node *cur)
 {
 	int		fd[2];
 
 	while (cur && cur->kind)
 	{
 		if (cur->kind == ND_REDIRECT_HEREDOC)
-			child_loop(cur, fd);
+			child_loop(ms, cur, fd);
 		cur = cur->right;
 	}
 }

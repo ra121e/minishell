@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:03:23 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 13:36:39 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 18:36:52 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	update_if_valid(t_ms *ms, char *str)
 		ms->pair = ft_strdup(str);
 	}
 	if (invalid(ms))
-		return (1) ;
+		return (1);
 	update_env(ms);
 	return (0);
 }

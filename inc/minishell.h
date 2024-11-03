@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 18:23:44 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 20:11:25 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ struct s_node
 	t_node		*next;
 };
 
-extern int	sig;
+extern int	g_sig;
 
 typedef struct s_ms
 {
@@ -133,6 +133,7 @@ typedef struct s_ms
 	int		cmd_error;
 	int		builtin_cmd;
 	int		pid;
+	int		pid_status;
 	int		in_pipe;
 	t_node	*cmd_node;
 	char	**cmd;
@@ -197,7 +198,7 @@ const char* getNodeKindName(t_node_kind kind);
 void 	printAST(t_node *node, int level, int isLeft);
 void	traverse_start(t_node *head, t_ms *ms, int action);
 void	traverse(t_node *cur, t_ms *ms, int fd_w[2], int action);
-void	heredoc(t_node *cur);
+void	heredoc(t_ms *ms, t_node *cur);
 void	expansion(t_ms *ms, t_node *cur);
 void	expansion_var(t_ms *ms, char *str);
 void	get_new_len(t_ms *ms, char *str, int i);

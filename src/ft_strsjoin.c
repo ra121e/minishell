@@ -6,13 +6,13 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 21:12:42 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/20 13:17:22 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 18:43:13 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	reslen(int count, va_list ap) 
+int	reslen(int count, va_list ap)
 {
 	char	*str;
 	int		res_len;

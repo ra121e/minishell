@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:34:39 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/03 11:40:02 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 18:36:33 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	builtin_env(t_ms *ms)
 	if (ms->cmd[1])
 	{
 		ft_dprintf(2, "Subject requirement: env with no options or arguments\n");
+		ms->exit_status = 2;
 		return ;
 	}
 	i = 0;
