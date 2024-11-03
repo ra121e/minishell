@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 16:37:43 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 17:11:15 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	init(t_ms *ms)
 	if (!ms->prompt)
 		perror("ms->prompt malloc error");//malloc protection
 	rl_event_hook = check_rl_done;
-	rl_done = 0;
 }
 
 void	init_envp(t_ms *ms, char **envp)

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:25:44 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 16:46:42 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 17:09:33 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,6 @@ void	handler_cmd(int signum)
 		rl_redisplay();
 	}
 	rl_done = 1;
-}
-
-void	handler_heredoc(int signum)
-{
-	sig = signum;
-	if (sig == SIGINT)
-		rl_done = 1;
 }
 
 void	ft_signal_non(void)
@@ -78,16 +71,3 @@ void	ft_signal_cmd(void)
 	if (sigaction(SIGQUIT, &sa, 0) == -1)
 		perror("signal handler error");//
 }
-
-//void	ft_signal_heredoc(void)
-//{
-//	struct sigaction	sa;
-//
-//	sig = 0;
-//	sa.sa_handler = handler_heredoc;
-//	sa.sa_flags = 0;
-//	sigemptyset(&sa.sa_mask);
-//	if (sigaction(SIGINT, &sa, 0) == -1)
-//		perror("signal handler heredoc error");//
-//	signal(SIGQUIT, SIG_IGN);
-//}

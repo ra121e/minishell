@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 16:37:56 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 18:23:44 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,6 @@ void	ft_signal(void);
 void	ft_signal_non(void);
 void	ft_signal_heredoc(void);
 void	ft_signal_cmd(void);
-
-int		check_rl_done(void);
 
 t_node	*parser(t_token **token);
 t_node	*parser_expr(t_token **token);

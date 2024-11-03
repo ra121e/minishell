@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/03 15:07:14 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 18:09:15 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ void	exec_parent_wait(t_ms *ms)
 		else
 			ms->exit_status = 128 + sig;
 	}
-	printf("sig: %d\n", sig);
-	printf("&status: %d\n", status);
-	printf("ms->exit_status: %d\n", ms->exit_status);
 }
 
 void	fork_process(t_ms *ms)
@@ -85,8 +82,6 @@ void	fork_process(t_ms *ms)
 
 void	exec_cmd(t_ms *ms)
 {
-	if (sig)
-		ms->exit_status = 128 + sig;
 	cmd_envp(ms);
 	if (is_builtin(ms->cmd[0]) == true)
 	{
@@ -98,7 +93,10 @@ void	exec_cmd(t_ms *ms)
 	}
 	else
 		fork_process(ms);
-	close_fd(ms);
+	if (ms->fd_r > 2)
+		close(ms->fd_r);
+	if (ms->fd_w[1] > 2)
+		close(ms->fd_w[1]);
 	ms->fd_r = ms->fd_w[0];
 	exec_parent_wait(ms);
 }

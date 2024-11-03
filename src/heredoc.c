@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/03 17:05:38 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 18:02:01 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,18 @@ void	child_loop(t_node *cur, int fd[2])
 {
 	int		status;
 	int		pid;
-	int		len;
 	char	*delimiter;
 
 	if (pipe(fd) == -1)
 		perror("pipe error for heredoc");
 	delimiter = remove_quote(cur->right->str);
-	len = ft_strlen(delimiter);
 	if ((pid = fork()) == -1)
 		perror("fork error for heredoc");
 	ft_signal_non();
 	if (!pid)
 	{
-		rl_event_hook = check_rl_done;
-		rl_done = 0;
 		ft_signal();
-		read_loop(delimiter, fd, len);
+		read_loop(delimiter, fd, ft_strlen(delimiter));
 		close(fd[0]);
 		close(fd[1]);
 		exit(128 + sig);
