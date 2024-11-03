@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
+/*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 06:24:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/02 13:27:13 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/02 20:39:07 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	builtin(t_ms *ms)
 		builtin_unset(ms);
 	else if (!ft_strncmp(ms->cmd[0], "env", 4))
 		builtin_env(ms);
-//	else if (!ft_strncmp(ms->cmd[0], "exit", 5))
-//		builtin_exit(ms);
+	else if (!ft_strncmp(ms->cmd[0], "exit", 5))
+		builtin_exit(ms);
 }
