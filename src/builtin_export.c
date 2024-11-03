@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:03:23 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 15:11:15 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 13:36:39 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_export(t_ms *ms)
 	ms->pair = 0;
 }
 
-void	update_if_valid(t_ms *ms, char *str)
+int	update_if_valid(t_ms *ms, char *str)
 {
 	int	i;
 
@@ -72,17 +72,20 @@ void	update_if_valid(t_ms *ms, char *str)
 		ms->pair = ft_strdup(str);
 	}
 	if (invalid(ms))
-		return ;
+		return (1) ;
 	update_env(ms);
+	return (0);
 }
 
 void	builtin_export(t_ms *ms)
 {
+	int	exit_status;
 	int	i;
 
 	if (display_if_no_arg(ms))
 		return ;
 	i = 0;
 	while (ms->cmd[++i])
-		update_if_valid(ms, ms->cmd[i]);
+		exit_status = update_if_valid(ms, ms->cmd[i]);
+	ms->exit_status = exit_status;
 }

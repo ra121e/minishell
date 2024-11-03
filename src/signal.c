@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:25:44 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 09:57:17 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 15:39:47 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,7 @@ void	handler(int signum)
 {
 	sig = signum;
 	if (sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
+		rl_done = 1;
 }
 
 void	handler_cmd(int signum)
@@ -41,6 +36,7 @@ void	handler_cmd(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	rl_done = 1;
 }
 
 void	handler_heredoc(int signum)
@@ -54,6 +50,7 @@ void	ft_signal(void)
 {
 	struct sigaction	sa;
 
+	sig = 0;
 	sa.sa_handler = handler;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
@@ -66,6 +63,7 @@ void	ft_signal_cmd(void)
 {
 	struct sigaction	sa;
 
+	sig = 0;
 	sa.sa_handler = handler_cmd;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
@@ -74,20 +72,16 @@ void	ft_signal_cmd(void)
 	if (sigaction(SIGQUIT, &sa, 0) == -1)
 		perror("signal handler error");//
 }
-int	check_rl_done(void)
-{
-	return (0);
-}
 
-void	ft_signal_heredoc(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = handler_heredoc;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	if (sigaction(SIGINT, &sa, 0) == -1)
-		perror("signal handler heredoc error");//
-	signal(SIGQUIT, SIG_IGN);
-	rl_event_hook = check_rl_done;
-}
+//void	ft_signal_heredoc(void)
+//{
+//	struct sigaction	sa;
+//
+//	sig = 0;
+//	sa.sa_handler = handler_heredoc;
+//	sa.sa_flags = 0;
+//	sigemptyset(&sa.sa_mask);
+//	if (sigaction(SIGINT, &sa, 0) == -1)
+//		perror("signal handler heredoc error");//
+//	signal(SIGQUIT, SIG_IGN);
+//}

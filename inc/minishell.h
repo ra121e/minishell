@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/02 18:54:03 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 11:16:06 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ typedef struct s_ms
 	t_node	*tmp_node;
 	t_node	*front;
 	t_node	*back;
-	int		heredoc_tmp;
 	int		info;
 	int		pipfd[2];
 	int		fd_r;
@@ -172,9 +171,9 @@ int		get_var_len(t_ms *ms, char *var);
 char	*get_var(t_ms *ms, char *var);
 
 void	ft_signal(void);
+void	ft_signal_non(void);
 void	ft_signal_heredoc(void);
 void	ft_signal_cmd(void);
-void	ft_signal_int_ign(void);
 
 t_node	*parser(t_token **token);
 t_node	*parser_expr(t_token **token);
@@ -198,7 +197,7 @@ const char* getNodeKindName(t_node_kind kind);
 void 	printAST(t_node *node, int level, int isLeft);
 void	traverse_start(t_node *head, t_ms *ms, int action);
 void	traverse(t_node *cur, t_ms *ms, int fd_w[2], int action);
-void	heredoc(t_ms *ms, t_node *cur);
+void	heredoc(t_node *cur);
 void	expansion(t_ms *ms, t_node *cur);
 void	expansion_var(t_ms *ms, char *str);
 void	get_new_len(t_ms *ms, char *str, int i);

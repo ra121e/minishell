@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/02 18:02:51 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 15:46:09 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,15 @@ int	heredoc_expand(t_ms *ms, t_node *node)
 	return (node->fd_w[0]);
 }
 
-static void	read_loop(t_ms *ms, char *delimiter, int fd[2], int len)
+static void	read_loop(char *delimiter, int fd[2], int len)
 {
 	char	*input;
 
 	while (1)
 	{
-		input = readline(">");
+		input = readline("> ");
 		if (sig == 2)
-		{
-			ms->sig = sig;
-			ms->exit_status = 128 + sig;
-			sig = 0;
-			break ;
-		}
+			return ;
 		if (!input)
 		{
 			ft_dprintf(2, "minishell: warning: here-document delimited \
@@ -85,7 +80,7 @@ static void	read_loop(t_ms *ms, char *delimiter, int fd[2], int len)
 	free(input);
 }
 
-void	child_loop(t_ms *ms, t_node *cur, int fd[2])
+void	child_loop(t_node *cur, int fd[2])
 {
 	int		pid;
 	int		len;
@@ -97,29 +92,29 @@ void	child_loop(t_ms *ms, t_node *cur, int fd[2])
 	len = ft_strlen(delimiter);
 	if ((pid = fork()) == -1)
 		perror("fork error for heredoc");
+//	ft_signal_heredoc();
 	if (!pid)
 	{
-		ft_signal_heredoc();
-		read_loop(ms, delimiter, fd, len);
-		ft_signal();
+		read_loop(delimiter, fd, len);
 		close(fd[0]);
 		close(fd[1]);
 		exit(0);
 	}
 	waitpid(pid, 0, 0);
+//	ft_signal();
 	cur->fd_w[0] = fd[0];
 	cur->fd_w[1] = fd[1];
 	free(delimiter);
 }
 
-void	heredoc(t_ms *ms, t_node *cur)
+void	heredoc(t_node *cur)
 {
 	int		fd[2];
 
 	while (cur && cur->kind)
 	{
 		if (cur->kind == ND_REDIRECT_HEREDOC)
-			child_loop(ms, cur, fd);
+			child_loop(cur, fd);
 		cur = cur->right;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:16:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/02 19:10:03 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/03 15:00:13 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	traverse_cmd(t_node *cur, t_ms *ms, int fd_w[2], int action)
 {
 	if (action == HEREDOC)
-		heredoc(ms, cur);
+		heredoc(cur);
 	else
 	{
 		redirection(ms, cur, fd_w);
-		if (ms->cmd[0])
+		if (ms->cmd[0] && !sig)
 			exec_cmd(ms);
 	}
 }
@@ -30,14 +30,14 @@ void	traverse_continue(t_node *cur, t_ms *ms, int fd_w[2], int action)
 	{
 		traverse(cur->left, ms, fd_w, action);
 		ms->in_pipe = 0;
-		if (!ms->exit_status && ms->sig == 0)
+		if (!ms->exit_status && sig == 0)
 			traverse(cur->right, ms, fd_w, action);
 	}
 	else if (cur->kind == ND_OR)
 	{
 		traverse(cur->left, ms, fd_w, action);
 		ms->in_pipe = 0;
-		if (ms->exit_status && ms->sig == 0)
+		if (ms->exit_status && sig == 0)
 			traverse(cur->right, ms, fd_w, action);
 	}
 	else
