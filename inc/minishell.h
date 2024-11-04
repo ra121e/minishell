@@ -31,7 +31,7 @@
 # define APPEND O_CREAT | O_WRONLY | O_APPEND
 # define IS_REDIRECT > 100
 # define HEREDOC 0
-# define EXECUTE 1 
+# define EXECUTE 1
 
 extern int	sig;
 
@@ -165,6 +165,7 @@ void	builtin_pwd(t_ms *ms);
 void	builtin_env(t_ms *ms);
 void	builtin_export(t_ms *ms);
 void	builtin_unset(t_ms *ms);
+void	builtin_exit(t_ms *ms);
 int		display_if_no_arg(t_ms *ms);
 void	export_add(t_ms *ms, t_envp **envp);
 void	update_env(t_ms *ms);
