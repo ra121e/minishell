@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:24:39 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 22:07:02 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 19:04:06 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,6 @@ void	cleanup_envp(t_ms *ms)
 	ms->envp = 0;
 }
 
-void	cleanup_str(char *str)
-{
-	if (str)
-	{
-		free(str);
-		str = 0;
-	}
-}
-
-void	cleanup_str2(char **str)
-{
-	if (*str)
-	{
-		free(*str);
-		str = 0;
-	}
-}
-
 void	cleanup_str_array(char **str)
 {
 	int	i;
@@ -73,18 +55,18 @@ void	cleanup(t_ms *ms)
 	(void)ms;
 //	t_token	*head;
 //	char	*token;
-	cleanup_str_array(ms->cmd);
-	cleanup_str2(&ms->str);
-	cleanup_str2(&ms->old_str);
+	if (ms->cmd)
+		cleanup_str_array(ms->cmd);
+	if (ms->str)
+		free_str(ms->str);
+	if (ms->old_str)
+		free_str(ms->old_str);
 //	t_node	*start_node;
-//	t_node	*tmp_node;
-//	t_node	*front;
-//	t_node	*back;
 }
 
 void	cleanup_final(t_ms *ms)
 {
-//	cleanup(ms);
+	cleanup(ms);
 	cleanup_envp(ms);
 	free(ms->prompt);
 	free(ms);

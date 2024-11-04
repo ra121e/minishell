@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 21:23:39 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 19:03:59 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,6 @@ typedef struct s_ms
 	char	*new_str;
 	int		eq;
 	t_node	*start_node;
-	t_node	*tmp_node;
-	t_node	*front;
-	t_node	*back;
 	int		info;
 	int		pipfd[2];
 	int		fd_r;
@@ -135,7 +132,6 @@ typedef struct s_ms
 	int		pid;
 	int		pid_status;
 	int		in_pipe;
-	t_node	*cmd_node;
 	char	**cmd;
 	char	**cmd_envp;
 	int		exit_status;

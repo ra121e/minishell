@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 21:15:58 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 19:11:52 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ static void	loop(t_ms *ms)
 			ft_dprintf(2, "exit\n");
 			break ;
 		}
-		else if (!*ms->input)
-			continue ;
 		else
 			process_flow(ms);
 	}
@@ -60,6 +58,10 @@ int	main(int argc, char **argv, char **envp)
 	if (!ms)
 		perror("ms malloc error");//malloc protection
 	init_envp(ms, envp);
+	ms->prompt = ft_strsjoin(3, "\001\033[35m\002" \
+			, "minishell~Powered by Honda:$", "\001\033[0m\002");
+	if (!ms->prompt)
+		perror("ms->prompt malloc error");
 	loop(ms);
 	cleanup_final(ms);
 }
