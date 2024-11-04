@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/04 21:36:55 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 06:08:16 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	loop(t_ms *ms)
 {
 	while (1)
 	{
-		init(ms);
+		init_loop(ms);
 		ft_signal();
 		ms->input = readline(ms->prompt);
 		if (g_sig)
@@ -59,11 +59,7 @@ int	main(int argc, char **argv, char **envp)
 	ms = malloc(sizeof(t_ms));
 	if (!ms)
 		perror("ms malloc error");//malloc protection
-	init_envp(ms, envp);
-	ms->prompt = ft_strsjoin(3, "\001\033[35m\002" \
-			, "minishell~Powered by Honda:$", "\001\033[0m\002");
-	if (!ms->prompt)
-		perror("ms->prompt malloc error");
+	init(ms, envp);
 	loop(ms);
 	cleanup_final(ms);
 }
