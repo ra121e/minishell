@@ -6,13 +6,13 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/03 21:37:15 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 20:10:08 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	heredoc_expand_child(t_ms *ms, int fd[2], char *buf)
+static void	heredoc_expand_child(t_ms *ms, char *delimiter, int fd[2], char *buf)
 {
 	char	**buf_split;
 	int		i;
@@ -23,12 +23,15 @@ static void	heredoc_expand_child(t_ms *ms, int fd[2], char *buf)
 	{
 		ms->len = 0;
 		ms->expand_var = 0;
-		get_new_len(ms, buf_split[i], -1);
+		get_new_len_heredoc(ms, buf_split[i], -1);
 		ms->new_str = malloc(ms->len + 1);
 		if (!ms->new_str)
 			perror("ms->new_str for heredoc malloc error\n");//malloc protection
 		expand_var(ms, buf_split[i], -1);
-		ft_dprintf(fd[1], "%s\n", ms->new_str);
+		if (ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '\"'))
+			ft_dprintf(fd[1], "%s\n", buf_split[i]);
+		else
+			ft_dprintf(fd[1], "%s\n", ms->new_str);
 		free_str(buf_split[i]);
 		free_str(ms->new_str);
 	}
@@ -43,8 +46,6 @@ int	heredoc_expand(t_ms *ms, t_node *node)
 	char	buf[65536];
 	int		pid;
 
-	if (ft_strchr(node->right->str, '\'') || ft_strchr(node->right->str, '\"'))
-		return (close(node->fd_w[1]), node->fd_w[0]);
 	ft_memset(buf, 0, sizeof(buf));
 	if (read(node->fd_w[0], buf, sizeof(buf)) == -1)
 		perror("read error on heredoc fd");//
@@ -52,7 +53,7 @@ int	heredoc_expand(t_ms *ms, t_node *node)
 	if (pid == -1)
 		perror("fork error for heredoc_expansion");
 	if (!pid)
-		heredoc_expand_child(ms, node->fd_w, buf);
+		heredoc_expand_child(ms, node->right->str, node->fd_w, buf);
 	waitpid(pid, 0, 0);
 	close(node->fd_w[1]);
 	return (node->fd_w[0]);
