@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/04 20:28:23 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 20:51:34 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,8 @@ typedef struct s_token t_token;
 struct s_token
 {
 	t_token_kind	kind;
-	t_token			*next;
-	int				val;
 	char			*str;
+	t_token			*next;
 };
 
 typedef struct s_envp t_envp;
@@ -93,7 +92,6 @@ struct s_node
 	int			fd_w[2];
 	t_node		*left;
 	t_node		*right;
-	t_node		*next;
 };
 
 extern int	g_sig;
