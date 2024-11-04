@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:24:39 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/04 19:04:06 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 23:49:12 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	cleanup_envp(t_ms *ms)
 	ms->envp = 0;
 }
 
-void	cleanup_str_array(char **str)
+void	free_str_array(char **str)
 {
 	int	i;
 
@@ -50,23 +50,32 @@ void	cleanup_str_array(char **str)
 	str = 0;
 }
 
+void	free_token(t_ms *ms)
+{
+	t_token	*tmp;
+
+	while (ms->head)
+	{
+		tmp = ms->head;
+		if (ms->head->str)
+			free(ms->head->str);
+		ms->head = ms->head->next;
+		free(tmp);
+	}
+}
 void	cleanup(t_ms *ms)
 {
-	(void)ms;
 //	t_token	*head;
 //	char	*token;
-	if (ms->cmd)
-		cleanup_str_array(ms->cmd);
-	if (ms->str)
-		free_str(ms->str);
-	if (ms->old_str)
-		free_str(ms->old_str);
-//	t_node	*start_node;
+	if (ms->head)
+		free_token(ms);
+	if (ms->start_node)
+		ast_free(ms->start_node);
 }
 
 void	cleanup_final(t_ms *ms)
 {
-	cleanup(ms);
+//	cleanup(ms);
 	cleanup_envp(ms);
 	free(ms->prompt);
 	free(ms);

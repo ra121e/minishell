@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/04 20:29:08 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 21:44:20 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,5 @@ void	exec_cmd(t_ms *ms)
 		close(ms->fd_w[1]);
 	ms->fd_r = ms->fd_w[0];
 	exec_parent_wait(ms);
+	free(ms->cmd_envp);
 }

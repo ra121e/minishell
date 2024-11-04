@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/04 20:28:46 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 21:36:55 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ static void	process_flow(t_ms *ms)
 		if (g_sig)
 			ms->exit_status = 128 + g_sig;
 		else
-		{
 			traverse_start(ms->start_node, ms, EXECUTE);
-			cleanup(ms);
-		}
 }
 static void	loop(t_ms *ms)
 {
@@ -48,6 +45,7 @@ static void	loop(t_ms *ms)
 		}
 		else
 			process_flow(ms);
+		cleanup(ms);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/04 18:13:09 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 23:29:19 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	init(t_ms *ms)
 	ms->fd_r = 0;
 	ms->cmd = 0;
 	ms->str = 0;
-	ms->old_str = 0;
 	rl_event_hook = check_rl_done;
 }
 

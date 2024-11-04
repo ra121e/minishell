@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/04 21:02:13 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 23:29:41 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ typedef struct s_ms
 	char	*var;
 	char	*var_value;
 	int		expand_var;
-	char	*old_str;
 	char	*new_str;
 	int		eq;
 	t_node	*start_node;
@@ -215,9 +214,11 @@ void	error_exit(char *str);
 void	error_wrong_cmd(t_ms *ms);
 
 void	free_str(char *str);
+void	free_str_array(char **str);
 void	free_cmd_envp(char **cmd_envp);
-void	cleanup_envp(t_ms *ms);
+void	ast_free(t_node *node);
 void	cleanup(t_ms *ms);
+void	cleanup_envp(t_ms *ms);
 void	cleanup_final(t_ms *ms);
 void	close_fd(t_ms *ms);
 

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:05:30 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/02 13:25:02 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 21:34:27 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ast_free(t_node *node)
 	ast_free(node->left);
 	ast_free(node->right);
 	free(node);
+	node = 0;
 }
 
 // ノードの種類を文字列に変換する関数
