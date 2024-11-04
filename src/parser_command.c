@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:17:20 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/31 09:37:57 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 21:19:06 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,11 @@
 t_node	*parser_command(t_token **token)
 {
 	t_node	*node;
-//	t_token	*next;
 	t_node	*right;
 
 	if (!*token || (*token)->kind == TK_EOF)
-//	if (*token == NULL)
 		return (NULL);
-	if ((*token)->kind == TK_LPAREN)
+	if ((*token)->kind == TK_LPAREN || (*token)->kind == TK_RPAREN)
 	{
 		node = parser_subshell(token);
 		if (!node)
@@ -65,6 +63,8 @@ t_node	*parser_cmd_re(t_token **token)
 	if (node == NULL)
 		return (NULL);
 	right = parser_cmd_right(token);
+	if (right && right->error == true)
+		node->error = true;
 	node->right = right;
 
 	return (node);
@@ -88,6 +88,8 @@ t_node	*parser_cmd_right(t_token **token)
 	|| (*token)->kind == TK_REDIRECT_HEREDOC || (*token)->kind == TK_REDIRECT_APPEND)
 	{
 		node = parser_cmd(token);
+		if (node == NULL)
+			return (NULL);
 		right = parser_cmd_right(token);
 		node->right = right;
 		return (node);

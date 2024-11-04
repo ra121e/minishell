@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 21:23:39 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 20:30:10 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ struct s_node
 	t_node		*left;
 	t_node		*right;
 	t_node		*next;
+	bool		error;
 };
 
 extern int	g_sig;
@@ -188,6 +189,9 @@ t_node	*parser_redirect(t_token **token);
 t_node	*parser_cmd_re(t_token **token);
 t_node	*parser_cmd_right(t_token **token);
 t_node	*parser_cmd(t_token **token);
+int		is_error_and_or(t_token *token);
+int		is_error_eof(t_token *token);
+int		is_error_pipe(t_token *token);
 void	error_expr(t_token *token);
 void	error_right(t_token *token);
 void	error_pip(t_token *token);
@@ -195,6 +199,7 @@ void	error_subshell(t_token *token);
 
 t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);
+void	ast_set_str_left(t_node *node, t_token **token, t_node *left);
 const char* getNodeKindName(t_node_kind kind);
 void 	printAST(t_node *node, int level, int isLeft);
 void	traverse_start(t_node *head, t_ms *ms, int action);

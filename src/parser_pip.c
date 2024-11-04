@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:16:23 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/23 11:00:46 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/04 21:57:15 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,56 +25,23 @@
 t_node	*parser_pip(t_token **token)
 {
 	t_node	*left;
-	t_node	*right;
 	t_node	*node;
 
-	if ((*token)->kind == TK_PIPE)
-	{
-		error_pip(*token);
+	if (is_error_pipe(*token))
 		return (NULL);
-	}
-	else
-		left = parser_command(token);
+	left = parser_command(token);
 	while (1)
 	{
 		if ((*token)->kind == TK_PIPE)
-		{
 			node = ast_newnode(ND_PIPE);
-			node->left = left;
-			*token = (*token)->next;
-			if ((*token)->kind == TK_EOF)
-			{
-				error_right(*token);
-				return (NULL);
-			}
-			right = parser_command(token);
-			if (right == NULL)
-				return (NULL);
-			node->right = right;
-			node->str = "|";
-			left = node;
-		}
 		else
 			return (left);
+		ast_set_str_left(node, token, left);
+		if (is_error_eof(*token) || is_error_pipe(*token))
+			return (NULL);
+		node->right = parser_expr(token);
+		if (node->right == NULL)
+			return (NULL);
+		left = node;
 	}
 }
-
-/*
-t_node	*parser_pip(t_token **token)
-{
-	t_node	*left;
-	t_node	*node;
-
-	left = parser_command(token);
-	if ((*token)->kind == TK_PIPE)
-	{
-		node = ast_newnode(ND_PIPE);
-		*token = (*token)->next;
-		node->left = left;
-		node->right = parser_pip(token);
-		node->str = "|";
-		return (node);
-	}
-	return (left);
-}
-*/

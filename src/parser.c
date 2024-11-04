@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:11:36 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/31 09:57:16 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 21:58:07 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,24 +79,3 @@ t_node	*parser(t_token **token)
 
 	return (node);
 }
-
-/*
-t_node	*parser_cmd2(t_token *token)
-{
-	t_node	*node;
-	t_token	*next;
-
-	node = ast_newnode(ND_COMMAND);
-	if (token->kind != TK_WORD)
-	{
-		ft_dprintf(2, "Syntax error: need command\n");
-		exit(1);
-	}
-	node->cmd_name = ft_strdup(token->str);
-	next = next_token(token);
-	while (next->kind == TK_WORD)
-	{
-
-	}
-}
-*/

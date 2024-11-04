@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
+/*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 18:48:26 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 17:47:14 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init(t_ms *ms)
 	ms->end = 0;
 	ms->key = 0;
 	ms->pid = 0;
+	ms->fd_r = 0;
 	ms->prompt = ft_strsjoin(3, "\001\033[35m\002" \
 			, "minishell~Powered by Honda:$", "\001\033[0m\002");
 	if (!ms->prompt)
