@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 19:18:47 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 19:20:08 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 		if (cur->kind IS_REDIRECT)
 		{
 			redirect(ms, &cur, fd_w);
-			if (ms->cmd_error || g_sig == 2)
+			if (g_sig == 2)
 				return ;
 		}
 		else
@@ -94,14 +94,12 @@ void	redirection(t_ms *ms, t_node *cur, int fd_w[2])
 		if (cur->kind IS_REDIRECT)
 		{
 			redirect(ms, &cur, fd_w);
-			if (ms->cmd_error || g_sig == 2)
+			if (g_sig == 2)
 				return ;
 		}
 		else
 		{
 			cmd_found(ms, cur, fd_w);
-			if (ms->cmd_error)
-				return ;
 			break ;
 		}
 		cur = cur->right;

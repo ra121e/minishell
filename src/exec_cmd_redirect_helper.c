@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/04 17:42:57 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 19:18:36 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	init_cmd(t_ms *ms)
 {
 	ms->cmd = 0;
 	ms->i = 0;
-	ms->cmd_error = 0;
 	ms->builtin_cmd = 0;
 }
 
