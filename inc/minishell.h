@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/04 20:51:34 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 21:02:13 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define HEREDOC 0
 # define EXECUTE 1
 
-extern int	sig;
+extern int	g_sig;
 
 typedef enum e_token_kind t_token_kind;
 enum e_token_kind
@@ -93,8 +93,6 @@ struct s_node
 	t_node		*left;
 	t_node		*right;
 };
-
-extern int	g_sig;
 
 typedef struct s_ms
 {
