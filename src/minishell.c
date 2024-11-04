@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 06:08:16 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 06:42:23 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void	process_flow(t_ms *ms)
 		free(ms->input);
 //		print_token(ms);
 		ms->start_node = parser(&ms->head);
+		if (ms->start_node == NULL)
+			return ;
 //		printAST(ms->start_node, 0, 0);
 		traverse_start(ms->start_node, ms, HEREDOC);
 		if (g_sig)
@@ -26,6 +28,7 @@ static void	process_flow(t_ms *ms)
 		else
 			traverse_start(ms->start_node, ms, EXECUTE);
 }
+
 static void	loop(t_ms *ms)
 {
 	while (1)
