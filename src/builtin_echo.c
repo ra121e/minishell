@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 05:18:17 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 11:36:22 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/04 19:44:19 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,15 @@ void	builtin_echo(t_ms *ms)
 	int	i;
 
 	if (!ms->cmd[1])
-		return ;
-	n_opt = is_n_opt(ms->cmd[1]);
+		n_opt = 0;
+	else
+		n_opt = is_n_opt(ms->cmd[1]);
 	i = 1;
 	if (!n_opt)
 		print_loop(ms, n_opt, i);
 	else
 	{
-		while (is_n_opt(ms->cmd[i]))
+		while (ms->cmd[i] && is_n_opt(ms->cmd[i]))
 			i++;
 		print_loop(ms, n_opt, i);
 	}
