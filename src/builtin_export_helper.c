@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:58:26 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 21:27:10 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 22:57:30 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,7 @@ void	export_add(t_ms *ms, t_envp **envp)
 		perror("malloc error for export_add\n");
 	i = -1;
 	while (envp[++i])
-	{
-		ms->envp[i] = malloc(sizeof(t_envp));
-		if (!ms->envp[i])
-			perror("malloc error for export_add\n");
 		ms->envp[i] = envp[i];
-	}
 	ms->envp[i] = malloc(sizeof(t_envp));
 	if (!ms->envp[i])
 		perror("malloc error for export_add\n");

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/05 07:26:46 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 23:53:05 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,27 @@ void	fork_process(t_ms *ms)
 void	exec_cmd(t_ms *ms)
 {
 	cmd_envp(ms);
-	if (is_builtin(ms->cmd[0]) == true)
+	if (**ms->cmd)
 	{
-		ms->builtin_cmd = 1;
-		if (ms->in_pipe)
-			fork_process(ms);
+		if (is_builtin(ms->cmd[0]) == true)
+		{
+			ms->builtin_cmd = 1;
+			if (ms->in_pipe)
+				fork_process(ms);
+			else
+				builtin(ms);
+		}
 		else
-			builtin(ms);
+			fork_process(ms);
+		exec_parent_wait(ms);
 	}
 	else
-		fork_process(ms);
-	if (ms->fd_r > 2)
-		close(ms->fd_r);
-	if (ms->fd_w[1] > 2)
-		close(ms->fd_w[1]);
+	{
+		ft_dprintf(2, "command '' not found\n");
+		ms->exit_status = 127;
+	}
+	close_fd(ms);
 	ms->fd_r = ms->fd_w[0];
-	exec_parent_wait(ms);
 	free(ms->cmd_envp);
 	free_str_array(ms->cmd);
 }

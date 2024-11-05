@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:24:39 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 07:51:17 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 23:47:17 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_str_array(char **str)
 	int	i;
 
 	i = 0;
-	while (str[i] && *str[i])
+	while (str[i])
 	{
 		free(str[i]);
 		str[i] = 0;

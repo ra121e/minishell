@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:03:23 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 21:24:15 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 22:50:47 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	invalid(t_ms *ms)
 {
 	int	invalid;
 	int	i;
-
 	invalid = 0;
 	if (!ms->key || (ms->key[0] != '_' && !ft_isalpha(ms->key[0])))
 		invalid = 1;
@@ -83,7 +82,10 @@ void	builtin_export(t_ms *ms)
 	int	i;
 
 	if (display_if_no_arg(ms))
+	{
+		ms->exit_status = 0;
 		return ;
+	}
 	i = 0;
 	while (ms->cmd[++i])
 		exit_status = update_if_valid(ms, ms->cmd[i]);
