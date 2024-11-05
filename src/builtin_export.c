@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:03:23 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 22:50:47 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/06 07:50:54 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	invalid(t_ms *ms)
 {
 	int	invalid;
 	int	i;
+
 	invalid = 0;
 	if (!ms->key || (ms->key[0] != '_' && !ft_isalpha(ms->key[0])))
 		invalid = 1;
