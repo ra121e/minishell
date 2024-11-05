@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:24:39 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/04 23:49:12 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 07:51:17 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,9 @@ void	free_token(t_ms *ms)
 		free(tmp);
 	}
 }
+
 void	cleanup(t_ms *ms)
 {
-//	t_token	*head;
-//	char	*token;
 	if (ms->head)
 		free_token(ms);
 	if (ms->start_node)

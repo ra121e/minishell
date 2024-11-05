@@ -6,13 +6,13 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/04 20:10:08 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 07:58:38 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	heredoc_expand_child(t_ms *ms, char *delimiter, int fd[2], char *buf)
+static void	expand_in_child(t_ms *ms, char *delimiter, int fd[2], char *buf)
 {
 	char	**buf_split;
 	int		i;
@@ -53,7 +53,7 @@ int	heredoc_expand(t_ms *ms, t_node *node)
 	if (pid == -1)
 		perror("fork error for heredoc_expansion");
 	if (!pid)
-		heredoc_expand_child(ms, node->right->str, node->fd_w, buf);
+		expand_in_child(ms, node->right->str, node->fd_w, buf);
 	waitpid(pid, 0, 0);
 	close(node->fd_w[1]);
 	return (node->fd_w[0]);

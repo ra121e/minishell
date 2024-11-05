@@ -6,12 +6,11 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 18:19:54 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/13 19:48:35 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 07:51:52 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 t_token	*next_token(t_token *cur)
 {
@@ -27,7 +26,6 @@ t_token	*prev_token(t_token *cur)
 		return (NULL);
 	cur = cur->next;
 	return (cur);
-
 }
 
 /*
