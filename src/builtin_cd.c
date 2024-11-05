@@ -6,11 +6,22 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 21:02:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/04 21:44:12 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/06 07:53:09 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	invalid_dir(t_ms *ms)
+{
+	if (chdir(ms->cmd[1]) == -1)
+	{
+		ft_dprintf(2, "bash: cd: %s: No such file or directory\n", ms->cmd[1]);
+		ms->exit_status = 1;
+	}
+	else
+		ms->exit_status = 0;
+}
 
 void	builtin_cd(t_ms *ms)
 {
@@ -30,13 +41,5 @@ void	builtin_cd(t_ms *ms)
 		ms->exit_status = 1;
 	}
 	else
-	{
-		if (chdir(ms->cmd[1]) == -1)
-		{
-			ft_dprintf(2, "bash: cd: %s: No such file or directory\n", ms->cmd[1]);
-			ms->exit_status = 1;
-		}
-		else
-			ms->exit_status = 0;
-	}
+		invalid_dir(ms);
 }
