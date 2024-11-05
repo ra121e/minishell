@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 22:23:05 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 22:40:41 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	found_var(t_ms *ms, char *str, int i)
 	ms->var_value = get_var(ms, ms->var);
 	if (ms->var_value)
 		replace_var(ms);
+	if (!ft_strncmp(ms->var, "?", 2))
+		free(ms->var_value);
 	free(ms->var);
 	return (--i);
 }
