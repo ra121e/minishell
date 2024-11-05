@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 20:28:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 21:28:33 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 23:59:25 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	update_envp(t_ms *ms, t_envp **envp, int new_envp_len)
 			ms->envp[n++] = envp[i];
 	}
 	ms->envp[n] = 0;
+	free(envp);
+	envp = 0;
 }
 
 void	builtin_unset(t_ms *ms)
@@ -70,4 +72,5 @@ void	builtin_unset(t_ms *ms)
 	}
 	if (var)
 		update_envp(ms, ms->envp, i - var);
+	ms->exit_status = 0;
 }
