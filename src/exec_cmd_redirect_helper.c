@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 06:40:57 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 21:37:59 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,33 +26,42 @@ int	*init_fd_w(t_ms *ms)
 	return (ms->fd_w);
 }
 
-static void	add_cmd_arg2(t_ms *ms, int i)
+static void	add_cmd_arg2(t_ms *ms, char *new_str)
 {
 	char	**tmp;
-	int		j;
+	int		i;
 
 	tmp = ms->cmd;
+	i = 0;
+	while (tmp && tmp[i])
+		i++;
 	ms->cmd = malloc(sizeof(char *) * (i + 2));
 	if (!ms->cmd)
 		perror("malloc error for ms->cmd");
-	j = -1;
-	while (++j < i)
-		ms->cmd[j] = tmp[j];
-	ms->cmd[j++] = ms->new_str;
-	ms->cmd[j] = 0;
+	i = 0;
+	while (tmp && tmp[i])
+	{
+		ms->cmd[i] = tmp[i];
+		i++;
+	}
+	ms->cmd[i++] = new_str;
+	ms->cmd[i] = 0;
 	free(tmp);
 }
 
 void	add_cmd_arg(t_ms *ms, char *str, int s, int i)
 {
 	char	*tmp;
+	char	*new_str;
 
-	tmp = ms->new_str;
-	ms->new_str = ft_substr(str, s, i - s);
-	free(tmp);
-	tmp = ms->new_str;
-	ms->new_str = remove_quote(tmp);
-	add_cmd_arg2(ms, ms->i++);
+	new_str = ft_substr(str, s, i - s);
+	if (!new_str)
+		perror("add_cmd_arg malloc error");//
+	tmp = new_str;
+	new_str = remove_quote(tmp);
+	if (!new_str)
+		perror("add_cmd_arg malloc error");//
+	add_cmd_arg2(ms, new_str);
 	free(tmp);
 }
 

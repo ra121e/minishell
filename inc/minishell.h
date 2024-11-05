@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 06:39:31 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 22:21:56 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,6 @@ void	heredoc(t_ms *ms, t_node *cur);
 void	expansion(t_ms *ms, t_node *cur);
 void	expansion_var(t_ms *ms, char *str);
 void	get_new_len(t_ms *ms, char *str, int i);
-void	get_new_len_heredoc(t_ms *ms, char *str, int i);
 void	expand_var(t_ms *ms, char *str, int i);
 int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
 void	expand_var_replace(t_ms *ms, int quote);

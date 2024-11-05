@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/04 20:04:03 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/05 21:19:10 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,29 @@ static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 	}
 }
 
-static void	word_split(t_ms *ms)
+static void	word_split(t_ms *ms, char *str)
 {
-	char	*str;
-	int		i;
-
-	str = ms->new_str;
 	ms->start = 0;
-	i = -1;
-	while (str[++i])
+	ms->i = -1;
+	while (str[++ms->i])
 	{
-		if (str[i] == '\'' || str[i] == '\"')
+		if (str[ms->i] == '\'' || str[ms->i] == '\"')
 		{
-			ms->c = str[i++];
-			while (str[i] != ms->c)
-				i++;
+			ms->c = str[ms->i++];
+			while (str[ms->i] != ms->c)
+				ms->i++;
 		}
-		else if (ft_isspace(str[i]))
+		else if (ft_isspace(str[ms->i]))
 		{
-			if (i > ms->start)
-				add_cmd_arg(ms, str, ms->start, i);
-			i++;
-			while (ft_isspace(str[i]))
-				i++;
-			ms->start = i;
+			if (ms->i > ms->start)
+				add_cmd_arg(ms, str, ms->start, ms->i);
+			ms->i++;
+			while (ft_isspace(str[ms->i]))
+				ms->i++;
+			ms->start = ms->i;
 		}
 	}
-	add_cmd_arg(ms, str, ms->start, i);
+	add_cmd_arg(ms, str, ms->start, ms->i);
 }
 
 void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
@@ -78,7 +74,8 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 		else
 		{
 			expansion_var(ms, cur->str);
-			word_split(ms);
+			word_split(ms, ms->new_str);
+			free(ms->new_str);
 		}
 		cur = cur->right;
 	}
