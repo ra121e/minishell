@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/06 19:29:42 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/06 22:08:01 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ void	add_cmd_arg(t_ms *ms, char *str, int s, int i)
 
 	new_str = ft_substr(str, s, i - s);
 	if (!new_str)
-		perror("add_cmd_arg malloc error");//
+	{
+		perror("add_cmd_arg malloc error");
+		free(new_str);
+		exit(EXIT_FAILURE);
+	}
 	tmp = new_str;
 	new_str = remove_quote(tmp);
 	if (!new_str)
