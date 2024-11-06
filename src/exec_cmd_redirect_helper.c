@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/06 19:29:42 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/06 23:25:29 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,25 @@ void	add_cmd_arg(t_ms *ms, char *str, int s, int i)
 
 	new_str = ft_substr(str, s, i - s);
 	if (!new_str)
-		perror("add_cmd_arg malloc error");//
+	{
+		perror("add_cmd_arg malloc error");
+		free_str(ms->new_str);
+		cleanup(ms);
+		cleanup_final(ms);
+		exit(EXIT_FAILURE);
+	}
 	tmp = new_str;
 	new_str = remove_quote(tmp);
-	if (!new_str)
-		perror("add_cmd_arg malloc error");//
-	add_cmd_arg2(ms, new_str);
 	free(tmp);
+	if (!new_str)
+	{
+		perror("add_cmd_arg malloc error");
+		free_str(ms->new_str);
+		cleanup(ms);
+		cleanup_final(ms);
+		exit(EXIT_FAILURE);
+	}
+	add_cmd_arg2(ms, new_str);
 }
 
 int	get_filename_fd(char *str, pid_t fd, int mode)
