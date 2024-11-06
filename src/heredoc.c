@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/05 22:22:10 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/06 21:26:34 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	heredoc_expand(t_ms *ms, t_node *node)
 	if (!pid)
 		expand_in_child(ms, node->right->str, node->fd_w, buf);
 	waitpid(pid, 0, 0);
+	if (ms->fd_r > 2)
+		close(ms->fd_r);
 	close(node->fd_w[1]);
 	return (node->fd_w[0]);
 }
@@ -70,8 +72,8 @@ static void	read_loop(char *delimiter, int fd[2], int len)
 			return ;
 		if (!input)
 		{
-			ft_dprintf(2, "minishell: warning: here-document delimited \
-					by end-of-file (wanted `%s')\n", delimiter);
+			ft_dprintf(2, "minishell: warning: here-document delimited ");
+			ft_dprintf(2, "by end-of-file (wanted `%s')\n", delimiter);
 			break ;
 		}	
 		else if (!ft_strncmp(input, delimiter, len + 1))

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/06 08:19:00 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/06 21:17:10 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ void	free_split(char **str);
 void	error_exit(char *str);
 void	error_wrong_cmd(t_ms *ms);
 
+void	close_heredoc_fd(t_node *node);
 void	free_str(char *str);
 void	free_str_array(char **str);
 void	free_token(t_ms *ms);
