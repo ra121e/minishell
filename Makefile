@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/11/02 20:12:15 by athonda          ###   ########.fr        #
+#    Updated: 2024/11/06 17:47:27 by athonda          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC_DIR := src
 SRC_F := minishell.c \
 		 init.c \
 		 cleanup.c \
+		 free.c \
 		 helper.c \
 		 syntax_checker.c \
 		 lexer.c \
