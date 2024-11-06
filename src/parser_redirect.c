@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:19:23 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/06 17:47:07 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/06 19:27:57 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_node	*parser_redirect_right(t_token **token)
 t_node	*parser_redirect(t_token **token)
 {
 	t_node	*node;
-	t_node	*right;
+//	t_node	*right;
 
 	node = NULL;
 	if ((*token)->kind == TK_REDIRECT_IN)
@@ -112,8 +112,8 @@ t_node	*parser_redirect(t_token **token)
 		node->error = true;
 		return (node);
 	}
-	right = ast_newnode(ND_WORD);
-	right->str = (*token)->str;
-	node->right = right;
+//	right = ast_newnode(ND_WORD);
+//	right->str = (*token)->str;
+//	node->right = right;
 	return (node);
 }
