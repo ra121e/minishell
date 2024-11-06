@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 22:21:56 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/06 08:19:00 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,13 +220,14 @@ void	error_wrong_cmd(t_ms *ms);
 
 void	free_str(char *str);
 void	free_str_array(char **str);
-void	free_cmd_envp(char **cmd_envp);
+void	free_token(t_ms *ms);
 void	ast_free(t_node *node);
 void	cleanup(t_ms *ms);
 void	cleanup_envp(t_ms *ms);
 void	cleanup_final(t_ms *ms);
 void	close_fd(t_ms *ms);
 
-void	print_token(t_ms *ms);
-char	*token_kind(int k);
+//void	print_token(t_ms *ms);
+//char	*token_kind(int k);
+//TODO: remove with print file
 #endif
