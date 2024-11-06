@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 21:19:10 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/06 08:01:49 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 		{
 			expansion_var(ms, cur->str);
 			word_split(ms, ms->new_str);
-			free(ms->new_str);
+			free_str(ms->new_str);
 		}
 		cur = cur->right;
 	}

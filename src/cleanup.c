@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:24:39 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 23:47:17 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/06 07:57:20 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	cleanup(t_ms *ms)
 
 void	cleanup_final(t_ms *ms)
 {
-//	cleanup(ms);
 	cleanup_envp(ms);
 	free(ms->prompt);
 	free(ms);
