@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/06 21:26:34 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/07 22:05:23 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	expand_in_child(t_ms *ms, char *delimiter, int fd[2], char *buf)
 
 	buf_split = ft_split(buf, '\n');
 	i = -1;
-	while (buf_split[++i])
+	while (buf_split && buf_split[++i])
 	{
 		ms->len = 0;
 		ms->expand_var = 0;
@@ -35,10 +35,10 @@ static void	expand_in_child(t_ms *ms, char *delimiter, int fd[2], char *buf)
 		free_str(buf_split[i]);
 		free_str(ms->new_str);
 	}
-	free(buf_split);
+	if (buf_split)
+		free(buf_split);
 	close(fd[0]);
-	close(fd[1]);
-	exit(0);
+	exit(close(fd[1]));
 }
 
 int	heredoc_expand(t_ms *ms, t_node *node)
@@ -47,6 +47,7 @@ int	heredoc_expand(t_ms *ms, t_node *node)
 	int		pid;
 
 	ft_memset(buf, 0, sizeof(buf));
+	close(node->fd_w[1]);
 	if (read(node->fd_w[0], buf, sizeof(buf)) == -1)
 		perror("read error on heredoc fd");//
 	pid = fork();
@@ -57,7 +58,7 @@ int	heredoc_expand(t_ms *ms, t_node *node)
 	waitpid(pid, 0, 0);
 	if (ms->fd_r > 2)
 		close(ms->fd_r);
-	close(node->fd_w[1]);
+//	close(node->fd_w[1]);
 	return (node->fd_w[0]);
 }
 
@@ -78,6 +79,7 @@ static void	read_loop(char *delimiter, int fd[2], int len)
 		}	
 		else if (!ft_strncmp(input, delimiter, len + 1))
 			break ;
+		return ;
 		ft_dprintf(fd[1], "%s\n", input);
 		free(input);
 	}

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 21:58:55 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/06 07:44:55 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/07 21:23:41 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	process_in_parent(t_ms *ms, unsigned char c)
 
 static void	process_in_child(t_ms *ms, unsigned char c)
 {
-	if (ms->cmd[2])
+	if (ms->cmd[1] && ms->cmd[2])
 	{
 		ft_dprintf(2, "bash: exit: too many arguments\n");
 		exit(1);

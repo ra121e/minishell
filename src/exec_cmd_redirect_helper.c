@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/06 22:08:01 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/07 21:16:21 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	add_cmd_arg2(t_ms *ms, char *new_str)
 	i = 0;
 	while (tmp && tmp[i])
 		i++;
-	ms->cmd = malloc(sizeof(char *) * (i + 2));
+	ms->cmd = ft_calloc(sizeof(char *), (i + 2));
 	if (!ms->cmd)
 		perror("malloc error for ms->cmd");
 	i = 0;
