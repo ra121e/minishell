@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/06 21:26:34 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/08 22:07:54 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,15 @@ static void	expand_in_child(t_ms *ms, char *delimiter, int fd[2], char *buf)
 	i = -1;
 	while (buf_split[++i])
 	{
-		ms->len = 0;
-		ms->expand_var = 0;
-		get_new_len(ms, buf_split[i], -1);
-		ms->new_str = malloc(ms->len + 1);
-		if (!ms->new_str)
-			perror("ms->new_str for heredoc malloc error\n");//malloc protection
-		expand_var(ms, buf_split[i], -1);
 		if (ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '\"'))
 			ft_dprintf(fd[1], "%s\n", buf_split[i]);
 		else
+		{
+			expand_var(ms, buf_split[i], 1);
 			ft_dprintf(fd[1], "%s\n", ms->new_str);
+			free_str(ms->new_str);
+		}
 		free_str(buf_split[i]);
-		free_str(ms->new_str);
 	}
 	free(buf_split);
 	close(fd[0]);

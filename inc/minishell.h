@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/06 21:17:10 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/08 22:13:53 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,10 +194,8 @@ void 	printAST(t_node *node, int level, int isLeft);
 void	traverse_start(t_node *head, t_ms *ms, int action);
 void	traverse(t_node *cur, t_ms *ms, int fd_w[2], int action);
 void	heredoc(t_ms *ms, t_node *cur);
-void	expansion(t_ms *ms, t_node *cur);
-void	expansion_var(t_ms *ms, char *str);
 void	get_new_len(t_ms *ms, char *str, int i);
-void	expand_var(t_ms *ms, char *str, int i);
+void	expand_var(t_ms *ms, char *str, int heredoc);
 int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
 void	expand_var_replace(t_ms *ms, int quote);
 char	*remove_quote(char *old);

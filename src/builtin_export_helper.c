@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:58:26 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 22:57:30 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/08 22:29:31 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	export_add(t_ms *ms, t_envp **envp)
 
 void	update_env(t_ms *ms)
 {
-	int	i;
+	char	*tmp;
+	int		i;
 
 	ms->len = ft_strlen(ms->key);
 	i = -1;
@@ -70,9 +71,14 @@ void	update_env(t_ms *ms)
 		{
 			if (!ms->envp[i]->value || ms->value)
 			{
+				free_str(ms->key);
+				tmp = ms->envp[i]->value;
 				ms->envp[i]->value = ms->value;
+				free_str(tmp);
+				tmp = ms->envp[i]->pair;
 				ms->envp[i]->pair = ms->pair;
-				break ;
+				free_str(tmp);
+				return ;
 			}
 		}
 	}

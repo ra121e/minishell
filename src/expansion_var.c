@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 22:40:41 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/08 22:14:09 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,7 @@ int	found_var(t_ms *ms, char *str, int i)
 	return (--i);
 }
 
-void	expand_var(t_ms *ms, char *str, int i)
-{
-	ms->n = 0;
-	while (str[++i])
-	{
-		if (str[i] == '$')
-			i = found_var(ms, str, i);
-		else
-			ms->new_str[ms->n++] = str[i];
-	}
-	ms->new_str[ms->n] = 0;
-}
-
-void	expansion_var(t_ms *ms, char *str)
+void	expand_var(t_ms *ms, char *str, int heredoc)
 {
 	ms->len = 0;
 	ms->expand_var = 0;
@@ -67,5 +54,21 @@ void	expansion_var(t_ms *ms, char *str)
 	ms->new_str = malloc(ms->len + 1);
 	if (!ms->new_str)
 		perror("ms->new_str malloc error\n");//malloc protection
-	expand_var(ms, str, -1);
+	ms->n = 0;
+	ms->i = -1;
+	while (str[++ms->i])
+	{
+		if (!heredoc && str[ms->i] == '\'')
+		{
+			ms->new_str[ms->n++] = str[ms->i];
+			while (str[++ms->i] != '\'')
+				ms->new_str[ms->n++] = str[ms->i];
+			ms->new_str[ms->n++] = str[ms->i];
+		}
+		else if (str[ms->i] == '$')
+			ms->i = found_var(ms, str, ms->i);
+		else
+			ms->new_str[ms->n++] = str[ms->i];
+	}
+	ms->new_str[ms->n] = 0;
 }

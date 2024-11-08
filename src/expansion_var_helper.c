@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 22:49:37 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/08 19:54:44 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/08 21:42:33 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,13 @@ void	get_new_len(t_ms *ms, char *str, int i)
 {
 	while (str[++i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '\'')
+		{
+			while (str[++i] != '\'')
+				ms->len++;
+			ms->len += 2;
+		}
+		else if (str[i] == '$')
 			i = get_new_len_found_var(ms, str, i);
 		else
 			ms->len++;

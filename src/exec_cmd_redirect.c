@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/06 08:01:49 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/08 22:00:36 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 		}
 		else
 		{
-			expansion_var(ms, cur->str);
-			word_split(ms, ms->new_str);
+			expand_var(ms, cur->str, 0);
+			word_split(ms, ms->new_str);//remove quotes during word split
 			free_str(ms->new_str);
 		}
 		cur = cur->right;
