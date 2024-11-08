@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 22:49:37 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 22:21:42 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/08 19:54:44 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 int	get_new_len_found_var(t_ms *ms, char *str, int i)
 {
-	if (str[i + 1] == '?')
-	{
-		ms->len += get_var_len(ms, "$?");
-		return (i);
-	}
 	ms->start = ++i;
 	while (str[i] == '_' || ft_isalnum(str[i]))
 		i++;

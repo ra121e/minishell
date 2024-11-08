@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 15:52:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/01 21:28:14 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/08 19:47:49 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	get_var_len(t_ms *ms, char *var)
 	i = -1;
 	while (ms->envp[++i])
 	{
-		if (!ft_strncmp(ms->envp[i]->key, var, ft_strlen(var) + 1))
+		if (ms->envp[i]->value && \
+				!ft_strncmp(ms->envp[i]->key, var, ft_strlen(var) + 1))
 			return (ft_strlen(ms->envp[i]->value));
 	}
 	return (0);
