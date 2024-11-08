@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:58:26 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/08 22:29:31 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/08 22:39:35 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	update_env(t_ms *ms)
 				tmp = ms->envp[i]->pair;
 				ms->envp[i]->pair = ms->pair;
 				free_str(tmp);
-				return ;
 			}
+			return ;
 		}
 	}
 	if (!ms->envp[i])
