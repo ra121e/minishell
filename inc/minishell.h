@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/08 22:13:53 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 11:16:35 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ struct s_node
 {
 	t_node_kind	kind;
 	char		*str;
-	int			fd_w[2];
+	char		*heredoc_str;
 	t_node		*left;
 	t_node		*right;
 	bool		error;
@@ -118,7 +118,9 @@ typedef struct s_ms
 	int		expand_var;
 	char	*new_str;
 	int		eq;
+	bool	error;
 	t_node	*start_node;
+	char	*heredoc_filename;
 	int		pipfd[2];
 	int		fd_r;
 	int		fd_w[2];
@@ -193,7 +195,8 @@ const char* getNodeKindName(t_node_kind kind);
 void 	printAST(t_node *node, int level, int isLeft);
 void	traverse_start(t_node *head, t_ms *ms, int action);
 void	traverse(t_node *cur, t_ms *ms, int fd_w[2], int action);
-void	heredoc(t_ms *ms, t_node *cur);
+void	heredoc(t_node *cur);
+int		heredoc_expand(t_ms *ms, t_node *node);
 void	get_new_len(t_ms *ms, char *str, int i);
 void	expand_var(t_ms *ms, char *str, int heredoc);
 int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
@@ -201,7 +204,6 @@ void	expand_var_replace(t_ms *ms, int quote);
 char	*remove_quote(char *old);
 void	add_cmd_arg(t_ms *ms, char *str, int s, int i);
 void	redirection(t_ms *ms, t_node *cur, int fd_w[2]);
-int		heredoc_expand(t_ms *ms, t_node *node);
 void	exec_cmd(t_ms *ms);
 void	init_cmd(t_ms *ms);
 int		*init_fd_w(t_ms *ms);
@@ -216,7 +218,6 @@ void	free_split(char **str);
 void	error_exit(char *str);
 void	error_wrong_cmd(t_ms *ms);
 
-void	close_heredoc_fd(t_node *node);
 void	free_str(char *str);
 void	free_str_array(char **str);
 void	free_token(t_ms *ms);

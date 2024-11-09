@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 21:12:42 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/03 18:43:13 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/09 21:46:40 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	reslen(int count, va_list ap)
 	{
 		str = va_arg(ap, char *);
 		len = -1;
-		while (str[++len])
+		while (str && str[++len])
 			res_len++;
 	}
 	return (res_len);

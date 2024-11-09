@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 06:41:46 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 11:20:50 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	init_loop(t_ms *ms)
 	ms->fd_r = 0;
 	ms->cmd = 0;
 	ms->str = 0;
+	ms->heredoc_filename = 0;
+	ms->error = false;
 	rl_event_hook = check_rl_done;
 }
 
@@ -63,7 +65,7 @@ void	init(t_ms *ms, char **envp)
 {
 	init_envp(ms, envp);
 	ms->prompt = ft_strsjoin(3, "\001\033[35m\002" \
-			, "minishell~Powered by Honda:$", "\001\033[0m\002");
+			, "minishell~Powered by Honda:$ ", "\001\033[0m\002");
 	if (!ms->prompt)
 		perror("ms->prompt malloc error");
 	ms->exit_status = 0;

@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:24:39 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/06 08:18:06 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 11:21:36 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void	cleanup(t_ms *ms)
 		free_token(ms);
 	if (ms->start_node)
 		ast_free(ms->start_node);
+	if (ms->heredoc_filename)
+		unlink(ms->heredoc_filename);
+	free(ms->heredoc_filename);
 }
 
 void	cleanup_final(t_ms *ms)

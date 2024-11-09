@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/06 21:54:11 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/09 19:38:33 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,16 @@ void	fork_process(t_ms *ms)
 	if (pid < 0)
 		error_exit("fork error!");
 	ms->pid = pid;
-	ft_signal_cmd();
 	if (pid == 0)
 	{
+		ft_signal_cmd();
 		if (ms->builtin_cmd && ms->in_pipe)
 			exec_builtin_in_child(ms);
 		else
 			exec_child(ms);
 	}
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	exec_cmd(t_ms *ms)

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/06 21:16:44 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/09 22:28:06 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ static void	process_flow(t_ms *ms)
 		return ;
 	traverse_start(ms->start_node, ms, HEREDOC);
 	if (g_sig)
-	{
 		ms->exit_status = 128 + g_sig;
-		close_heredoc_fd(ms->start_node);
-	}
 	else
 		traverse_start(ms->start_node, ms, EXECUTE);
 }

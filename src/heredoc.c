@@ -6,66 +6,75 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/08 22:07:54 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 12:49:23 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	expand_in_child(t_ms *ms, char *delimiter, int fd[2], char *buf)
+int	heredoc_expand_loop(t_ms *ms, t_node *node)
 {
-	char	**buf_split;
-	int		i;
+	int		file_fd;
+	char	*delimiter;
 
-	buf_split = ft_split(buf, '\n');
-	i = -1;
-	while (buf_split[++i])
+	delimiter = node->right->str;
+	file_fd = -1;
+	if (access(ms->heredoc_filename, F_OK))
 	{
+		file_fd = open(ms->heredoc_filename, WRITE, 0644);
+		if (file_fd == -1)
+			perror("minishell");//
 		if (ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '\"'))
-			ft_dprintf(fd[1], "%s\n", buf_split[i]);
+			ft_dprintf(file_fd, node->heredoc_str);
 		else
 		{
-			expand_var(ms, buf_split[i], 1);
-			ft_dprintf(fd[1], "%s\n", ms->new_str);
+			expand_var(ms, node->heredoc_str, 1);
+			ft_dprintf(file_fd, ms->new_str);
 			free_str(ms->new_str);
 		}
-		free_str(buf_split[i]);
+		close(file_fd);
+		file_fd = open(ms->heredoc_filename, READ);
 	}
-	free(buf_split);
-	close(fd[0]);
-	close(fd[1]);
-	exit(0);
+	return (file_fd);
 }
 
 int	heredoc_expand(t_ms *ms, t_node *node)
 {
-	char	buf[65536];
-	int		pid;
+	char	*cwd;
+	char	*counter;
+	int		file_fd;
+	int		i;
 
-	ft_memset(buf, 0, sizeof(buf));
-	if (read(node->fd_w[0], buf, sizeof(buf)) == -1)
-		perror("read error on heredoc fd");//
-	pid = fork();
-	if (pid == -1)
-		perror("fork error for heredoc_expansion");
-	if (!pid)
-		expand_in_child(ms, node->right->str, node->fd_w, buf);
-	waitpid(pid, 0, 0);
 	if (ms->fd_r > 2)
+	{
 		close(ms->fd_r);
-	close(node->fd_w[1]);
-	return (node->fd_w[0]);
+		unlink(ms->heredoc_filename);
+		free(ms->heredoc_filename);
+	}
+	i = 0;
+	while (++i)
+	{
+		cwd = getcwd(0, 0);
+		counter = ft_itoa(i);
+		ms->heredoc_filename = ft_strsjoin(3, cwd, "/tmp", counter);
+		free(cwd);
+		free(counter);
+		file_fd = heredoc_expand_loop(ms, node);
+		if (file_fd > 2)
+			return (file_fd);
+	}
+	return (-1);
 }
 
-static void	read_loop(char *delimiter, int fd[2], int len)
+char	*read_loop(char *delimiter, int len, char *heredoc_str, char *input)
 {
-	char	*input;
+	char	*tmp;
 
 	while (1)
 	{
 		input = readline("> ");
 		if (g_sig == 2)
-			return ;
+			break ;
 		if (!input)
 		{
 			ft_dprintf(2, "minishell: warning: here-document delimited ");
@@ -74,47 +83,40 @@ static void	read_loop(char *delimiter, int fd[2], int len)
 		}	
 		else if (!ft_strncmp(input, delimiter, len + 1))
 			break ;
-		ft_dprintf(fd[1], "%s\n", input);
+		tmp = heredoc_str;
+		if (!heredoc_str)
+			heredoc_str = ft_strdup(input);
+		else
+			heredoc_str = ft_strsjoin(3, heredoc_str, "\n", input);
+		free(tmp);
 		free(input);
 	}
 	free(input);
+	return (heredoc_str);
 }
 
-void	child_loop(t_ms *ms, t_node *cur, int fd[2])
+void	heredoc(t_node *cur)
 {
+	char	*heredoc_str;
+	char	*tmp;
 	char	*delimiter;
-
-	if (pipe(fd) == -1)
-		perror("pipe error for heredoc");
-	delimiter = remove_quote(cur->right->str);
-	ms->pid = fork();
-	if (ms->pid == -1)
-		perror("fork error for heredoc");
-	ft_signal_non();
-	if (!ms->pid)
-	{
-		ft_signal();
-		read_loop(delimiter, fd, ft_strlen(delimiter));
-		close(fd[0]);
-		close(fd[1]);
-		exit(128 + g_sig);
-	}
-	waitpid(ms->pid, &ms->pid_status, 0);
-	ft_signal();
-	g_sig = WEXITSTATUS(ms->pid_status) % 128;
-	cur->fd_w[0] = fd[0];
-	cur->fd_w[1] = fd[1];
-	free(delimiter);
-}
-
-void	heredoc(t_ms *ms, t_node *cur)
-{
-	int		fd[2];
 
 	while (cur && cur->kind)
 	{
 		if (cur->kind == ND_REDIRECT_HEREDOC)
-			child_loop(ms, cur, fd);
+		{
+			delimiter = remove_quote(cur->right->str);
+			ft_signal();
+			heredoc_str = read_loop(delimiter, ft_strlen(delimiter), 0, 0);
+			tmp = heredoc_str;
+			if (!heredoc_str)
+				heredoc_str = ft_strdup("");
+			else
+				heredoc_str = ft_strsjoin(2, heredoc_str, "\n");
+			free(tmp);
+			free(delimiter);
+			cur->heredoc_str = heredoc_str;
+		}
 		cur = cur->right;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:05:30 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/05 06:40:30 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/09 21:31:16 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ t_node	*ast_newnode(t_node_kind kind)
 		return (NULL);
 	node->kind = kind;
 	node->str = NULL;
+	node->heredoc_str = NULL;
 	node->left = NULL;
 	node->right = NULL;
 	node->error = false;
-	node->fd_w[0] = -1;
-	node->fd_w[1] = -1;
 	return (node);
 }
 
@@ -42,6 +41,7 @@ void	ast_free(t_node *node)
 		return ;
 	ast_free(node->left);
 	ast_free(node->right);
+	free(node->heredoc_str);
 	free(node);
 	node = 0;
 }
