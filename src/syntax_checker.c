@@ -6,13 +6,13 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 22:12:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/10/31 09:57:17 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 19:00:04 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	syntax_check_quote(char *str)
+int	syntax_check_quote(char *str)
 {
 	char	c;
 	int		i;
@@ -28,13 +28,14 @@ void	syntax_check_quote(char *str)
 			if (!str[i])
 			{
 				ft_dprintf(2, "Syntax error...no closing quote\n");
-				exit(1);//cleanup before exit
+				return (1);
 			}
 		}
 	}
+	return (0);
 }
 
-void	syntax_check_parenthesis(char *str)
+int	syntax_check_parenthesis(char *str)
 {
 	int		i;
 
@@ -49,14 +50,16 @@ void	syntax_check_parenthesis(char *str)
 			if (!str[i])
 			{
 				ft_dprintf(2, "Syntax error...no closing quote\n");
-				exit(1);//cleanup before exit
+				return (1);
 			}
 		}
 	}
+	return (0);
 }
 
-void	syntax_checker(char *str)
+int	syntax_checker(t_ms *ms, char *str)
 {
-	syntax_check_quote(str);
-	syntax_check_parenthesis(str);
+	if (syntax_check_quote(str) || syntax_check_parenthesis(str))
+		ms->error = true;
+	return (ms->error);
 }

@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 20:28:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/05 23:59:25 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 19:54:04 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	update_envp(t_ms *ms, t_envp **envp, int new_envp_len)
 
 	ms->envp = malloc(sizeof(t_envp) * (new_envp_len + 1));
 	if (!ms->envp)
-		perror("malloc error for update_envp after unset\n");
+		error_malloc(ms, "malloc error for update_envp after unset");
 	n = 0;
 	i = -1;
 	while (envp[++i])

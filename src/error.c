@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:46:53 by athonda           #+#    #+#             */
-/*   Updated: 2024/10/23 08:11:14 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/10 18:08:30 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,10 @@ void	error_wrong_cmd(t_ms *ms)
 	ft_putstr_fd(": command not found\n", 2);
 	free_split(ms->cmd);
 	exit(127);
+}
+
+void	error_malloc(t_ms *ms, char *msg)
+{
+	perror(msg);
+	ms->error = true;
 }

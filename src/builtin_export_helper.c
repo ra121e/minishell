@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:58:26 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/08 22:39:35 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 19:53:26 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	export_add(t_ms *ms, t_envp **envp)
 		i++;
 	ms->envp = malloc(sizeof(t_envp) * (i + 2));
 	if (!ms->envp)
-		perror("malloc error for export_add\n");
+		error_malloc(ms, "malloc error for export_add");
 	i = -1;
 	while (envp[++i])
 		ms->envp[i] = envp[i];
 	ms->envp[i] = malloc(sizeof(t_envp));
 	if (!ms->envp[i])
-		perror("malloc error for export_add\n");
+		error_malloc(ms, "malloc error for export_add");
 	ms->envp[i]->key = ms->key;
 	ms->envp[i]->value = ms->value;
 	ms->envp[i]->pair = ms->pair;

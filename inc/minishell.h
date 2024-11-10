@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/10 17:14:51 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 19:01:06 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	init(t_ms *ms, char **envp);
 void	init_loop(t_ms *ms);
 void	init_envp(t_ms *ms, char **envp);
 void	cleanup(t_ms *ms);
-void	syntax_checker(char *str);
+int		syntax_checker(t_ms *ms, char *str);
 void	lexer(t_ms *ms, char *str);
 bool	is_builtin(char *str);
 char	*ft_strsjoin(int count, ...);
@@ -218,6 +218,7 @@ char	*get_fullpath(char *cmd, t_ms *ms);
 void	free_split(char **str);
 void	error_exit(char *str);
 void	error_wrong_cmd(t_ms *ms);
+void	error_malloc(t_ms *ms, char *msg);
 
 void	free_str(char *str);
 void	free_str_array(char **str);

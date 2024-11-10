@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/09 21:14:34 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 18:39:37 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	add_cmd_arg2(t_ms *ms, char *new_str)
 		i++;
 	ms->cmd = malloc(sizeof(char *) * (i + 2));
 	if (!ms->cmd)
-		perror("malloc error for ms->cmd");
+		error_malloc(ms, "malloc error for ms->cmd");
 	i = 0;
 	while (tmp && tmp[i])
 	{
@@ -57,7 +57,7 @@ void	add_cmd_arg(t_ms *ms, char *str, int s, int i)
 	new_str = ft_substr(str, s, i - s);
 	if (!new_str)
 	{
-		perror("add_cmd_arg malloc error");
+		error_malloc(ms, "add_cmd_arg malloc error");
 		free_str(ms->new_str);
 		cleanup(ms);
 		cleanup_final(ms);
@@ -68,7 +68,7 @@ void	add_cmd_arg(t_ms *ms, char *str, int s, int i)
 	free(tmp);
 	if (!new_str)
 	{
-		perror("add_cmd_arg malloc error");
+		error_malloc(ms, "add_cmd_arg malloc error");
 		free_str(ms->new_str);
 		cleanup(ms);
 		cleanup_final(ms);
@@ -98,7 +98,7 @@ int	get_filename_fd(char *str, pid_t fd, int mode)
 	else
 		file_fd = open(filename, mode, 0644);
 	if (file_fd == -1)
-		perror("minishell");//
+		perror("minishell");
 	free(filename);
 	return (file_fd);
 }

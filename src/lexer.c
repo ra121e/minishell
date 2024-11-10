@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/04 23:46:12 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 19:04:26 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	new_str_len(t_ms *ms, char *str)
 	}
 	ms->str = malloc(ms->len + 1);
 	if (!ms->str)
-		perror("ms->new_str malloc error");//malloc protection
+		error_malloc(ms, "ms->new_str malloc error");
 }
 
 void	optimize_str(t_ms *ms, char *str)
@@ -80,7 +80,8 @@ void	quote(t_ms *ms, char c)
 
 void	lexer(t_ms *ms, char *str)
 {
-	syntax_checker(str);
+	if (syntax_checker(ms, str))
+		return ;
 	optimize_str(ms, str);
 	ms->end = 0;
 	while (ms->end <= ms->len)

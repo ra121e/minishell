@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 22:49:37 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/10 18:00:32 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 18:14:14 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	get_new_len_found_var(t_ms *ms, char *str, int i)
 		return (--i);
 	ms->var = ft_substr(str, ms->start, i - ms->start);
 	if (!ms->var)
-		perror("ms->var malloc error\n");//
+		error_malloc(ms, "ms->var malloc error\n");
 	ms->len += get_var_len(ms, ms->var);
 	free(ms->var);
 	return (--i);

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/09 22:28:06 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 19:05:57 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	process_flow(t_ms *ms)
 	add_history(ms->input);
 	lexer(ms, ms->input);
 	free(ms->input);
+	if (ms->error)
+		return ;
 	ms->start_node = parser(&ms->head);
 	if (ms->start_node == NULL)
 		return ;
@@ -59,7 +61,10 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	ms = malloc(sizeof(t_ms));
 	if (!ms)
-		perror("ms malloc error");//malloc protection
+	{
+		perror("ms malloc error");
+		return (1);
+	}
 	init(ms, envp);
 	loop(ms);
 	cleanup_final(ms);

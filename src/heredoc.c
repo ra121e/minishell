@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/10 12:49:23 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 18:24:56 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	heredoc_expand_loop(t_ms *ms, t_node *node)
 	{
 		file_fd = open(ms->heredoc_filename, WRITE, 0644);
 		if (file_fd == -1)
-			perror("minishell");//
+			perror("minishell");
 		if (ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '\"'))
 			ft_dprintf(file_fd, node->heredoc_str);
 		else

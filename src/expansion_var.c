@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/08 22:14:09 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 18:12:50 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	found_var(t_ms *ms, char *str, int i)
 	}
 	ms->var = ft_substr(str, ms->start, i - ms->start);
 	if (!ms->var)
-		perror("ms->var malloc error\n");
+		error_malloc(ms, "ms->var malloc error\n");
 	ms->var_value = get_var(ms, ms->var);
 	if (ms->var_value)
 		replace_var(ms);
@@ -53,7 +53,7 @@ void	expand_var(t_ms *ms, char *str, int heredoc)
 	get_new_len(ms, str, -1);
 	ms->new_str = malloc(ms->len + 1);
 	if (!ms->new_str)
-		perror("ms->new_str malloc error\n");//malloc protection
+		error_malloc(ms, "ms->new_str malloc error\n");
 	ms->n = 0;
 	ms->i = -1;
 	while (str[++ms->i])
