@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/06 08:19:00 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/09 22:38:57 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ enum e_token_kind
 	TK_AND,
 	TK_OR,
 	TK_PIPE,
-	TK_HEREDOC_DELIMITER,
-	TK_REDIRECT_IN,
-	TK_REDIRECT_OUT,
-	TK_REDIRECT_HEREDOC,
-	TK_REDIRECT_APPEND,
 	TK_LPAREN,
 	TK_RPAREN,
 	TK_WORD,
 	TK_EOF,
+	TK_HEREDOC_DELIMITER,
+	TK_REDIRECT_IN = 101,
+	TK_REDIRECT_OUT,
+	TK_REDIRECT_HEREDOC,
+	TK_REDIRECT_APPEND,
 };
 
 typedef struct s_token t_token;
@@ -181,6 +181,7 @@ t_node	*parser_cmd(t_token **token);
 int		is_error_and_or(t_token *token);
 int		is_error_eof(t_token *token);
 int		is_error_pipe(t_token *token);
+int		is_error_and_or_eof(t_token *token, t_node **node);
 void	error_expr(t_token *token);
 void	error_right(t_token *token);
 void	error_pip(t_token *token);
