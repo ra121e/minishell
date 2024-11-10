@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:19:23 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/06 19:30:19 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 17:15:55 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ t_node	*parser_redirect_re(t_token **token)
 	if (node == NULL)
 		return (NULL);
 	right = parser_redirect_right(token);
+	if (right && right->error == true)
+		node->error = true;
 	node->right = right;
 	return (node);
 }
@@ -64,20 +66,19 @@ t_node	*parser_redirect_right(t_token **token)
 	t_node	*node;
 	t_node	*right;
 
-	if (!*token || (*token)->kind == TK_EOF)
-	{
-		return (NULL);
-	}
-	else
+	if ((*token)->kind == TK_WORD || (*token)->kind IS_REDIRECT)
 	{
 		node = parser_redirect(token);
 		if (node == NULL)
 			return (NULL);
-		*token = next_token(*token);
 		right = parser_redirect_right(token);
+		if (right && right->error == true)
+			node->error = true;
 		node->right = right;
+		return (node);
 	}
-	return (node);
+	else
+		return (NULL);
 }
 
 /**
@@ -107,7 +108,8 @@ t_node	*parser_redirect(t_token **token)
 	*token = (*token)->next;
 	if ((*token)->kind != TK_WORD)
 	{
-		ft_dprintf(2, "bash: Syntax error near unexpected token \n");
+		ft_dprintf(2, "bash: Syntax error near unexpected token `");
+		ft_dprintf(2, "%s' \n", (*token)->str);
 		node->error = true;
 		return (node);
 	}
