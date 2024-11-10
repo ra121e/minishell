@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:17:20 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/10 10:12:01 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/10 17:22:03 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_node	*parser_cmd_right(t_token **token)
 	t_node	*node;
 	t_node	*right;
 
-	if ((*token)->kind == TK_WORD || (*token)->kind IS_REDIRECTION)
+	if ((*token)->kind == TK_WORD || (*token)->kind IS_REDIRECT)
 	{
 		node = parser_cmd(token);
 		if (node == NULL)
