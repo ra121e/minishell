@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:03:23 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/06 07:50:54 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/12 06:48:48 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,8 @@ void	init_export(t_ms *ms)
 	ms->pair = 0;
 }
 
-int	update_if_valid(t_ms *ms, char *str)
+void	update_ms_value(t_ms *ms, char *str)
 {
-	int	i;
-
-	init_export(ms);
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '=')
-			ms->eq = i;
-	}
 	if (ms->eq)
 	{
 		ms->key = ft_substr(str, 0, ms->eq);
@@ -71,6 +62,23 @@ int	update_if_valid(t_ms *ms, char *str)
 		ms->value = 0;
 		ms->pair = ft_strdup(str);
 	}
+}
+
+int	update_if_valid(t_ms *ms, char *str)
+{
+	int	i;
+
+	init_export(ms);
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == '=')
+		{
+			ms->eq = i;
+			break ;
+		}
+	}
+	update_ms_value(ms, str);
 	if (invalid(ms))
 		return (1);
 	update_env(ms);

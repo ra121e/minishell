@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/11 23:53:29 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/12 06:08:36 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	replace_var(t_ms *ms)
 	ms->end = 0;
 	while (ms->var_value[ms->end])
 		ms->new_str[ms->n++] = ms->var_value[ms->end++];
+	ms->expand_var = 1;
 }
 
 int	found_var(t_ms *ms, char *str, int i)
