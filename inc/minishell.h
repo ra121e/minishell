@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/10 19:01:06 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/10 21:05:47 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,17 @@
 # include "libft.h"
 
 # define READ O_RDONLY
-# define WRITE O_CREAT | O_WRONLY | O_TRUNC
-# define APPEND O_CREAT | O_WRONLY | O_APPEND
+# define WRITE 01101
+//# define WRITE O_CREAT | O_WRONLY | O_TRUNC
+# define APPEND 02101
+//# define APPEND O_CREAT | O_WRONLY | O_APPEND
 # define IS_REDIRECT > 100
 # define HEREDOC 0
 # define EXECUTE 1
 
-extern int	g_sig;
+extern int					g_sig;
 
-typedef enum e_token_kind t_token_kind;
+typedef enum e_token_kind	t_token_kind;
 enum e_token_kind
 {
 	TK_AND,
@@ -52,7 +54,7 @@ enum e_token_kind
 	TK_REDIRECT_APPEND,
 };
 
-typedef struct s_token t_token;
+typedef struct s_token		t_token;
 struct s_token
 {
 	t_token_kind	kind;
@@ -60,7 +62,7 @@ struct s_token
 	t_token			*next;
 };
 
-typedef struct s_envp t_envp;
+typedef struct s_envp		t_envp;
 struct s_envp
 {
 	char	*key;
@@ -68,7 +70,7 @@ struct s_envp
 	char	*pair;
 };
 
-typedef enum e_node_kind t_node_kind;
+typedef enum e_node_kind	t_node_kind;
 enum e_node_kind
 {
 	ND_PIPE,
@@ -84,7 +86,7 @@ enum e_node_kind
 	ND_REDIRECT_APPEND,
 };
 
-typedef struct s_node t_node;
+typedef struct s_node		t_node;
 struct s_node
 {
 	t_node_kind	kind;
@@ -192,8 +194,6 @@ void	error_subshell(t_token *token);
 t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);
 void	ast_set_str_left(t_node *node, t_token **token, t_node *left);
-const char* getNodeKindName(t_node_kind kind);
-void 	printAST(t_node *node, int level, int isLeft);
 void	traverse_start(t_node *head, t_ms *ms, int action);
 void	traverse(t_node *cur, t_ms *ms, int fd_w[2], int action);
 void	heredoc(t_node *cur);
@@ -228,8 +228,4 @@ void	cleanup(t_ms *ms);
 void	cleanup_envp(t_ms *ms);
 void	cleanup_final(t_ms *ms);
 void	close_fd(t_ms *ms);
-
-//void	print_token(t_ms *ms);
-//char	*token_kind(int k);
-//TODO: remove with print file
 #endif

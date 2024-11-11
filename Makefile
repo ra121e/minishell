@@ -6,13 +6,11 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/11/09 21:42:13 by xlok             ###   ########.fr        #
+#    Updated: 2024/11/10 21:08:09 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := minishell
-
-BONUS_NAME := minishell_bonus
 
 LIB_DIR := libft
 LIB := $(LIB_DIR)/libft.a
@@ -65,31 +63,12 @@ SRC_F := minishell.c \
 		 free_split.c \
 		 error.c \
 		 ft_strsjoin.c \
-		 signal.c \
-		 to_remove_test_print.c
+		 signal.c
 
 SRC := $(SRC_F:%.c=$(SRC_DIR)/%.c)
 
 OBJ_DIR := obj
 OBJ := $(SRC_F:%.c=$(OBJ_DIR)/%.o)
-
-BONUS_SRC_DIR := bonus_src
-BONUS_SRC_F :=	so_long_bonus.c \
-				init_bonus.c \
-				validate_map_bonus.c \
-				validate_map_path_bonus.c \
-				render_bonus.c \
-				animate_bonus.c \
-				movement_bonus.c \
-		 		get_pos_bonus.c \
-				handler_bonus.c \
-				enemy_bonus.c \
-				error_bonus.c
-
-BONUS_SRC := $(BONUS_SRC_F:%.c=$(BONUS_SRC_DIR)/%.c)
-
-BONUS_OBJ_DIR := bonus_obj
-BONUS_OBJ := $(BONUS_SRC_F:%.c=$(BONUS_OBJ_DIR)/%.o)
 
 .PHONY: all clean fclean re bonus norm
 
@@ -98,20 +77,11 @@ all: $(NAME)
 $(NAME): $(LIB) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LINK) -o $@
 
-bonus: $(BONUS_NAME)
-
-$(BONUS_NAME): $(LIB) $(BONUS_OBJ)
-	$(CC) $(CFLAGS) $(BONUS_OBJ) $(LINK) -o $@
-
 $(LIB):
 	$(MAKE) -C $(LIB_DIR) CFLAGS=$(CFLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(DEP)
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INC_FLAG) -c $< -o $@
-
-$(BONUS_OBJ_DIR)/%.o: $(BONUS_SRC_DIR)/%.c $(BONUS_DEP)
-	@mkdir -p $(BONUS_OBJ_DIR)
 	$(CC) $(CFLAGS) $(INC_FLAG) -c $< -o $@
 
 clean:
@@ -122,7 +92,3 @@ fclean: clean
 	rm -rf $(NAME) $(BONUS_NAME) $(LIB)
 
 re: fclean all
-
-norm:
-	clear
-	@norminette $(SRC) $(BONUS_SRC) $(DEP) $(BONUS_DEP)
