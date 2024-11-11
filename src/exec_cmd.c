@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/10 19:51:37 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/11 18:53:24 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,6 @@ void	exec_cmd(t_ms *ms)
 		else
 			fork_process(ms);
 		exec_parent_wait(ms);
-	}
-	else
-	{
-		ft_dprintf(2, "command '' not found\n");
-		ms->exit_status = 127;
 	}
 	close_fd(ms);
 	ms->fd_r = ms->fd_w[0];
