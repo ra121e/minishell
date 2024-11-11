@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 22:49:37 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/10 18:14:14 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/11 23:33:19 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ int	get_new_len_found_var(t_ms *ms, char *str, int i)
 	return (--i);
 }
 
-void	get_new_len(t_ms *ms, char *str, int i)
+void	get_new_len(t_ms *ms, char *str, int i, int is_heredoc)
 {
 	while (str[++i])
 	{
-		if (str[i] == '\'')
+		if (!is_heredoc && str[i] == '\'')
 		{
 			while (str[++i] != '\'')
 				ms->len++;
