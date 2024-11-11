@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/11 21:30:24 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/12 00:09:00 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	heredoc_expand(t_ms *ms, t_node *node)
 		file_fd = heredoc_expand_loop(ms, node);
 		if (file_fd > 2)
 			return (file_fd);
+		free(ms->heredoc_filename);
 	}
 	return (-1);
 }
