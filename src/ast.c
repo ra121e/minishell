@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:05:30 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/10 17:15:36 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/11 20:17:35 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	ast_set_str_left(t_node *node, t_token **token, t_node *left)
 {
 	node->str = (*token)->str;
 	node->left = left;
+	if (left->error == true)
+		node->error = true;
 	*token = (*token)->next;
 }
 
