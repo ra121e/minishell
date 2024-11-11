@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/10 18:12:50 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/11 21:33:16 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,20 @@ int	found_var(t_ms *ms, char *str, int i)
 	return (--i);
 }
 
-void	expand_var(t_ms *ms, char *str, int heredoc)
+void	expand_var_heredoc_loop(t_ms *ms, char *str)
 {
-	ms->len = 0;
-	ms->expand_var = 0;
-	get_new_len(ms, str, -1);
-	ms->new_str = malloc(ms->len + 1);
-	if (!ms->new_str)
-		error_malloc(ms, "ms->new_str malloc error\n");
-	ms->n = 0;
-	ms->i = -1;
 	while (str[++ms->i])
 	{
-		if (!heredoc && str[ms->i] == '\'')
+		if (str[ms->i] == '\"')
 		{
 			ms->new_str[ms->n++] = str[ms->i];
-			while (str[++ms->i] != '\'')
-				ms->new_str[ms->n++] = str[ms->i];
+			while (str[++ms->i] != '\"')
+			{
+				if (str[ms->i] == '$')
+					ms->i = found_var(ms, str, ms->i);
+				else
+					ms->new_str[ms->n++] = str[ms->i];
+			}
 			ms->new_str[ms->n++] = str[ms->i];
 		}
 		else if (str[ms->i] == '$')
@@ -70,5 +67,61 @@ void	expand_var(t_ms *ms, char *str, int heredoc)
 		else
 			ms->new_str[ms->n++] = str[ms->i];
 	}
+}
+
+void	expand_var_loop(t_ms *ms, char *str)
+{
+	while (str[++ms->i])
+	{
+		if (str[ms->i] == '\'')
+		{
+			while (str[++ms->i] != '\'')
+				ms->new_str[ms->n++] = str[ms->i];
+		}
+		else if (str[ms->i] == '\"')
+		{
+			while (str[++ms->i] != '\"')
+			{
+				if (str[ms->i] == '$')
+					ms->i = found_var(ms, str, ms->i);
+				else
+					ms->new_str[ms->n++] = str[ms->i];
+			}
+		}
+		else if (str[ms->i] == '$')
+			ms->i = found_var(ms, str, ms->i);
+		else
+			ms->new_str[ms->n++] = str[ms->i];
+	}
+}
+
+void	expand_var(t_ms *ms, char *str, int is_heredoc)
+{
+	ms->len = 0;
+	ms->expand_var = 0;
+	get_new_len(ms, str, -1);
+	ms->new_str = malloc(ms->len + 1);
+	if (!ms->new_str)
+		error_malloc(ms, "ms->new_str malloc error");
+	ms->n = 0;
+	ms->i = -1;
+	if (is_heredoc)
+		expand_var_heredoc_loop(ms, str);
+	else
+		expand_var_loop(ms, str);
 	ms->new_str[ms->n] = 0;
 }
+
+//void	expand_var_heredoc(t_ms *ms, char *str)
+//{
+//	ms->len = 0;
+//	ms->expand_var = 0;
+//	get_new_len(ms, str, -1);
+//	ms->new_str = malloc(ms->len + 1);
+//	if (!ms->new_str)
+//		error_malloc(ms, "ms->new_str malloc error");
+//	ms->n = 0;
+//	ms->i = -1;
+//	expand_var_heredoc_loop(ms, str);
+//	ms->new_str[ms->n] = 0;
+//}

@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/10 18:48:14 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/11 22:08:55 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,7 @@ static void	word_split(t_ms *ms, char *str)
 	ms->i = -1;
 	while (str[++ms->i])
 	{
-		if (str[ms->i] == '\'' || str[ms->i] == '\"')
-		{
-			ms->c = str[ms->i++];
-			while (str[ms->i] != ms->c)
-				ms->i++;
-		}
-		else if (ft_isspace(str[ms->i]))
+		if (ft_isspace(str[ms->i]))
 		{
 			if (ms->i > ms->start)
 				add_cmd_arg(ms, str, ms->start, ms->i);
@@ -74,7 +68,11 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 		else
 		{
 			expand_var(ms, cur->str, 0);
-			word_split(ms, ms->new_str);
+			if ((ms->cmd && ft_strncmp(ms->cmd[0], "export", 7))
+				|| (!ms->cmd && ft_strncmp(ms->new_str, "export", 7)))
+				word_split(ms, ms->new_str);
+			else
+				add_cmd_arg(ms, ms->new_str, 0, ft_strlen(ms->new_str));
 			free_str(ms->new_str);
 		}
 		cur = cur->right;

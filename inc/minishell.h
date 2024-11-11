@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/10 21:05:47 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/11 21:31:10 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void	traverse(t_node *cur, t_ms *ms, int fd_w[2], int action);
 void	heredoc(t_node *cur);
 int		heredoc_expand(t_ms *ms, t_node *node);
 void	get_new_len(t_ms *ms, char *str, int i);
-void	expand_var(t_ms *ms, char *str, int heredoc);
+void	expand_var(t_ms *ms, char *str, int is_heredoc);
 int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
 void	expand_var_replace(t_ms *ms, int quote);
 char	*remove_quote(char *old);

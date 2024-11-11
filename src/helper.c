@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 15:52:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/10 18:47:27 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/11 20:29:55 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*remove_quote(char *old)
 	new = malloc(ft_strlen(old) + 1);
 	if (!new)
 	{
-		perror("remove quote malloc error\n");
+		perror("remove quote malloc error");
 		return (0);
 	}
 	quote = 0;
