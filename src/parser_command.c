@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:17:20 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/12 20:14:45 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/12 22:13:14 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ t_node	*parser_cmd_re(t_token **token)
 	node = parser_cmd(token);
 	if (node == NULL)
 		return (NULL);
+	if (node->kind == ND_REDIRECT_HEREDOC && (*token)->kind == TK_WORD)
+		heredoc(node, (*token)->str);
 	right = parser_cmd_right(token);
 	if (right && right->error == true)
 		node->error = true;
 	node->right = right;
-	if (node->right && node->kind == ND_REDIRECT_HEREDOC)
-		heredoc(node);
 	return (node);
 }
 
@@ -86,12 +86,12 @@ t_node	*parser_cmd_right(t_token **token)
 		node = parser_cmd(token);
 		if (node == NULL)
 			return (NULL);
+		if (node->kind == ND_REDIRECT_HEREDOC && (*token)->kind == TK_WORD)
+			heredoc(node, (*token)->str);
 		right = parser_cmd_right(token);
 		if (right && right->error == true)
 			node->error = true;
 		node->right = right;
-		if (node->right && node->kind == ND_REDIRECT_HEREDOC)
-			heredoc(node);
 		return (node);
 	}
 	else

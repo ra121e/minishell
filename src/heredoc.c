@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/12 00:09:00 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/12 22:13:43 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	heredoc_expand(t_ms *ms, t_node *node)
 	if (ms->fd_r > 2)
 	{
 		close(ms->fd_r);
-		unlink(ms->heredoc_filename);
+		if (ms->heredoc_filename)
+			unlink(ms->heredoc_filename);
 		free(ms->heredoc_filename);
 	}
 	i = 0;
@@ -96,17 +97,16 @@ char	*read_loop(char *delimiter, int len, char *heredoc_str, char *input)
 	return (heredoc_str);
 }
 
-void	heredoc(t_node *cur)
+void	heredoc(t_node *cur, char *delimiter)
 {
 	char	*heredoc_str;
 	char	*tmp;
-	char	*delimiter;
 
 	while (cur && cur->kind)
 	{
 		if (cur->kind == ND_REDIRECT_HEREDOC)
 		{
-			delimiter = remove_quote(cur->right->str);
+			delimiter = remove_quote(delimiter);
 			ft_signal();
 			heredoc_str = read_loop(delimiter, ft_strlen(delimiter), 0, 0);
 			tmp = heredoc_str;
