@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 22:12:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/12 21:12:36 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/12 21:37:41 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	syntax_check_parenthesis(char *str)
 				return (1);
 			}
 		}
-		else if(str[i] == ')')
+		else if (str[i] == ')')
 		{
 			ft_dprintf(2, "bash: Syntax error near unexpected token `)'\n");
 			return (1);
