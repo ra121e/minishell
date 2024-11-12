@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/12 15:28:09 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/12 19:36:26 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@ static void	process_flow(t_ms *ms)
 	ms->start_node = parser(&ms->head);
 	if (ms->start_node == NULL)
 		return ;
-	traverse_start(ms->start_node, ms, HEREDOC);
 	if (g_sig)
 		ms->exit_status = 128 + g_sig;
 	else
-		traverse_start(ms->start_node, ms, EXECUTE);
+		traverse_start(ms->start_node, ms);
 }
 
 static void	loop(t_ms *ms)

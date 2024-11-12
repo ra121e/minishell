@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/11 23:34:20 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/12 19:41:11 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,8 +194,8 @@ void	error_subshell(t_token *token);
 t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);
 void	ast_set_str_left(t_node *node, t_token **token, t_node *left);
-void	traverse_start(t_node *head, t_ms *ms, int action);
-void	traverse(t_node *cur, t_ms *ms, int fd_w[2], int action);
+void	traverse_start(t_node *head, t_ms *ms);
+void	traverse(t_node *cur, t_ms *ms, int fd_w[2]);
 void	heredoc(t_node *cur);
 int		heredoc_expand(t_ms *ms, t_node *node);
 void	get_new_len(t_ms *ms, char *str, int i, int is_heredoc);
