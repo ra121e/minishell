@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/11 18:53:24 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/12 15:28:43 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	exec_child(t_ms *ms)
 		close(ms->fd_w[0]);
 	if (ms->fd_w[1] > 2)
 		dup2_and_close(ms->fd_w[1], STDOUT_FILENO);
+	if (!ft_strlen(*ms->cmd))
+	{
+		ft_dprintf(2, "Command '' not found\n");
+		exit(127);
+	}
 	execve(ms->cmd[0], ms->cmd, ms->cmd_envp);
 	cmd_exe = get_fullpath(ms->cmd[0], ms);
 	if (cmd_exe == NULL)
@@ -77,20 +82,17 @@ void	fork_process(t_ms *ms)
 void	exec_cmd(t_ms *ms)
 {
 	cmd_envp(ms);
-	if (**ms->cmd)
+	if (is_builtin(ms->cmd[0]) == true)
 	{
-		if (is_builtin(ms->cmd[0]) == true)
-		{
-			ms->builtin_cmd = 1;
-			if (ms->in_pipe)
-				fork_process(ms);
-			else
-				builtin(ms);
-		}
-		else
+		ms->builtin_cmd = 1;
+		if (ms->in_pipe)
 			fork_process(ms);
-		exec_parent_wait(ms);
+		else
+			builtin(ms);
 	}
+	else
+		fork_process(ms);
+	exec_parent_wait(ms);
 	close_fd(ms);
 	ms->fd_r = ms->fd_w[0];
 	free(ms->cmd_envp);

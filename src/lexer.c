@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/11 19:01:33 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/12 15:07:58 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ void	lexer(t_ms *ms, char *str)
 {
 	if (syntax_checker(ms, str))
 		return ;
-	if (is_empty_quote(ms, str))
-		return ;
+//	if (is_empty_quote(ms, str))
+//		return ;
 	optimize_str(ms, str);
 	ms->end = 0;
 	while (ms->end <= ms->len)
