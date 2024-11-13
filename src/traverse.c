@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:16:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/13 22:14:59 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/13 22:35:10 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	traverse_cmd(t_node *cur, t_ms *ms, int fd_w[2])
 			ms->fd_r = ms->fd_w[0];
 		}
 	}
-//	close_fd(ms);
-//	ms->fd_r = ms->fd_w[0];
 }
 
 void	traverse_continue(t_node *cur, t_ms *ms, int fd_w[2])

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/13 21:19:56 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/13 22:34:19 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	exec_parent_wait(t_ms *ms)
 {
 	int	status;
 
+	status = 0;
 	waitpid(ms->pid, &status, 0);
 	while (1)
 	{
