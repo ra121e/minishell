@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/12 21:36:14 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/13 22:05:54 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 	kind = (*cur)->kind;
 	*cur = (*cur)->right;
 	if (kind == ND_REDIRECT_IN)
-		ms->fd_r = get_filename_fd((*cur)->str, ms->fd_r, READ);
+		ms->fd_r = get_filename_fd(ms, (*cur)->str, ms->fd_r, READ);
 	else if (kind == ND_REDIRECT_HEREDOC)
 		ms->fd_r = heredoc_expand(ms, redirect_node);
 	else if (kind == ND_REDIRECT_OUT || kind == ND_REDIRECT_APPEND)
@@ -29,9 +29,9 @@ static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 		if (fd_w)
 		{
 			if (kind == ND_REDIRECT_OUT)
-				fd_w[1] = get_filename_fd((*cur)->str, fd_w[1], WRITE);
+				fd_w[1] = get_filename_fd(ms, (*cur)->str, fd_w[1], WRITE);
 			else
-				fd_w[1] = get_filename_fd((*cur)->str, fd_w[1], APPEND);
+				fd_w[1] = get_filename_fd(ms, (*cur)->str, fd_w[1], APPEND);
 		}
 	}
 }

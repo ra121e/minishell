@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/13 21:16:41 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/13 22:06:23 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ void	exec_parent_wait(t_ms *ms);
 void	init_cmd(t_ms *ms);
 int		*init_fd_w(t_ms *ms);
 void	dup2_and_close(pid_t old_fd, pid_t new_fd);
-int		get_filename_fd(char *str, pid_t fd, int mode);
+int		get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode);
 int		*exec_pip(t_ms *ms);
 void	cmd_envp(t_ms *ms);
 char	**find_envpath(t_ms *ms);

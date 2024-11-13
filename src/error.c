@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:46:53 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/10 18:08:30 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/13 22:03:34 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,6 @@ void	error_exit(char *str)
 {
 	perror(str);
 	exit(EXIT_FAILURE);
-}
-
-void	error_empty_cmd(char **cmd_parts)
-{
-	ft_putstr_fd("pipex: Permission denied:\n", 2);
-	free_split(cmd_parts);
-	exit(126);
 }
 
 void	error_wrong_cmd(t_ms *ms)
