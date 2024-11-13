@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/13 22:19:28 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/14 07:53:19 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static void	loop(t_ms *ms)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_ms		*ms;
+	t_ms	*ms;
+	int		exit_status;
 
 	if (argc != 1)
 		return (ft_dprintf(2, "No arguments allowed...\n"), 1);
@@ -64,5 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	init(ms, envp);
 	loop(ms);
+	exit_status = ms->exit_status;
 	cleanup_final(ms);
+	return (exit_status);
 }
