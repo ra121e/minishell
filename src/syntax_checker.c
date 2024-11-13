@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
+/*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 22:12:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/10 19:00:04 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/12 21:37:41 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,14 @@ int	syntax_check_parenthesis(char *str)
 				i++;
 			if (!str[i])
 			{
-				ft_dprintf(2, "Syntax error...no closing quote\n");
+				ft_dprintf(2, "bash: Syntax error: unexpected end of file\n");
 				return (1);
 			}
+		}
+		else if (str[i] == ')')
+		{
+			ft_dprintf(2, "bash: Syntax error near unexpected token `)'\n");
+			return (1);
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:17:20 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/13 20:21:05 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/13 21:55:39 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ t_node	*parser_cmd(t_token **token)
 		node = ast_newnode(ND_COMMAND);
 		node->str = (*token)->str;
 		*token = (*token)->next;
-		if ((*token)->kind == TK_LPAREN || (*token)->kind == TK_LPAREN)
+		if ((*token)->kind == TK_LPAREN)
 		{
 			ft_dprintf(2, "bash: Syntax error near unexpected token `");
 			ft_dprintf(2, "%s' \n", (*token)->str);
