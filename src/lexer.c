@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/12 15:07:58 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/13 21:25:06 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,27 +78,10 @@ void	quote(t_ms *ms, char c)
 	ms->end++;
 }
 
-int	is_empty_quote(t_ms *ms, char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] != '\'' && str[i] != '\"')
-			return (0);
-	}
-	ft_dprintf(2, "Command '' not found\n");
-	ms->exit_status = 126;
-	return (1);
-}
-
 void	lexer(t_ms *ms, char *str)
 {
 	if (syntax_checker(ms, str))
 		return ;
-//	if (is_empty_quote(ms, str))
-//		return ;
 	optimize_str(ms, str);
 	ms->end = 0;
 	while (ms->end <= ms->len)

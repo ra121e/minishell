@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:16:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/12 19:42:55 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/13 21:16:55 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ void	traverse_cmd(t_node *cur, t_ms *ms, int fd_w[2])
 	if (!g_sig)
 	{
 		if (ms->cmd && ms->cmd[0])
-		{
 			exec_cmd(ms);
-			if (g_sig)
-				close(ms->fd_r);
-		}
 		else
 		{
 			close_fd(ms);
@@ -74,4 +70,5 @@ void	traverse_start(t_node *head, t_ms *ms)
 		return ;
 	ms->in_pipe = 0;
 	traverse(head, ms, 0);
+	exec_parent_wait(ms);
 }

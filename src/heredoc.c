@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 11:29:46 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/12 22:13:43 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/13 21:24:39 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	heredoc_expand(t_ms *ms, t_node *node)
 	char	*cwd;
 	char	*counter;
 	int		file_fd;
-	int		i;
 
 	if (ms->fd_r > 2)
 	{
@@ -52,11 +51,11 @@ int	heredoc_expand(t_ms *ms, t_node *node)
 			unlink(ms->heredoc_filename);
 		free(ms->heredoc_filename);
 	}
-	i = 0;
-	while (++i)
+	ms->i = 0;
+	while (++ms->i)
 	{
 		cwd = getcwd(0, 0);
-		counter = ft_itoa(i);
+		counter = ft_itoa(ms->i);
 		ms->heredoc_filename = ft_strsjoin(3, cwd, "/tmp", counter);
 		free(cwd);
 		free(counter);

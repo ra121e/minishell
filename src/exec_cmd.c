@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/12 19:56:24 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/13 21:19:56 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,24 @@ void	exec_parent_wait(t_ms *ms)
 	int	status;
 
 	waitpid(ms->pid, &status, 0);
-	if (!ms->builtin_cmd || ms->in_pipe)
+	while (1)
+	{
+		if (wait(0) == -1)
+		{
+			if (errno == ECHILD)
+				break ;
+		}
+	}
+	if (WIFEXITED(status) && (!ms->builtin_cmd || ms->in_pipe))
 		ms->exit_status = WEXITSTATUS(status);
-	if (g_sig)
-		ms->exit_status = 128 + g_sig;
+	else if (WIFSIGNALED(status))
+	{
+		ms->exit_status = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == 2)
+			ft_dprintf(2, "\n");
+		else if (WTERMSIG(status) == 3)
+			ft_dprintf(ms->fd_w[1], "Quit (core dumped)\n");
+	}
 }
 
 void	fork_process(t_ms *ms)
@@ -70,13 +84,14 @@ void	fork_process(t_ms *ms)
 	ms->pid = pid;
 	if (pid == 0)
 	{
-		ft_signal_cmd();
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (ms->builtin_cmd && ms->in_pipe)
 			exec_builtin_in_child(ms);
 		else
 			exec_child(ms);
 	}
-	ft_signal_non();
+	signal(SIGINT, SIG_IGN);
 }
 
 void	exec_cmd(t_ms *ms)
@@ -92,7 +107,6 @@ void	exec_cmd(t_ms *ms)
 	}
 	else
 		fork_process(ms);
-	exec_parent_wait(ms);
 	close_fd(ms);
 	ms->fd_r = ms->fd_w[0];
 	free(ms->cmd_envp);

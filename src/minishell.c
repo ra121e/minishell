@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/12 19:36:26 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/13 20:26:38 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static void	process_flow(t_ms *ms)
 	if (ms->error)
 		return ;
 	ms->start_node = parser(&ms->head);
-	if (ms->start_node == NULL)
-		return ;
 	if (g_sig)
 		ms->exit_status = 128 + g_sig;
 	else

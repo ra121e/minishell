@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/12 22:14:07 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/13 21:16:41 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,7 @@ char	*remove_quote(char *old);
 void	add_cmd_arg(t_ms *ms, char *str, int s, int i);
 void	redirection(t_ms *ms, t_node *cur, int fd_w[2]);
 void	exec_cmd(t_ms *ms);
+void	exec_parent_wait(t_ms *ms);
 void	init_cmd(t_ms *ms);
 int		*init_fd_w(t_ms *ms);
 void	dup2_and_close(pid_t old_fd, pid_t new_fd);
