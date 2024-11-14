@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/13 22:34:19 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/14 21:35:00 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	exec_child(t_ms *ms)
 	}
 	execve(ms->cmd[0], ms->cmd, ms->cmd_envp);
 	cmd_exe = get_fullpath(ms->cmd[0], ms);
-	if (cmd_exe == NULL)
-		error_wrong_cmd(ms);
 	execve(cmd_exe, ms->cmd, ms->cmd_envp);
 	perror(ms->cmd[0]);
 	free(cmd_exe);

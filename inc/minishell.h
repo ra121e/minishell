@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/13 22:06:23 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/14 20:12:59 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <signal.h>
