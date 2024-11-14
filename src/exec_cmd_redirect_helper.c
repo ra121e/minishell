@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/13 22:05:14 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/14 22:09:49 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode)
 	else
 		file_fd = open(filename, mode, 0644);
 	if (file_fd == -1)
-		error_malloc(ms, "minishell");
+		error_filename(ms, str);
 	free(filename);
 	return (file_fd);
 }

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/14 20:12:59 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/14 22:10:23 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,7 @@ void	free_split(char **str);
 void	error_exit(char *str);
 void	error_wrong_cmd(t_ms *ms);
 void	error_malloc(t_ms *ms, char *msg);
+void	error_filename(t_ms *ms, char *msg);
 
 void	free_str(char *str);
 void	free_str_array(char **str);
