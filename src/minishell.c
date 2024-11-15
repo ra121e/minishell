@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/14 07:53:19 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/15 10:59:18 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	process_flow(t_ms *ms)
 {
-	add_history(ms->input);
+	if (*ms->input)
+		add_history(ms->input);
 	lexer(ms, ms->input);
 	free(ms->input);
 	if (ms->error)
