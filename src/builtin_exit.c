@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 21:58:55 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/06 07:44:55 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/15 08:01:02 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ static void	clean_before_exit(t_ms *ms, unsigned char c)
 static void	process_in_parent(t_ms *ms, unsigned char c)
 {
 	ft_dprintf(2, "exit\n");
-	if (!ms->cmd[1])
-		clean_before_exit(ms, 0);
-	else if (ms->cmd[2])
+	if (ms->cmd[1] && ms->cmd[2])
 	{
 		ft_dprintf(2, "bash: exit: too many arguments\n");
 		ms->exit_status = 1;
@@ -52,7 +50,7 @@ static void	process_in_parent(t_ms *ms, unsigned char c)
 
 static void	process_in_child(t_ms *ms, unsigned char c)
 {
-	if (ms->cmd[2])
+	if (ms->cmd[1] && ms->cmd[2])
 	{
 		ft_dprintf(2, "bash: exit: too many arguments\n");
 		exit(1);
@@ -89,7 +87,7 @@ void	builtin_exit(t_ms *ms)
 	if (ms->cmd[1])
 		c = ft_atoi(ms->cmd[1]);
 	else
-		c = 0;
+		c = ms->exit_status;
 	if (ms->in_pipe == 0)
 		process_in_parent(ms, c);
 	else
