@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 18:19:54 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/05 07:51:52 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/15 19:47:20 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,3 @@ t_token	*prev_token(t_token *cur)
 	cur = cur->next;
 	return (cur);
 }
-
-/*
-bool	consume(t_token *token, char op)
-{
-	if (token->kind != TK_AND || token->kind != TK_OR || token->str[0] != op)
-		return (false);
-	token = token->next;
-	return (true);
-}
-*/

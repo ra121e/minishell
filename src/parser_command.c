@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:17:20 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/13 22:27:22 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/15 19:28:03 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,9 @@ t_node	*parser_cmd_re(t_token **token)
 		return (node);
 	}
 	right = parser_cmd_right(token);
-	if (right && right->error == true)
+	if ((right && right->error == true) || \
+		(!right && ((*token)->kind == TK_WORD || \
+		(*token)->kind IS_REDIRECT)))
 		node->error = true;
 	node->right = right;
 	return (node);
@@ -99,7 +101,9 @@ t_node	*parser_cmd_right(t_token **token)
 			return (node);
 		}
 		right = parser_cmd_right(token);
-		if (right && right->error == true)
+		if ((right && right->error == true) || \
+			(!right && ((*token)->kind == TK_WORD || \
+			(*token)->kind IS_REDIRECT)))
 			node->error = true;
 		node->right = right;
 		return (node);
@@ -125,6 +129,8 @@ t_node	*parser_cmd(t_token **token)
 	else
 	{
 		node = ast_newnode(ND_COMMAND);
+		if (node == NULL)
+			return (NULL);
 		node->str = (*token)->str;
 		*token = (*token)->next;
 		if ((*token)->kind == TK_LPAREN)

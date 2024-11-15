@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/15 10:34:13 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/15 20:01:54 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ int		is_error_and_or(t_token *token);
 int		is_error_eof(t_token *token);
 int		is_error_pipe(t_token *token);
 int		is_error_and_or_eof(t_token *token, t_node **node);
+int		is_error_pipe_eof(t_token *token, t_node **node);
 void	error_expr(t_token *token);
 void	error_right(t_token *token);
 void	error_pip(t_token *token);
@@ -195,7 +196,7 @@ void	error_subshell(t_token *token);
 
 t_token	*next_token(t_token *cur);
 t_node	*ast_newnode(t_node_kind kind);
-void	ast_set_str_left(t_node *node, t_token **token, t_node *left);
+int		ast_set_str_left(t_node *node, t_token **token, t_node *left);
 void	traverse_start(t_node *head, t_ms *ms);
 void	traverse(t_node *cur, t_ms *ms, int fd_w[2]);
 void	heredoc(t_node *cur, char *delimiter);

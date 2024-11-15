@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:03:37 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/10 10:13:38 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/15 19:48:32 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ t_node	*parser_expr(t_token **token)
 			node = ast_newnode(ND_OR);
 		else
 			return (left);
-		ast_set_str_left(node, token, left);
+		if (ast_set_str_left(node, token, left) == 0)
+			return (left);
 		if (is_error_and_or_eof(*token, &node))
 			return (node);
 		node->right = parser_pip(token);
