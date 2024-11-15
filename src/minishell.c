@@ -6,29 +6,67 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/09/25 16:54:42 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:59:18 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main()
+static void	process_flow(t_ms *ms)
 {
-	char		*input;
-	char		*prompt;
-	t_token		*head;
-	prompt = ft_strjoin(ft_strjoin(getenv("USER"), "@"), ":$");//TODO:free
+	if (*ms->input)
+		add_history(ms->input);
+	lexer(ms, ms->input);
+	free(ms->input);
+	if (ms->error)
+		return ;
+	ms->start_node = parser(&ms->head);
+	if (g_sig)
+		ms->exit_status = 128 + g_sig;
+	else
+		traverse_start(ms->start_node, ms);
+}
+
+static void	loop(t_ms *ms)
+{
 	while (1)
 	{
-		input = readline(prompt);
-		if (!input)
-			break ;
-		else if (*input)
+		init_loop(ms);
+		ft_signal();
+		ms->input = readline(ms->prompt);
+		if (g_sig)
 		{
-			add_history(input);
-			head = lexer(input);
+			ms->exit_status = 128 + g_sig;
+			continue ;
 		}
-		free(input);
-		printf("tokens: %s -> %s -> %s...", head->str, head->next->str, head->next->next->str);
+		if (!ms->input)
+		{
+			ft_dprintf(2, "exit\n");
+			break ;
+		}
+		else
+			process_flow(ms);
+		cleanup(ms);
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_ms	*ms;
+	int		exit_status;
+
+	if (argc != 1)
+		return (ft_dprintf(2, "No arguments allowed...\n"), 1);
+	(void)argv;
+	ms = malloc(sizeof(t_ms));
+	if (!ms)
+	{
+		perror("ms malloc error");
+		return (1);
+	}
+	init(ms, envp);
+	loop(ms);
+	exit_status = ms->exit_status;
+	cleanup_final(ms);
+	return (exit_status);
 }

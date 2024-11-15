@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   parser_helper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
+/*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 17:08:56 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/10 18:38:56 by xlok             ###   ########.fr       */
+/*   Created: 2024/10/07 18:19:54 by athonda           #+#    #+#             */
+/*   Updated: 2024/11/15 19:47:20 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_pwd(t_ms *ms)
+t_token	*next_token(t_token *cur)
 {
-	char	*cwd;
+	if (cur == NULL)
+		return (NULL);
+	cur = cur->next;
+	return (cur);
+}
 
-	cwd = getcwd(0, 0);
-	if (!cwd)
-		error_malloc(ms, "getcwd malloc error");
-	ft_dprintf(ms->fd_w[1], "%s\n", cwd);
-	free(cwd);
-	ms->exit_status = 0;
+t_token	*prev_token(t_token *cur)
+{
+	if (cur == NULL)
+		return (NULL);
+	cur = cur->next;
+	return (cur);
 }

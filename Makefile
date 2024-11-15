@@ -6,13 +6,11 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/09/23 21:39:03 by athonda          ###   ########.fr        #
+#    Updated: 2024/11/15 09:20:30 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := minishell
-
-BONUS_NAME := minishell_bonus
 
 LIB_DIR := libft
 LIB := $(LIB_DIR)/libft.a
@@ -27,33 +25,51 @@ BONUS_DEP := inc/minishell_bonus.h
 
 SRC_DIR := src
 SRC_F := minishell.c \
+		 init.c \
+		 cleanup.c \
+		 free.c \
+		 helper.c \
+		 syntax_checker.c \
 		 lexer.c \
+		 expansion_var.c \
+		 expansion_var_helper.c \
+		 builtin.c \
+		 builtin_echo.c \
+		 builtin_cd.c \
 		 builtin_pwd.c \
+		 builtin_env.c \
+		 builtin_export.c \
+		 builtin_export_helper.c \
+		 builtin_unset.c \
+		 builtin_exit.c \
 		 tokenize.c \
-		 token.c
+		 token.c \
+		 parser.c \
+		 parser_expr.c \
+		 parser_pip.c \
+		 parser_command.c \
+		 parser_subshell.c \
+		 parser_redirect.c \
+		 parser_helper.c \
+		 error_parser.c \
+		 ast.c \
+		 traverse.c \
+		 exec_cmd.c \
+		 exec_cmd_helper.c \
+		 exec_cmd_redirect.c \
+		 exec_cmd_redirect_helper.c \
+		 pipe_wait.c \
+		 heredoc.c \
+		 get_fullpath.c \
+		 free_split.c \
+		 error.c \
+		 ft_strsjoin.c \
+		 signal.c
 
 SRC := $(SRC_F:%.c=$(SRC_DIR)/%.c)
 
 OBJ_DIR := obj
 OBJ := $(SRC_F:%.c=$(OBJ_DIR)/%.o)
-
-BONUS_SRC_DIR := bonus_src
-BONUS_SRC_F :=	so_long_bonus.c \
-				init_bonus.c \
-				validate_map_bonus.c \
-				validate_map_path_bonus.c \
-				render_bonus.c \
-				animate_bonus.c \
-				movement_bonus.c \
-		 		get_pos_bonus.c \
-				handler_bonus.c \
-				enemy_bonus.c \
-				error_bonus.c
-
-BONUS_SRC := $(BONUS_SRC_F:%.c=$(BONUS_SRC_DIR)/%.c)
-
-BONUS_OBJ_DIR := bonus_obj
-BONUS_OBJ := $(BONUS_SRC_F:%.c=$(BONUS_OBJ_DIR)/%.o)
 
 .PHONY: all clean fclean re bonus norm
 
@@ -62,20 +78,11 @@ all: $(NAME)
 $(NAME): $(LIB) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LINK) -o $@
 
-bonus: $(BONUS_NAME)
-
-$(BONUS_NAME): $(LIB) $(BONUS_OBJ)
-	$(CC) $(CFLAGS) $(BONUS_OBJ) $(LINK) -o $@
-
 $(LIB):
-	$(MAKE) -C $(LIB_DIR)
+	$(MAKE) -C $(LIB_DIR) CFLAGS=$(CFLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(DEP)
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INC_FLAG) -c $< -o $@
-
-$(BONUS_OBJ_DIR)/%.o: $(BONUS_SRC_DIR)/%.c $(BONUS_DEP)
-	@mkdir -p $(BONUS_OBJ_DIR)
 	$(CC) $(CFLAGS) $(INC_FLAG) -c $< -o $@
 
 clean:
@@ -86,7 +93,3 @@ fclean: clean
 	rm -rf $(NAME) $(BONUS_NAME) $(LIB)
 
 re: fclean all
-
-norm:
-	clear
-	@norminette $(SRC) $(BONUS_SRC) $(DEP) $(BONUS_DEP)
