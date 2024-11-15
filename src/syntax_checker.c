@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 22:12:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/12 21:37:41 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:51:57 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,29 @@ int	syntax_check_quote(char *str)
 
 int	syntax_check_parenthesis(char *str)
 {
-	int		i;
+	int	i;
+	int	balance;
 
+	balance = 0;
 	i = -1;
 	while (str[++i])
 	{
 		if (str[i] == '(')
+			balance++;
+		else if (str[i] == ')')
 		{
-			i++;
-			while (str[i] && str[i] != ')')
-				i++;
-			if (!str[i])
+			balance--;
+			if (balance < 0)
 			{
-				ft_dprintf(2, "bash: Syntax error: unexpected end of file\n");
+				ft_dprintf(2, "bash: Syntax error near unexpected token `)'\n");
 				return (1);
 			}
 		}
-		else if (str[i] == ')')
-		{
-			ft_dprintf(2, "bash: Syntax error near unexpected token `)'\n");
-			return (1);
-		}
+	}
+	if (balance != 0)
+	{
+		ft_dprintf(2, "bash: Syntax error: unexpected end of file\n");
+		return (1);
 	}
 	return (0);
 }
