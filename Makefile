@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/11/10 21:08:09 by xlok             ###   ########.fr        #
+#    Updated: 2024/11/15 09:20:30 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ SRC_F := minishell.c \
 		 exec_cmd_helper.c \
 		 exec_cmd_redirect.c \
 		 exec_cmd_redirect_helper.c \
+		 pipe_wait.c \
 		 heredoc.c \
 		 get_fullpath.c \
 		 free_split.c \

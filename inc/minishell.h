@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/14 22:10:23 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/15 10:34:13 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ typedef struct s_ms
 	bool	error;
 	t_node	*start_node;
 	char	*heredoc_filename;
+	int		forked;
 	int		pipfd[2];
 	int		fd_r;
 	int		fd_w[2];
@@ -207,7 +208,7 @@ char	*remove_quote(char *old);
 void	add_cmd_arg(t_ms *ms, char *str, int s, int i);
 void	redirection(t_ms *ms, t_node *cur, int fd_w[2]);
 void	exec_cmd(t_ms *ms);
-void	exec_parent_wait(t_ms *ms);
+void	pipe_wait(t_ms *ms);
 void	init_cmd(t_ms *ms);
 int		*init_fd_w(t_ms *ms);
 void	dup2_and_close(pid_t old_fd, pid_t new_fd);

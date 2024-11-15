@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/14 21:35:00 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/15 10:33:32 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,32 +47,6 @@ void	exec_child(t_ms *ms)
 	exit(EXIT_FAILURE);
 }
 
-void	exec_parent_wait(t_ms *ms)
-{
-	int	status;
-
-	status = 0;
-	waitpid(ms->pid, &status, 0);
-	while (1)
-	{
-		if (wait(0) == -1)
-		{
-			if (errno == ECHILD)
-				break ;
-		}
-	}
-	if (WIFEXITED(status) && (!ms->builtin_cmd || ms->in_pipe))
-		ms->exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-	{
-		ms->exit_status = 128 + WTERMSIG(status);
-		if (WTERMSIG(status) == 2)
-			ft_dprintf(2, "\n");
-		else if (WTERMSIG(status) == 3)
-			ft_dprintf(ms->fd_w[1], "Quit (core dumped)\n");
-	}
-}
-
 void	fork_process(t_ms *ms)
 {
 	pid_t	pid;
@@ -80,6 +54,7 @@ void	fork_process(t_ms *ms)
 	pid = fork();
 	if (pid < 0)
 		error_exit("fork error!");
+	ms->forked = 1;
 	ms->pid = pid;
 	if (pid == 0)
 	{
@@ -110,4 +85,5 @@ void	exec_cmd(t_ms *ms)
 	ms->fd_r = ms->fd_w[0];
 	free(ms->cmd_envp);
 	free_str_array(ms->cmd);
+	ms->cmd = 0;
 }

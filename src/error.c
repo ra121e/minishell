@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:46:53 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/14 22:10:34 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/15 09:19:13 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	error_malloc(t_ms *ms, char *msg)
 
 void	error_filename(t_ms *ms, char *msg)
 {
-	char *error_msg;
+	char	*error_msg;
 
 	error_msg = ft_strjoin("minishell: ", msg);
 	perror(error_msg);
