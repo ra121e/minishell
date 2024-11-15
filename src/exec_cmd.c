@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/15 10:33:32 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/15 22:18:03 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,15 @@ void	exec_child(t_ms *ms)
 		ft_dprintf(2, "Command '' not found\n");
 		exit(127);
 	}
-	execve(ms->cmd[0], ms->cmd, ms->cmd_envp);
+	if (check_relative_path(ms->cmd[0]))
+	{
+		execve(ms->cmd[0], ms->cmd, ms->cmd_envp);
+		exit(0);
+	}
 	cmd_exe = get_fullpath(ms->cmd[0], ms);
 	execve(cmd_exe, ms->cmd, ms->cmd_envp);
-	perror(ms->cmd[0]);
 	free(cmd_exe);
-	exit(EXIT_FAILURE);
+	exit(0);
 }
 
 void	fork_process(t_ms *ms)
