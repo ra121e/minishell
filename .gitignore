@@ -1,4 +1,7 @@
+.gitignore
 *.o
 *.a
 minishell
 *.swp
+*.pdf
+*.supp

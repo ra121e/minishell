@@ -6,11 +6,20 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:24:39 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/15 08:27:57 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 17:00:12 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	clean_cmd_before_exit(t_ms *ms, unsigned char c)
+{
+	free(ms->cmd_envp);
+	free_str_array(ms->cmd);
+	cleanup(ms);
+	cleanup_final(ms);
+	exit(c);
+}
 
 void	cleanup_envp(t_ms *ms)
 {

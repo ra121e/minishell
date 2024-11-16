@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/16 21:34:06 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/16 22:27:32 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,11 +170,10 @@ void	export_add(t_ms *ms, t_envp **envp);
 void	update_env(t_ms *ms);
 int		get_var_len(t_ms *ms, char *var);
 char	*get_var(t_ms *ms, char *var);
+int		lexer_is_space_or_tab(int c);
+int		word_split_delimiter(int c);
 
 void	ft_signal(void);
-void	ft_signal_non(void);
-void	ft_signal_heredoc(void);
-void	ft_signal_cmd(void);
 
 t_node	*parser(t_token **token);
 t_node	*parser_expr(t_token **token);
@@ -219,10 +218,10 @@ void	dup2_and_close(pid_t old_fd, pid_t new_fd);
 int		get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode);
 int		*exec_pip(t_ms *ms);
 void	cmd_envp(t_ms *ms);
-char	**find_envpath(t_ms *ms);
+char	**find_envpath(t_ms *ms, char *str);
 char	*join_cmd_path(char *cmd, char *path);
 char	*get_fullpath(char *cmd, t_ms *ms);
-int		check_relative_path(char *cmd);
+char	*check_relative_path(t_ms *ms, char *cmd);
 void	free_split(char **str);
 void	error_exit(char *str);
 void	error_wrong_cmd(t_ms *ms);
@@ -233,6 +232,7 @@ void	free_str(char *str);
 void	free_str_array(char **str);
 void	free_token(t_ms *ms);
 void	ast_free(t_node *node);
+void	clean_cmd_before_exit(t_ms *ms, unsigned char c);
 void	cleanup(t_ms *ms);
 void	cleanup_envp(t_ms *ms);
 void	cleanup_final(t_ms *ms);

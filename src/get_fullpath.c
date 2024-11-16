@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:25:29 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/14 21:55:02 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 19:44:40 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
  * @return path double pointer to the address of string of path
  */
 
-char	**find_envpath(t_ms *ms)
+char	**find_envpath(t_ms *ms, char *str)
 {
 	char	*envpath;
 	char	**path;
@@ -39,7 +39,7 @@ char	**find_envpath(t_ms *ms)
 	i = 0;
 	while (ms->cmd_envp[i])
 	{
-		if (ft_strncmp(ms->cmd_envp[i], "PATH=", 5) == 0)
+		if (ft_strncmp(ms->cmd_envp[i], str, 5) == 0)
 		{
 			envpath = ms->cmd_envp[i] + 5;
 			break ;
@@ -122,7 +122,7 @@ char	*search_envp(t_ms *ms, char *cmd, char **path, struct stat sb)
 			{
 				free(fullpath);
 				free_str_array(ms->cmd);
-				exit (ms->n);
+				clean_cmd_before_exit(ms, ms->n);
 			}
 		}
 		free(fullpath);
@@ -137,7 +137,7 @@ char	*get_fullpath(char *cmd, t_ms *ms)
 	char		**path;
 	char		*res;
 
-	path = find_envpath(ms);
+	path = find_envpath(ms, "PATH=");
 	if (path == NULL)
 		return (NULL);
 	sb.st_mode = 0;
@@ -145,7 +145,7 @@ char	*get_fullpath(char *cmd, t_ms *ms)
 	if (!res)
 	{
 		ft_dprintf(2, "Command '%s' not found\n", cmd);
-		exit (127);
+		clean_cmd_before_exit(ms, 127);
 	}
 	return (res);
 }

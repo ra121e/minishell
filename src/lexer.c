@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/13 21:54:50 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 16:32:30 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ void	lexer(t_ms *ms, char *str)
 	{
 		if (ms->str[ms->end] == '\'' || ms->str[ms->end] == '\"')
 			quote(ms, ms->str[ms->end]);
-		else if (!ms->str[ms->end] || ft_isspace(ms->str[ms->end]))
+		else if (!ms->str[ms->end] || lexer_is_space_or_tab(ms->str[ms->end]))
 		{
 			if (!ms->end)
 				ms->start = ++ms->end;
-			else if (!ft_isspace(ms->str[ms->end - 1]))
+			else if (!lexer_is_space_or_tab(ms->str[ms->end - 1]))
 				tokenize_prior_str(ms);
 			else
 				ms->start = ++ms->end;
