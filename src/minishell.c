@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/15 10:59:18 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 17:43:44 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ static void	loop(t_ms *ms)
 		ft_signal();
 		ms->input = readline(ms->prompt);
 		if (g_sig)
-		{
 			ms->exit_status = 128 + g_sig;
-			continue ;
-		}
 		if (!ms->input)
 		{
 			ft_dprintf(2, "exit\n");

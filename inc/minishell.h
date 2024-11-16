@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/16 17:33:28 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 17:50:30 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,9 +171,6 @@ int		lexer_is_space_or_tab(int c);
 int		word_split_delimiter(int c);
 
 void	ft_signal(void);
-void	ft_signal_non(void);
-void	ft_signal_heredoc(void);
-void	ft_signal_cmd(void);
 
 t_node	*parser(t_token **token);
 t_node	*parser_expr(t_token **token);
