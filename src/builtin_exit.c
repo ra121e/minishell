@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 21:58:55 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/16 18:20:01 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 21:03:40 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,19 @@ static void	process_in_child(t_ms *ms, unsigned char c)
 
 static void	process_arg(t_ms *ms)
 {
-	int				i;
+	int	i;
+	int	sign;
 
-	i = 0;
-	if (ms->cmd[1] && (ms->cmd[1][i] == '-' || ms->cmd[1][i] == '+'))
-		i++;
-	if (ms->cmd[1] && !ms->cmd[1][1])
+	sign = 0;
+	if (ms->cmd[1][0] == '-' || ms->cmd[1][0] == '+')
+		sign = 1;
+	if (sign && !ms->cmd[1][1])
 	{
 		ft_dprintf(2, "exit\n");
 		ft_dprintf(2, "bash: exit: %s: numeric argument required\n", ms->cmd[1]);
 		clean_cmd_before_exit(ms, 2);
 	}
+	i = 1;
 	while (ms->cmd[1] && ms->cmd[1][i])
 	{
 		if (!ft_isdigit(ms->cmd[1][i]))
@@ -80,7 +82,8 @@ void	builtin_exit(t_ms *ms)
 {
 	unsigned char	c;
 
-	process_arg(ms);
+	if (ms->cmd[1])
+		process_arg(ms);
 	if (ms->cmd[1])
 		c = ft_atoi(ms->cmd[1]);
 	else
