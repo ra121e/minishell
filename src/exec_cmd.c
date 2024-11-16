@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/16 17:10:34 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 17:33:09 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	exec_child(t_ms *ms)
 		exit(127);
 	}
 	if (ms->cmd[0][0] == '/' || (ms->cmd[0][0] == '.' && ms->cmd[0][1] == '/'))
-		cmd_exe = check_relative_path(ms->cmd[0]);
+		cmd_exe = check_relative_path(ms, ms->cmd[0]);
 	else
 		cmd_exe = get_fullpath(ms->cmd[0], ms);
 	execve(cmd_exe, ms->cmd, ms->cmd_envp);

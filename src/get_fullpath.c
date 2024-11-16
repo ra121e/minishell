@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:25:29 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/14 21:55:02 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 17:32:24 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ char	*search_envp(t_ms *ms, char *cmd, char **path, struct stat sb)
 			{
 				free(fullpath);
 				free_str_array(ms->cmd);
-				exit (ms->n);
+				clean_cmd_before_exit(ms, ms->n);
 			}
 		}
 		free(fullpath);
@@ -145,7 +145,7 @@ char	*get_fullpath(char *cmd, t_ms *ms)
 	if (!res)
 	{
 		ft_dprintf(2, "Command '%s' not found\n", cmd);
-		exit (127);
+		clean_cmd_before_exit(ms, 127);
 	}
 	return (res);
 }
