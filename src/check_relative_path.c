@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 21:33:32 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/16 17:32:41 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 19:07:50 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	*check_relative_path(t_ms *ms, char *cmd)
 	struct stat	sb;
 	char		*res;
 
+	sb.st_mode = 0;
 	stat(cmd, &sb);
 	if (S_ISDIR(sb.st_mode))
 	{

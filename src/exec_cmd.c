@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/16 17:33:09 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 19:03:27 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ void	exec_child(t_ms *ms)
 		cmd_exe = check_relative_path(ms, ms->cmd[0]);
 	else
 		cmd_exe = get_fullpath(ms->cmd[0], ms);
+	if (!cmd_exe)
+	{
+		ft_dprintf(2, "minishell: %s: No such file or directory\n", ms->cmd[0]);
+		clean_cmd_before_exit(ms, 127);
+	}
 	execve(cmd_exe, ms->cmd, ms->cmd_envp);
 	free(cmd_exe);
 	clean_cmd_before_exit(ms, 0);
