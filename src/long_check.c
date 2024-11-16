@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:23:05 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/16 22:07:53 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/16 22:50:04 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	display_numeric_error(t_ms *ms, unsigned long res, int sign)
 	{
 		ft_dprintf(2, "exit\n");
 		ft_dprintf(2, "bash: exit: %s: numeric argument required\n", ms->cmd[1]);
-		clean_before_exit(ms, 2);
+		clean_cmd_before_exit(ms, 2);
 	}
 	else if (sign == -1 && (res - 1 > LONG_MAX))
 	{
 		ft_dprintf(2, "exit\n");
 		ft_dprintf(2, "bash: exit: %s: numeric argument required\n", ms->cmd[1]);
-		clean_before_exit(ms, 2);
+		clean_cmd_before_exit(ms, 2);
 	}
 }
 
@@ -45,7 +45,7 @@ void	long_check(t_ms *ms)
 	{
 		ft_dprintf(2, "exit\n");
 		ft_dprintf(2, "bash: exit: %s: numeric argument required\n", ms->cmd[1]);
-		clean_before_exit(ms, 2);
+		clean_cmd_before_exit(ms, 2);
 	}
 	res = 0;
 	while (ms->cmd[1][i] >= '0' && ms->cmd[1][i] <= '9')
