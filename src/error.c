@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:46:53 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/15 09:19:13 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 20:45:39 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ void	error_filename(t_ms *ms, char *msg)
 	error_msg = ft_strjoin("minishell: ", msg);
 	perror(error_msg);
 	free(error_msg);
+	ms->exit_status = 1;
 	ms->error = true;
 }
