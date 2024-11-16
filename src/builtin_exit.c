@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 21:58:55 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/15 08:01:02 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 16:19:14 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,37 +53,42 @@ static void	process_in_child(t_ms *ms, unsigned char c)
 	if (ms->cmd[1] && ms->cmd[2])
 	{
 		ft_dprintf(2, "bash: exit: too many arguments\n");
-		exit(1);
+		clean_before_exit(ms, 1);
 	}
 	else
-		exit(c);
+		clean_before_exit(ms, c);
 }
 
-static void	process_arg(t_ms *ms, int i)
+static void	process_arg(t_ms *ms)
 {
-	if (!ft_isdigit(ms->cmd[1][i]))
+	int				i;
+
+	i = 0;
+	if (ms->cmd[1] && (ms->cmd[1][i] == '-' || ms->cmd[1][i] == '+'))
+		i++;
+	if (ms->cmd[1] && !ms->cmd[1][1])
 	{
+		ft_dprintf(2, "exit\n");
 		ft_dprintf(2, "bash: exit: %s: numeric argument required\n", ms->cmd[1]);
-		if (ms->in_pipe == 0)
+		clean_before_exit(ms, 2);
+	}
+	while (ms->cmd[1] && ms->cmd[1][i])
+	{
+		if (!ft_isdigit(ms->cmd[1][i]))
+		{
+			ft_dprintf(2, "exit\n");
+			ft_dprintf(2, "bash: exit: %s: numeric argument required\n", ms->cmd[1]);
 			clean_before_exit(ms, 2);
-		else
-			exit(2);
+		}
+		i++;
 	}
 }
 
 void	builtin_exit(t_ms *ms)
 {
 	unsigned char	c;
-	int				i;
 
-	i = 0;
-	if (ms->cmd[1] && (ms->cmd[1][i] == '-' || ms->cmd[1][i] == '+'))
-		i++;
-	while (ms->cmd[1] && ms->cmd[1][i])
-	{
-		process_arg(ms, i);
-		i++;
-	}
+	process_arg(ms);
 	if (ms->cmd[1])
 		c = ft_atoi(ms->cmd[1]);
 	else
