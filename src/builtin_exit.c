@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 21:58:55 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/16 16:19:14 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 22:11:27 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
  *		- exit number and one more arguments
  */
 
-static void	clean_before_exit(t_ms *ms, unsigned char c)
+void	clean_before_exit(t_ms *ms, unsigned char c)
 {
 	free(ms->cmd_envp);
 	free_str_array(ms->cmd);
@@ -66,7 +66,7 @@ static void	process_arg(t_ms *ms)
 	i = 0;
 	if (ms->cmd[1] && (ms->cmd[1][i] == '-' || ms->cmd[1][i] == '+'))
 		i++;
-	if (ms->cmd[1] && !ms->cmd[1][1])
+	if (ms->cmd[1] && !ms->cmd[1][i])
 	{
 		ft_dprintf(2, "exit\n");
 		ft_dprintf(2, "bash: exit: %s: numeric argument required\n", ms->cmd[1]);
@@ -77,7 +77,8 @@ static void	process_arg(t_ms *ms)
 		if (!ft_isdigit(ms->cmd[1][i]))
 		{
 			ft_dprintf(2, "exit\n");
-			ft_dprintf(2, "bash: exit: %s: numeric argument required\n", ms->cmd[1]);
+			ft_dprintf(2, "bash: exit: %s: numeric argument required\n", \
+			ms->cmd[1]);
 			clean_before_exit(ms, 2);
 		}
 		i++;
@@ -89,6 +90,7 @@ void	builtin_exit(t_ms *ms)
 	unsigned char	c;
 
 	process_arg(ms);
+	long_check(ms);
 	if (ms->cmd[1])
 		c = ft_atoi(ms->cmd[1]);
 	else
