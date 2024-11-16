@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 05:18:17 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/12 20:31:30 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 16:42:43 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	print_loop(t_ms *ms, int n_opt, int i)
 	{
 		ft_dprintf(ms->fd_w[1], "%s", ms->cmd[i]);
 		if (ms->cmd[i + 1] && *ms->cmd[i + 1])
-			ft_dprintf(ms->fd_w[1], " ");
+			ft_dprintf(1, " ");
 		i++;
 	}
 	if (!n_opt)
-		ft_dprintf(ms->fd_w[1], "\n");
+		ft_dprintf(1, "\n");
 }
 
 void	builtin_echo(t_ms *ms)
