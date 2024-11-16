@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 21:02:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/16 20:34:24 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 21:25:33 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	invalid_dir(t_ms *ms, char *arg)
 		if (errno == EACCES)
 			ft_dprintf(2, "minishell: cd: %s: Permission denied\n", arg);
 		else
-		ft_dprintf(2, "minishell: cd: %s: No such file or directory\n", arg);
+			ft_dprintf(2, "minishell: cd: %s: No such file or directory\n", arg);
 		ms->exit_status = 1;
 	}
 	else
