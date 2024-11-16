@@ -6,11 +6,21 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 15:52:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/11 20:29:55 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 16:34:31 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	lexer_is_space_or_tab(int c)
+{
+	return (c == ' ' || c == '\t');
+}
+
+int	word_split_delimiter(int c)
+{
+	return (c == ' ' || c == '\t' || c == '\n');
+}
 
 int	get_var_len(t_ms *ms, char *var)
 {

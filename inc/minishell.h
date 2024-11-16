@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/15 22:02:41 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 16:35:14 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,8 @@ void	export_add(t_ms *ms, t_envp **envp);
 void	update_env(t_ms *ms);
 int		get_var_len(t_ms *ms, char *var);
 char	*get_var(t_ms *ms, char *var);
+int		lexer_is_space_or_tab(int c);
+int		word_split_delimiter(int c);
 
 void	ft_signal(void);
 void	ft_signal_non(void);
