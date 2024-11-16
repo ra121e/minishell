@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/16 16:33:45 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 18:16:24 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 		else
 		{
 			expand_var(ms, cur->str, 0);
-			if (ms->expand_var)
+			if (ms->expand_var && (!ft_strchr(cur->str, '\"')))
 				word_split(ms, ms->new_str);
 			else
 				add_cmd_arg(ms, ms->new_str, 0, ft_strlen(ms->new_str));
