@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 21:58:55 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/16 16:19:14 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 16:58:47 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,6 @@
  *		- exit number and one more arguments
  */
 
-static void	clean_before_exit(t_ms *ms, unsigned char c)
-{
-	free(ms->cmd_envp);
-	free_str_array(ms->cmd);
-	cleanup(ms);
-	cleanup_final(ms);
-	exit(c);
-}
-
 static void	process_in_parent(t_ms *ms, unsigned char c)
 {
 	ft_dprintf(2, "exit\n");
@@ -45,7 +36,7 @@ static void	process_in_parent(t_ms *ms, unsigned char c)
 		ms->exit_status = 1;
 	}
 	else
-		clean_before_exit(ms, c);
+		clean_cmd_before_exit(ms, c);
 }
 
 static void	process_in_child(t_ms *ms, unsigned char c)
@@ -53,10 +44,10 @@ static void	process_in_child(t_ms *ms, unsigned char c)
 	if (ms->cmd[1] && ms->cmd[2])
 	{
 		ft_dprintf(2, "bash: exit: too many arguments\n");
-		clean_before_exit(ms, 1);
+		clean_cmd_before_exit(ms, 1);
 	}
 	else
-		clean_before_exit(ms, c);
+		clean_cmd_before_exit(ms, c);
 }
 
 static void	process_arg(t_ms *ms)
@@ -70,7 +61,7 @@ static void	process_arg(t_ms *ms)
 	{
 		ft_dprintf(2, "exit\n");
 		ft_dprintf(2, "bash: exit: %s: numeric argument required\n", ms->cmd[1]);
-		clean_before_exit(ms, 2);
+		clean_cmd_before_exit(ms, 2);
 	}
 	while (ms->cmd[1] && ms->cmd[1][i])
 	{
@@ -78,7 +69,7 @@ static void	process_arg(t_ms *ms)
 		{
 			ft_dprintf(2, "exit\n");
 			ft_dprintf(2, "bash: exit: %s: numeric argument required\n", ms->cmd[1]);
-			clean_before_exit(ms, 2);
+			clean_cmd_before_exit(ms, 2);
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/16 16:35:14 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 17:07:39 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ void	cmd_envp(t_ms *ms);
 char	**find_envpath(t_ms *ms);
 char	*join_cmd_path(char *cmd, char *path);
 char	*get_fullpath(char *cmd, t_ms *ms);
-int		check_relative_path(char *cmd);
+char	*check_relative_path(char *cmd);
 void	free_split(char **str);
 void	error_exit(char *str);
 void	error_wrong_cmd(t_ms *ms);
@@ -232,6 +232,7 @@ void	free_str(char *str);
 void	free_str_array(char **str);
 void	free_token(t_ms *ms);
 void	ast_free(t_node *node);
+void	clean_cmd_before_exit(t_ms *ms, unsigned char c);
 void	cleanup(t_ms *ms);
 void	cleanup_envp(t_ms *ms);
 void	cleanup_final(t_ms *ms);

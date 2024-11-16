@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/16 15:58:16 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 17:10:34 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ void	exec_builtin_in_child(t_ms *ms)
 		dup2_and_close(ms->fd_w[1], STDOUT_FILENO);
 	builtin(ms);
 	exit_status = ms->exit_status;
-	free(ms->cmd_envp);
-	free_str_array(ms->cmd);
-	cleanup(ms);
-	cleanup_final(ms);
-	exit(exit_status);
+	clean_cmd_before_exit(ms, exit_status);
 }
 
 void	exec_child(t_ms *ms)
@@ -46,15 +42,13 @@ void	exec_child(t_ms *ms)
 		ft_dprintf(2, "Command '' not found\n");
 		exit(127);
 	}
-	if (check_relative_path(ms->cmd[0]))
-	{
-		execve(ms->cmd[0], ms->cmd, ms->cmd_envp);
-		exit(0);
-	}
-	cmd_exe = get_fullpath(ms->cmd[0], ms);
+	if (ms->cmd[0][0] == '/' || (ms->cmd[0][0] == '.' && ms->cmd[0][1] == '/'))
+		cmd_exe = check_relative_path(ms->cmd[0]);
+	else
+		cmd_exe = get_fullpath(ms->cmd[0], ms);
 	execve(cmd_exe, ms->cmd, ms->cmd_envp);
 	free(cmd_exe);
-	exit(0);
+	clean_cmd_before_exit(ms, 0);
 }
 
 void	fork_process(t_ms *ms)
