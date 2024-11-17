@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 22:12:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/15 10:51:57 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/16 17:32:20 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ int	syntax_check_parenthesis(char *str)
 int	syntax_checker(t_ms *ms, char *str)
 {
 	if (syntax_check_quote(str) || syntax_check_parenthesis(str))
+	{
 		ms->error = true;
+		ms->exit_status = 2;
+	}
 	return (ms->error);
 }

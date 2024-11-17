@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/11/15 22:01:51 by xlok             ###   ########.fr        #
+#    Updated: 2024/11/16 19:59:40 by athonda          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRC_F := minishell.c \
 		 builtin_export.c \
 		 builtin_export_helper.c \
 		 builtin_unset.c \
+		 long_check.c \
 		 builtin_exit.c \
 		 tokenize.c \
 		 token.c \

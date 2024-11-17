@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/16 19:46:30 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/16 22:27:32 by athonda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdbool.h>
 # include <signal.h>
 # include <errno.h>
+# include <limits.h>
 # include "libft.h"
 
 # define READ O_RDONLY
@@ -161,6 +162,8 @@ void	builtin_pwd(t_ms *ms);
 void	builtin_env(t_ms *ms);
 void	builtin_export(t_ms *ms);
 void	builtin_unset(t_ms *ms);
+void	clean_before_exit(t_ms *ms, unsigned char c);
+void	long_check(t_ms *ms);
 void	builtin_exit(t_ms *ms);
 int		display_if_no_arg(t_ms *ms);
 void	export_add(t_ms *ms, t_envp **envp);
