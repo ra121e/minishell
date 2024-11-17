@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 22:49:37 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/16 18:37:50 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/17 20:46:34 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,12 @@ void	get_new_len(t_ms *ms, char *str, int i, int is_heredoc)
 		else
 			ms->len++;
 	}
+}
+
+void	replace_var(t_ms *ms)
+{
+	ms->end = 0;
+	while (ms->var_value[ms->end])
+		ms->new_str[ms->n++] = ms->var_value[ms->end++];
+	ms->expand_var = 1;
 }

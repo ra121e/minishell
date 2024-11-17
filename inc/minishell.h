@@ -6,9 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:34:03 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/16 22:27:32 by athonda          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/*   Updated: 2024/11/17 21:07:00 by xlok             ###   ########.fr       */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -112,6 +110,7 @@ typedef struct s_ms
 	char	*str;
 	int		start;
 	int		end;
+	int		split_s;
 	int		i;
 	int		n;
 	char	c;
@@ -206,7 +205,7 @@ int		heredoc_expand(t_ms *ms, t_node *node);
 void	get_new_len(t_ms *ms, char *str, int i, int is_heredoc);
 void	expand_var(t_ms *ms, char *str, int is_heredoc);
 int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
-void	expand_var_replace(t_ms *ms, int quote);
+void	replace_var(t_ms *ms);
 char	*remove_quote(char *old);
 void	add_cmd_arg(t_ms *ms, char *str, int s, int i);
 void	redirection(t_ms *ms, t_node *cur, int fd_w[2]);
