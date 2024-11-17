@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/16 18:16:24 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/17 08:33:43 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 				fd_w[1] = get_filename_fd(ms, (*cur)->str, fd_w[1], APPEND);
 		}
 	}
+	if (ms->fd_r != -1 && fd_w[1] != -1)
+		ms->exit_status = 0;
 }
 
 static void	word_split(t_ms *ms, char *str)
