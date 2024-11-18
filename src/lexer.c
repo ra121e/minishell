@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:36:49 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/16 16:32:30 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/17 23:41:20 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	new_str_len(t_ms *ms, char *str)
 			ms->len += 2;
 		ms->len++;
 	}
-	ms->str = malloc(ms->len + 1);
+	ms->str = malloc(ms->len + 2);
 	if (!ms->str)
 		error_malloc(ms, "ms->new_str malloc error");
 }

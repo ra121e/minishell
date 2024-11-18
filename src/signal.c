@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:25:44 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/13 20:59:53 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/17 23:16:15 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	g_sig;
 void	handler(int signum)
 {
 	g_sig = signum;
-	rl_done = 1;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 void	ft_signal(void)

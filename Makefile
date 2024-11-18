@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/11/16 19:59:40 by athonda          ###   ########.fr        #
+#    Updated: 2024/11/18 08:05:00 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRC_F := minishell.c \
 		 pipe_wait.c \
 		 heredoc.c \
 		 check_relative_path.c \
+		 get_relative_path.c \
 		 get_fullpath.c \
 		 free_split.c \
 		 error.c \

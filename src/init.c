@@ -6,16 +6,11 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/14 22:39:03 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/17 23:16:27 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	check_rl_done(void)
-{
-	return (0);
-}
 
 void	init_envp(t_ms *ms, char **envp)
 {
@@ -61,7 +56,6 @@ void	init_loop(t_ms *ms)
 	ms->fd_w[1] = 1;
 	ms->cmd = 0;
 	ms->str = 0;
-	rl_event_hook = check_rl_done;
 }
 
 void	init(t_ms *ms, char **envp)
