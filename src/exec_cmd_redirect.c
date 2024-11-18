@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/18 08:10:30 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/18 23:14:23 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 		}
 	}
 	free(ms->new_str);
-	if (ms->fd_r != -1 && fd_w[1] != -1)
-		ms->exit_status = 0;
 }
 
 void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
@@ -54,7 +52,8 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 		{
 			expand_var(ms, cur->str, 0);
 			if (*ms->new_str || !ft_strchr(cur->str, '$'))
-				add_cmd_arg(ms, ms->new_str, ms->split_s, ft_strlen(ms->new_str));
+				add_cmd_arg(ms, ms->new_str, ms->split_s, \
+					ft_strlen(ms->new_str));
 			free_str(ms->new_str);
 		}
 		cur = cur->right;

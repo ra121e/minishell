@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/18 08:04:13 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/18 23:15:06 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,16 @@ void	add_cmd_arg(t_ms *ms, char *str, int s, int i)
 int	get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode)
 {
 	char	*filename;
-//	char	*cwd;
 	pid_t	file_fd;
 
-//	if (*str == '/')
-//		filename = ft_strdup(str);
-//	else
-//	{
-//		cwd = getcwd(0, 0);
-//		filename = ft_strsjoin(3, cwd, "/", str);
-//		free(cwd);
-//	}
+	file_fd = -1;
 	filename = get_relative_path(ms, str);
 	if (fd > 2)
 		close(fd);
-	if (mode == READ)
+	if (mode == READ && !access(filename, R_OK))
 		file_fd = open(filename, mode);
-	else
+	else if (mode != READ && \
+			!(!access(filename, F_OK) && access(filename, W_OK)))
 		file_fd = open(filename, mode, 0644);
 	if (file_fd == -1)
 		error_filename(ms, str);

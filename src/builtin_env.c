@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:34:39 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/18 07:46:42 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/18 20:34:55 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	builtin_env(t_ms *ms)
 
 	if (ms->cmd[1])
 	{
-		ft_dprintf(2, "Subject requirement: env with no options or arguments\n");
 		ms->exit_status = 2;
 		return ;
 	}
@@ -36,7 +35,7 @@ void	builtin_env(t_ms *ms)
 	while (ms->envp[i])
 	{
 		if (ms->envp[i]->value)
-			ft_dprintf(1, "%s\n", ms->envp[i]->pair);
+			ft_dprintf(ms->fd_w[1], "%s\n", ms->envp[i]->pair);
 		i++;
 	}
 	ms->exit_status = 0;

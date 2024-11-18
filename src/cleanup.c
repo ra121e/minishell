@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:24:39 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/17 23:24:58 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/18 23:08:20 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@ void	cleanup(t_ms *ms)
 	if (ms->heredoc_filename)
 		unlink(ms->heredoc_filename);
 	free(ms->heredoc_filename);
-	if ((g_sig || ms->error) && ms->cmd)
-	{
-		free_str_array(ms->cmd);
-		ms->cmd = 0;
-	}
 	close_fd(ms);
 }
 

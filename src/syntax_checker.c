@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 22:12:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/16 17:32:20 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/18 23:06:36 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,28 @@ int	syntax_check_quote(char *str)
 	return (0);
 }
 
+static int	error_msg(int in_loop)
+{
+	if (in_loop)
+		ft_dprintf(2, "bash: Syntax error near unexpected token `)'\n");
+	else
+		ft_dprintf(2, "bash: Syntax error: unexpected end of file\n");
+	return (1);
+}
+
+int	in_quote(char *str, int i)
+{
+	char	c;
+
+	c = str[i];
+	while (str[++i])
+	{
+		while (str[i] && str[i] != c)
+			i++;
+	}
+	return (i);
+}
+
 int	syntax_check_parenthesis(char *str)
 {
 	int	i;
@@ -44,23 +66,19 @@ int	syntax_check_parenthesis(char *str)
 	i = -1;
 	while (str[++i])
 	{
-		if (str[i] == '(')
+		if (str[i] == '\'' || str[i] == '\"')
+			i = in_quote(str, i);
+		else if (str[i] == '(')
 			balance++;
 		else if (str[i] == ')')
 		{
 			balance--;
 			if (balance < 0)
-			{
-				ft_dprintf(2, "bash: Syntax error near unexpected token `)'\n");
-				return (1);
-			}
+				return (error_msg(1));
 		}
 	}
 	if (balance != 0)
-	{
-		ft_dprintf(2, "bash: Syntax error: unexpected end of file\n");
-		return (1);
-	}
+		return (error_msg(0));
 	return (0);
 }
 
