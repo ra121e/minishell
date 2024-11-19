@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/19 17:56:08 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/19 20:21:52 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ void	exec_builtin_in_child(t_ms *ms)
 void	exec_child2(t_ms *ms)
 {
 	char	*cmd_exe;
+	char	*tmp;
 
 	if (ft_strchr(ms->cmd[0], '/'))
 	{
 		cmd_exe = get_relative_path(ms, ms->cmd[0]);
+		tmp = cmd_exe;
 		cmd_exe = check_relative_path(ms, cmd_exe);
+		free(tmp);
 	}
 	else
 		cmd_exe = get_fullpath(ms->cmd[0], ms);
@@ -45,8 +48,6 @@ void	exec_child2(t_ms *ms)
 void	exec_child(t_ms *ms)
 {
 	dup_fds(ms);
-//	if (ms->exit_status)
-//		close(ms->fd_r);
 	if (ms->error)
 		clean_cmd_before_exit(ms, 1);
 	if (!ft_strlen(*ms->cmd) && !ms->cmd[1])

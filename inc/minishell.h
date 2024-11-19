@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:07:30 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/19 17:48:02 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/19 21:55:08 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ typedef struct s_ms
 	int		start;
 	int		end;
 	int		split_s;
+	char	*rpath;
 	int		i;
-	int		relative_s;
 	int		n;
 	char	c;
 	int		len;
@@ -224,9 +224,8 @@ char	**find_envpath(t_ms *ms, char *str);
 char	*join_cmd_path(char *cmd, char *path);
 char	*get_fullpath(char *cmd, t_ms *ms);
 char	*get_relative_path(t_ms *ms, char *str);
-//int		is_parent_or_current_dir(t_ms *ms, char *path, char *str, int i);
-//char	*update_path(t_ms *ms, char *path, char *str);
 char	*check_relative_path(t_ms *ms, char *path);
+void	is_path_valid(t_ms *ms, char *path, char *str);
 void	free_split(char **str);
 void	error_exit(char *str);
 void	error_wrong_cmd(t_ms *ms);
