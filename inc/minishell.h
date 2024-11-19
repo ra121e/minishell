@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:07:30 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/19 00:15:18 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/19 17:48:02 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ void	exec_cmd(t_ms *ms);
 void	pipe_wait(t_ms *ms);
 void	init_cmd(t_ms *ms);
 int		*init_fd_w(t_ms *ms);
-void	dup2_and_close(pid_t old_fd, pid_t new_fd);
+void	dup_fds(t_ms *ms);
 int		get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode);
 int		*exec_pip(t_ms *ms);
 void	cmd_envp(t_ms *ms);
