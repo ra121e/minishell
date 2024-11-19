@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/19 00:26:46 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/19 15:44:58 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	exec_child(t_ms *ms)
 	if (!ft_strlen(*ms->cmd) && !ms->cmd[1])
 	{
 		ft_dprintf(2, "Command '' not found\n");
-		exit(127);
+		clean_cmd_before_exit(ms, 127);
 	}
 	exec_child2(ms);
 }

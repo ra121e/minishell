@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 22:12:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/18 23:06:36 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/19 15:48:42 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,11 @@ int	in_quote(char *str, int i)
 	c = str[i];
 	while (str[++i])
 	{
-		while (str[i] && str[i] != c)
-			i++;
+		if (str[i] == c || !str[i])
+			break ;
 	}
+	if (!str[i])
+		return (--i);
 	return (i);
 }
 
