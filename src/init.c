@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/17 23:16:27 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/19 22:22:40 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ void	init_envp(t_ms *ms, char **envp)
 	ms->envp[i] = 0;
 }
 
+int	check_rl_done(void)
+{
+	return (0);
+}
+
 void	init_loop(t_ms *ms)
 {
 	ms->head = 0;
@@ -56,6 +61,7 @@ void	init_loop(t_ms *ms)
 	ms->fd_w[1] = 1;
 	ms->cmd = 0;
 	ms->str = 0;
+	rl_event_hook = check_rl_done;
 }
 
 void	init(t_ms *ms, char **envp)

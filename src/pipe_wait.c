@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 09:19:51 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/18 21:05:16 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/19 22:35:08 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	pipe_wait(t_ms *ms)
 		ms->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 	{
+		g_sig = WTERMSIG(status);
 		ms->exit_status = 128 + WTERMSIG(status);
 		if (WTERMSIG(status) == 2)
 			ft_dprintf(2, "\n");

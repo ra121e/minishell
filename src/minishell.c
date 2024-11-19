@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:45:28 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/18 22:58:01 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/19 22:28:37 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ int	main(int argc, char **argv, char **envp)
 	int		exit_status;
 
 	if (argc != 1)
-		return (ft_dprintf(2, "No arguments allowed...\n"), 1);
+	{
+		ft_dprintf(2, "minishell: %s: No such file or directory\n", argv[1]);
+		return (127);
+	}
 	(void)argv;
 	ms = malloc(sizeof(t_ms));
 	if (!ms)

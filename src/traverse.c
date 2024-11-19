@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:16:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/18 23:10:35 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/19 22:31:57 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,12 @@ void	traverse_cmd(t_node *cur, t_ms *ms, int fd_w[2])
 {
 	ms->error = 0;
 	redirection(ms, cur, fd_w);
-	if (!g_sig)
+	if (ms->cmd && ms->cmd[0])
+		exec_cmd(ms);
+	else
 	{
-		if (ms->cmd && ms->cmd[0])
-			exec_cmd(ms);
-		else
-		{
-			close_fd(ms);
-			ms->fd_r = ms->fd_w[0];
-		}
+		close_fd(ms);
+		ms->fd_r = ms->fd_w[0];
 	}
 }
 
@@ -38,7 +35,7 @@ void	traverse(t_node *cur, t_ms *ms, int fd_w[2])
 			error_exit("pip creation error");
 		ms->in_pipe = 1;
 		traverse(cur->left, ms, pipfd);
-		if (g_sig == 0)
+		if (g_sig != 2)
 			traverse(cur->right, ms, fd_w);
 	}
 	else if (cur->kind == ND_AND || cur->kind == ND_OR)
@@ -47,9 +44,9 @@ void	traverse(t_node *cur, t_ms *ms, int fd_w[2])
 		if (ms->forked)
 			pipe_wait(ms);
 		ms->in_pipe = 0;
-		if (cur->kind == ND_AND && (!ms->exit_status && g_sig == 0))
+		if (cur->kind == ND_AND && (!ms->exit_status && g_sig != 2))
 			traverse(cur->right, ms, fd_w);
-		else if (cur->kind == ND_OR && (ms->exit_status && g_sig == 0))
+		else if (cur->kind == ND_OR && (ms->exit_status && g_sig != 2))
 			traverse(cur->right, ms, fd_w);
 	}
 	else
