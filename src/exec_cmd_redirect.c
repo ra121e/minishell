@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/18 23:14:23 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/19 17:03:51 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 	redirect_node = *cur;
 	kind = (*cur)->kind;
 	*cur = (*cur)->right;
-	expand_var(ms, (*cur)->str, 0);
+	if (kind != ND_REDIRECT_HEREDOC)
+		expand_var(ms, (*cur)->str, 0);
 	if (kind == ND_REDIRECT_IN)
 		ms->fd_r = get_filename_fd(ms, ms->new_str, ms->fd_r, READ);
 	else if (kind == ND_REDIRECT_HEREDOC)
@@ -35,7 +36,8 @@ static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 				fd_w[1] = get_filename_fd(ms, ms->new_str, fd_w[1], APPEND);
 		}
 	}
-	free(ms->new_str);
+	if (kind != ND_REDIRECT_HEREDOC)
+		free(ms->new_str);
 }
 
 void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
