@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 21:33:32 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/19 21:58:45 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/21 23:31:16 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,16 @@ char	*check_relative_path(t_ms *ms, char *path)
 	return (0);
 }
 
-void	is_path_valid(t_ms *ms, char *path, char *str)
+void	is_path_valid(t_ms *ms, char *path)
 {
 	if (access(path, F_OK) || access(path, X_OK))
 	{
-		ft_dprintf(2, "minishell: %s: No such file or directory\n", ms->cmd[0]);
-		free(path);
-		free(str);
-		clean_cmd_before_exit(ms, 127);
+		ms->error = 1;
+		ms->exit_status = 1;
+		ft_dprintf(2, "minishell: ");
+		if (ms->cmd && *ms->cmd)
+			ft_dprintf(2, "%s: No such file or directory\n", *ms->cmd);
+		else
+			ft_dprintf(2, "%s: No such file or directory\n", path);
 	}
 }

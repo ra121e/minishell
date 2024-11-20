@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/19 17:03:51 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/21 22:35:51 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,10 @@ static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 		ms->fd_r = heredoc_expand(ms, redirect_node);
 	else if (kind == ND_REDIRECT_OUT || kind == ND_REDIRECT_APPEND)
 	{
-		if (fd_w)
-		{
-			if (kind == ND_REDIRECT_OUT)
-				fd_w[1] = get_filename_fd(ms, ms->new_str, fd_w[1], WRITE);
-			else
-				fd_w[1] = get_filename_fd(ms, ms->new_str, fd_w[1], APPEND);
-		}
+		if (kind == ND_REDIRECT_OUT)
+			fd_w[1] = get_filename_fd(ms, ms->new_str, fd_w[1], WRITE);
+		else
+			fd_w[1] = get_filename_fd(ms, ms->new_str, fd_w[1], APPEND);
 	}
 	if (kind != ND_REDIRECT_HEREDOC)
 		free(ms->new_str);
@@ -48,7 +45,7 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 		{
 			redirect(ms, &cur, fd_w);
 			if (g_sig == 2 || ms->error)
-				return ;
+				break ;
 		}
 		else
 		{
@@ -73,7 +70,7 @@ void	redirection(t_ms *ms, t_node *cur, int fd_w[2])
 		{
 			redirect(ms, &cur, fd_w);
 			if (g_sig == 2 || ms->error)
-				return ;
+				break ;
 		}
 		else
 		{

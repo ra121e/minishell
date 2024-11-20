@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/18 23:15:06 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/21 22:51:48 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,12 @@ int	get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode)
 	char	*filename;
 	pid_t	file_fd;
 
-	file_fd = -1;
-	filename = get_relative_path(ms, str);
 	if (fd > 2)
 		close(fd);
+	file_fd = -1;
+	filename = get_relative_path(ms, str);
+	if (!filename || ms->error)
+		return (free(filename), file_fd);
 	if (mode == READ && !access(filename, R_OK))
 		file_fd = open(filename, mode);
 	else if (mode != READ && \
@@ -81,6 +83,5 @@ int	get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode)
 		file_fd = open(filename, mode, 0644);
 	if (file_fd == -1)
 		error_filename(ms, str);
-	free(filename);
-	return (file_fd);
+	return (free(filename), file_fd);
 }

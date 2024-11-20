@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:58:26 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/10 19:53:26 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/22 00:23:58 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ int	display_if_no_arg(t_ms *ms)
 		while (ms->envp[++i])
 		{
 			if (!ms->envp[i]->value)
-				ft_dprintf(ms->fd_w[1], "declare -x %s\n", ms->envp[i]->key);
-			else if (!ft_strncmp(ms->envp[i]->value, "", 1))
-				ft_dprintf(ms->fd_w[1], "declare -x %s=\"\"\n", ms->envp[i]->key);
-			else
-				ft_dprintf(ms->fd_w[1], "declare -x %s=\"%s\"\n", \
+				ft_dprintf(STDOUT_FILENO, "declare -x %s\n", ms->envp[i]->key);
+			else if (ft_strncmp(ms->envp[i]->key, "_", 2))
+				ft_dprintf(STDOUT_FILENO, "declare -x %s=\"%s\"\n", \
 						ms->envp[i]->key, ms->envp[i]->value);
 		}
 		return (1);
@@ -58,9 +56,28 @@ void	export_add(t_ms *ms, t_envp **envp)
 	envp = 0;
 }
 
-void	update_env(t_ms *ms)
+void	update_env_value(t_ms *ms, int i)
 {
 	char	*tmp;
+
+	free_str(ms->key);
+	tmp = ms->envp[i]->value;
+	ms->envp[i]->value = ms->value;
+	free_str(tmp);
+	tmp = ms->envp[i]->pair;
+	ms->envp[i]->pair = ms->pair;
+	free_str(tmp);
+}
+
+static void	free_cur(t_ms *ms)
+{
+	free_str(ms->key);
+	free_str(ms->value);
+	free_str(ms->pair);
+}
+
+void	update_env(t_ms *ms)
+{
 	int		i;
 
 	ms->len = ft_strlen(ms->key);
@@ -69,16 +86,15 @@ void	update_env(t_ms *ms)
 	{
 		if (!ft_strncmp(ms->envp[i]->key, ms->key, ms->len + 1))
 		{
-			if (!ms->envp[i]->value || ms->value)
+			if (!ft_strncmp(ms->key, "_", 2))
 			{
-				free_str(ms->key);
-				tmp = ms->envp[i]->value;
-				ms->envp[i]->value = ms->value;
-				free_str(tmp);
-				tmp = ms->envp[i]->pair;
-				ms->envp[i]->pair = ms->pair;
-				free_str(tmp);
+				free_cur(ms);
+				i++;
 			}
+			else if (!ms->envp[i]->value || ms->value)
+				update_env_value(ms, i);
+			else
+				free_cur(ms);
 			return ;
 		}
 	}

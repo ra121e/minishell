@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/19 20:21:52 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/22 00:20:24 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	exec_builtin_in_child(t_ms *ms)
 {
 	int	exit_status;
 
+	dup_fds(ms);
 	builtin(ms);
 	exit_status = ms->exit_status;
 	clean_cmd_before_exit(ms, exit_status);
@@ -88,20 +89,27 @@ void	fork_process(t_ms *ms)
 
 void	exec_cmd(t_ms *ms)
 {
-	cmd_envp(ms);
-	if (is_builtin(ms->cmd[0]) == true)
+	if (ms->cmd)
 	{
-		ms->builtin_cmd = 1;
-		if (ms->in_pipe)
+		cmd_envp(ms);
+		if (is_builtin(ms->cmd[0]) == true)
+		{
+			ms->builtin_cmd = 1;
+			if (ms->in_pipe)
+				fork_process(ms);
+			else if (!ms->error)
+				builtin(ms);
+		}
+		else
 			fork_process(ms);
-		else if (!ms->error)
-			builtin(ms);
+		free(ms->cmd_envp);
+		free_str_array(ms->cmd);
+		ms->cmd = 0;
 	}
-	else
-		fork_process(ms);
 	close_fd(ms);
 	ms->fd_r = ms->fd_w[0];
-	free(ms->cmd_envp);
-	free_str_array(ms->cmd);
-	ms->cmd = 0;
+	if (ms->heredoc_filename)
+		unlink(ms->heredoc_filename);
+	free(ms->heredoc_filename);
+	ms->heredoc_filename = 0;
 }

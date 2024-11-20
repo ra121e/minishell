@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:00:29 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/19 21:54:53 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/21 22:18:13 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	update_path(t_ms *ms, char *str)
 			error_malloc(ms, "relative path malloc error");
 	}
 	free(tmp);
-	is_path_valid(ms, ms->rpath, str);
+	is_path_valid(ms, ms->rpath);
 }
 
 void	parent_or_current_dir(t_ms *ms, char *str)
@@ -73,7 +73,6 @@ void	add_dir(t_ms *ms, char *str)
 		ft_dprintf(2, "%s: cannot access '%s'\n", *ms->cmd, str);
 		ms->error = 1;
 		ms->exit_status = 2;
-		free(tmp);
 	}
 	free(tmp);
 	ms->start = ++ms->i;
@@ -115,7 +114,7 @@ char	*get_relative_path(t_ms *ms, char *str)
 			add_dir(ms, str);
 		ms->i++;
 		if (ms->error)
-			return (free(ms->rpath), NULL);
+			return (ms->rpath);
 	}
 	final_path(ms, str);
 	return (ms->rpath);

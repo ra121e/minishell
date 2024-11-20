@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:07:30 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/19 21:55:08 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/21 23:14:47 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@
 # define APPEND 02101
 //# define APPEND O_CREAT | O_WRONLY | O_APPEND
 # define IS_REDIRECT > 100
-# define HEREDOC 0
-# define EXECUTE 1
 
 extern int					g_sig;
 
@@ -128,12 +126,10 @@ typedef struct s_ms
 	t_node	*start_node;
 	char	*heredoc_filename;
 	int		forked;
-	int		pipfd[2];
 	int		fd_r;
 	int		fd_w[2];
 	int		builtin_cmd;
 	int		pid;
-	int		pid_status;
 	int		in_pipe;
 	char	**cmd;
 	char	**cmd_envp;
@@ -225,7 +221,7 @@ char	*join_cmd_path(char *cmd, char *path);
 char	*get_fullpath(char *cmd, t_ms *ms);
 char	*get_relative_path(t_ms *ms, char *str);
 char	*check_relative_path(t_ms *ms, char *path);
-void	is_path_valid(t_ms *ms, char *path, char *str);
+void	is_path_valid(t_ms *ms, char *path);
 void	free_split(char **str);
 void	error_exit(char *str);
 void	error_wrong_cmd(t_ms *ms);

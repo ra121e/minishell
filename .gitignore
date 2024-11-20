@@ -2,6 +2,7 @@
 *.o
 *.a
 minishell
+*test*
 *.swp
 *.pdf
 *.supp

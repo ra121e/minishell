@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:25:29 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/18 22:12:07 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/21 23:46:17 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ char	*search_envp(t_ms *ms, char *cmd, char **path, struct stat sb)
 			else if (ms->n > 125)
 			{
 				free(fullpath);
-				free_str_array(ms->cmd);
 				clean_cmd_before_exit(ms, ms->n);
 			}
 		}

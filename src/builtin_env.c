@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:34:39 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/18 20:34:55 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/22 00:22:43 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	builtin_env(t_ms *ms)
 	while (ms->envp[i])
 	{
 		if (ms->envp[i]->value)
-			ft_dprintf(ms->fd_w[1], "%s\n", ms->envp[i]->pair);
+			ft_dprintf(STDOUT_FILENO, "%s\n", ms->envp[i]->pair);
 		i++;
 	}
 	ms->exit_status = 0;

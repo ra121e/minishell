@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 20:28:53 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/10 19:54:04 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/20 22:42:52 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ void	builtin_unset(t_ms *ms)
 		j = 0;
 		while (ms->cmd[++j])
 		{
-			if (!ft_strncmp(ms->envp[i]->key, ms->cmd[j], \
-						ft_strlen(ms->cmd[j]) + 1))
+			if (ft_strncmp(ms->cmd[j], "_", 2) && \
+					!ft_strncmp(ms->envp[i]->key, ms->cmd[j], \
+					ft_strlen(ms->cmd[j]) + 1))
 				var++;
 		}
 	}

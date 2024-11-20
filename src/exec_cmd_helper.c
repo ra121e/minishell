@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 08:33:50 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/19 18:01:08 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/21 20:05:26 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,10 @@ void	cmd_envp(t_ms *ms)
 void	close_fd(t_ms *ms)
 {
 	if (ms->fd_r > 2)
-	{
 		close(ms->fd_r);
-		ms->fd_r = 0;
-	}
 	if (ms->fd_w[1] > 2)
 	{
 		close(ms->fd_w[1]);
-		ms->fd_w[1] = 1;
 	}
 }
 
@@ -49,18 +45,13 @@ void	dup_fds(t_ms *ms)
 		if (dup2(ms->fd_r, STDIN_FILENO) < 0)
 			error_exit("dup2 error");
 		close(ms->fd_r);
-		ms->fd_r = 0;
 	}
 	if (ms->fd_w[0] > 2)
-	{
 		close(ms->fd_w[0]);
-		ms->fd_w[0] = 0;
-	}
 	if (ms->fd_w[1] > 2)
 	{
 		if (dup2(ms->fd_w[1], STDOUT_FILENO) < 0)
 			error_exit("dup2 error");
 		close(ms->fd_w[1]);
-		ms->fd_w[1] = 1;
 	}
 }
