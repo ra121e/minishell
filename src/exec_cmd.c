@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:16:56 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/22 00:20:24 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/23 08:09:58 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ void	exec_cmd(t_ms *ms)
 		free_str_array(ms->cmd);
 		ms->cmd = 0;
 	}
+	else
+		fork_process(ms);
 	close_fd(ms);
 	ms->fd_r = ms->fd_w[0];
 	if (ms->heredoc_filename)
