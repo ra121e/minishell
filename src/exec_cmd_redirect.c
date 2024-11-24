@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/24 16:43:23 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/24 18:45:30 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	check(t_ms *ms, char *str, char *var)
 	if (ft_strchr(str, ' ') || ft_strchr(str, '\t') || ft_strchr(str, '\n') \
 			|| !*ms->new_str)
 	{
-		ft_dprintf(2, "minishell: %s: ambiguogus redirect\n", var);
+		ft_dprintf(2, "minishell: %s: ambiguous redirect\n", var);
 		ms->error = 1;
 		ms->exit_status = 1;
 		free(ms->new_str);

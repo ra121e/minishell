@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:24:39 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/23 07:58:16 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/24 18:57:16 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	clean_cmd_before_exit(t_ms *ms, unsigned char c)
 {
+	if (ms->heredoc_filename)
+		unlink(ms->heredoc_filename);
+	free(ms->heredoc_filename);
+	ms->heredoc_filename = 0;
 	if (ms->cmd)
 	{
 		free(ms->cmd_envp);
