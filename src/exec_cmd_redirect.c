@@ -6,11 +6,24 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/21 22:35:51 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/24 16:28:49 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	check(t_ms *ms, char *str, char *var)
+{
+	if (ft_strchr(str, ' ') || ft_strchr(str, '\t') || ft_strchr(str, '\n'))
+	{
+		ft_dprintf(2, "minishell: %s: ambiguogus redirect\n", var);
+		ms->error = 1;
+		ms->exit_status = 1;
+		free(ms->new_str);
+		return (1);
+	}
+	return (0);
+}
 
 static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 {
@@ -21,7 +34,11 @@ static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 	kind = (*cur)->kind;
 	*cur = (*cur)->right;
 	if (kind != ND_REDIRECT_HEREDOC)
+	{
 		expand_var(ms, (*cur)->str, 0);
+		if (check(ms, ms->new_str, (*cur)->str))
+			return ;
+	}
 	if (kind == ND_REDIRECT_IN)
 		ms->fd_r = get_filename_fd(ms, ms->new_str, ms->fd_r, READ);
 	else if (kind == ND_REDIRECT_HEREDOC)

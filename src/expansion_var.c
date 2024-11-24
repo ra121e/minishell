@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/17 20:55:56 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/24 16:04:10 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,10 @@ void	expand_var_loop(t_ms *ms, char *str)
 					ms->new_str[ms->n++] = str[ms->i];
 			}
 		}
-		else if (str[ms->i] == '$')
+		else if (str[ms->i] == '$' && !ft_strchr(str, '='))
 			word_split(ms, str);
+		else if (str[ms->i] == '$')
+			ms->i = found_var(ms, str, ms->i);
 		else
 			ms->new_str[ms->n++] = str[ms->i];
 	}
