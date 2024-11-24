@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 21:58:55 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/16 22:47:38 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/24 19:07:37 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	process_arg(t_ms *ms)
 		ft_dprintf(2, "bash: exit: %s: numeric argument required\n", ms->cmd[1]);
 		clean_cmd_before_exit(ms, 2);
 	}
-	i = 1;
+	i = sign;
 	while (ms->cmd[1] && ms->cmd[1][i])
 	{
 		if (!ft_isdigit(ms->cmd[1][i]))
