@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/24 18:20:04 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/26 22:35:23 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,14 @@ void	word_split(t_ms *ms, char *str)
 	{
 		if (word_split_delimiter(str[i]))
 		{
-			add_cmd_arg(ms, str, ms->split_s, i);
-			i++;
+			if (i && !word_split_delimiter(str[i - 1]))
+			{
+				add_cmd_arg(ms, str, ms->split_s, i);
+				i++;
+			}
 			while (word_split_delimiter(str[i]))
 				i++;
-			ms->split_s = i;
+			ms->split_s = i--;
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/21 22:51:48 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/26 23:28:48 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ void	add_cmd_arg(t_ms *ms, char *str, int s, int i)
 		cleanup_final(ms);
 		exit(EXIT_FAILURE);
 	}
-	add_cmd_arg2(ms, new_str);
+	if (!*str || i - s > 0)
+		add_cmd_arg2(ms, new_str);
+	else
+		free(new_str);
 }
 
 int	get_filename_fd(t_ms *ms, char *str, pid_t fd, int mode)
