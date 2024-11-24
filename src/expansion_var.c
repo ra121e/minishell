@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/24 16:04:10 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/24 18:20:04 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	expand_var(t_ms *ms, char *str, int is_heredoc)
 	ms->len = 0;
 	ms->expand_var = 0;
 	get_new_len(ms, str, -1, is_heredoc);
-	ms->new_str = ft_calloc(ms->len + 2, 1);
+	ms->new_str = ft_calloc(ms->len + 1, 1);
 	if (!ms->new_str)
 		error_malloc(ms, "ms->new_str malloc error");
 	ms->start = 0;
