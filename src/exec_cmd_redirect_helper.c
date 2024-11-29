@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:41:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/26 23:28:48 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/29 20:44:01 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_cmd(t_ms *ms)
 	ms->cmd = 0;
 	ms->i = 0;
 	ms->builtin_cmd = 0;
+	ms->word_split = 0;
 }
 
 int	*init_fd_w(t_ms *ms)
@@ -26,7 +27,7 @@ int	*init_fd_w(t_ms *ms)
 	return (ms->fd_w);
 }
 
-static void	add_cmd_arg2(t_ms *ms, char *new_str)
+void	add_cmd_arg2(t_ms *ms, char *new_str)
 {
 	char	**tmp;
 	int		i;

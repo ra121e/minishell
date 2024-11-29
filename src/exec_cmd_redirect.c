@@ -6,22 +6,37 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:54:47 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/26 23:07:24 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/30 20:58:38 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check(t_ms *ms, char *str, char *var)
+static int	check(t_ms *ms, char *str, char **ws, char *var)
 {
-	if (ft_strchr(str, ' ') || ft_strchr(str, '\t') || ft_strchr(str, '\n') \
-			|| !*ms->new_str)
+	char	*tmp;
+
+	if ((str && !*str) || !ws || (ws[0] && ws[1]))
 	{
-		ft_dprintf(2, "minishell: %s: ambiguous redirect\n", var);
+		if ((str && !*str && ws) || \
+				ft_strchr(var, '\'') || ft_strchr(var, '\"'))
+			ft_dprintf(2, "minishell: : No such file or directory\n", var);
+		else
+			ft_dprintf(2, "minishell: %s: ambiguous redirect\n", var);
 		ms->error = 1;
 		ms->exit_status = 1;
 		free(ms->new_str);
+		if (ws)
+			free_str_array(ms->word_split);
 		return (1);
+	}
+	if (ws)
+	{
+		tmp = ms->new_str;
+		ms->new_str = *ws;
+		free(tmp);
+		free(ms->word_split);
+		ms->word_split = 0;
 	}
 	return (0);
 }
@@ -37,7 +52,7 @@ static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 	if (kind != ND_REDIRECT_HEREDOC)
 	{
 		expand_var(ms, (*cur)->str, 0);
-		if (check(ms, ms->new_str, (*cur)->str))
+		if (check(ms, ms->new_str, ms->word_split, (*cur)->str))
 			return ;
 	}
 	if (kind == ND_REDIRECT_IN)
@@ -55,6 +70,17 @@ static void	redirect(t_ms *ms, t_node **cur, int fd_w[2])
 		free(ms->new_str);
 }
 
+static void	word_split_to_cmd(t_ms *ms)
+{
+	int	i;
+
+	i = -1;
+	while (ms->word_split[++i])
+		add_cmd_arg2(ms, ms->word_split[i]);
+	free(ms->word_split);
+	ms->word_split = 0;
+}
+
 void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 {
 	while (cur != NULL)
@@ -68,10 +94,8 @@ void	cmd_found(t_ms *ms, t_node *cur, int fd_w[2])
 		else
 		{
 			expand_var(ms, cur->str, 0);
-			if ((*ms->new_str && ms->split_s < (int)ft_strlen(ms->new_str)) \
-					|| ft_strchr(cur->str, '\'') || ft_strchr(cur->str, '\"'))
-				add_cmd_arg(ms, ms->new_str, ms->split_s, \
-					ft_strlen(ms->new_str));
+			if (ms->word_split)
+				word_split_to_cmd(ms);
 			free_str(ms->new_str);
 		}
 		cur = cur->right;

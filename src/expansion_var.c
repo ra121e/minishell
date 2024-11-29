@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:05:57 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/26 22:35:23 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/29 20:46:47 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	word_split(t_ms *ms, char *str)
 		{
 			if (i && !word_split_delimiter(str[i - 1]))
 			{
-				add_cmd_arg(ms, str, ms->split_s, i);
+				add_word_split(ms, str, ms->split_s, i);
 				i++;
 			}
 			while (word_split_delimiter(str[i]))
@@ -62,6 +62,14 @@ void	word_split(t_ms *ms, char *str)
 			ms->split_s = i--;
 		}
 	}
+}
+
+static void	add_last_word(t_ms *ms, char *str)
+{
+	if ((*ms->new_str && ms->split_s < (int)ft_strlen(ms->new_str)) \
+			|| ft_strchr(str, '\'') || ft_strchr(str, '\"'))
+		add_word_split(ms, ms->new_str, ms->split_s, \
+				ft_strlen(ms->new_str));
 }
 
 void	expand_var_loop(t_ms *ms, char *str)
@@ -90,6 +98,7 @@ void	expand_var_loop(t_ms *ms, char *str)
 		else
 			ms->new_str[ms->n++] = str[ms->i];
 	}
+	add_last_word(ms, str);
 }
 
 void	expand_var(t_ms *ms, char *str, int is_heredoc)

@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 22:49:37 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/24 18:36:02 by xlok             ###   ########.fr       */
+/*   Updated: 2024/11/29 20:44:21 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,46 @@ void	replace_var(t_ms *ms)
 	while (ms->var_value[ms->end])
 		ms->new_str[ms->n++] = ms->var_value[ms->end++];
 	ms->expand_var = 1;
+}
+
+static void	add_word_split2(t_ms *ms, char *new_str)
+{
+	char	**tmp;
+	int		i;
+
+	tmp = ms->word_split;
+	i = 0;
+	while (tmp && tmp[i])
+		i++;
+	ms->word_split = malloc(sizeof(char *) * (i + 2));
+	if (!ms->word_split)
+		error_malloc(ms, "malloc error for ms->cmd");
+	i = 0;
+	while (tmp && tmp[i])
+	{
+		ms->word_split[i] = tmp[i];
+		i++;
+	}
+	ms->word_split[i++] = new_str;
+	ms->word_split[i] = 0;
+	free(tmp);
+}
+
+void	add_word_split(t_ms *ms, char *str, int s, int i)
+{
+	char	*new_str;
+
+	new_str = ft_substr(str, s, i - s);
+	if (!new_str)
+	{
+		error_malloc(ms, "add_cmd_arg malloc error");
+		free_str(ms->new_str);
+		cleanup(ms);
+		cleanup_final(ms);
+		exit(EXIT_FAILURE);
+	}
+	if (!*str || i - s > 0)
+		add_word_split2(ms, new_str);
+	else
+		free(new_str);
 }

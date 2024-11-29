@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:07:30 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/28 20:54:00 by athonda          ###   ########.fr       */
+/*   Updated: 2024/11/29 19:00:16 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct s_ms
 	int		builtin_cmd;
 	int		pid;
 	int		in_pipe;
+	char	**word_split;
 	char	**cmd;
 	char	**cmd_envp;
 	int		exit_status;
@@ -207,6 +208,8 @@ int		expand_var_found_var(t_ms *ms, char *str, int i, int quote);
 void	replace_var(t_ms *ms);
 char	*remove_quote(char *old);
 void	add_cmd_arg(t_ms *ms, char *str, int s, int i);
+void	add_cmd_arg2(t_ms *ms, char *new_str);
+void	add_word_split(t_ms *ms, char *str, int s, int i);
 void	redirection(t_ms *ms, t_node *cur, int fd_w[2]);
 void	exec_cmd(t_ms *ms);
 void	pipe_wait(t_ms *ms);
