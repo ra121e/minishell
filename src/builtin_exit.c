@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 21:58:55 by athonda           #+#    #+#             */
-/*   Updated: 2024/11/24 19:07:37 by xlok             ###   ########.fr       */
+/*   Updated: 2024/12/02 18:43:42 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,15 @@ static void	process_in_parent(t_ms *ms, unsigned char c)
 		ms->exit_status = 1;
 	}
 	else
+	{
+		if (dup2(ms->fd_stdin, STDIN_FILENO) < 0)
+			error_exit("dup2 error");
+		if (dup2(ms->fd_stdout, STDOUT_FILENO) < 0)
+			error_exit("dup2 error");
+		close(ms->fd_stdin);
+		close(ms->fd_stdout);
 		clean_cmd_before_exit(ms, c);
+	}
 }
 
 static void	process_in_child(t_ms *ms, unsigned char c)

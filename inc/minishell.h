@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:07:30 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/29 19:00:16 by xlok             ###   ########.fr       */
+/*   Updated: 2024/12/02 18:42:39 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ typedef struct s_ms
 	int		forked;
 	int		fd_r;
 	int		fd_w[2];
+	int		fd_stdin;
+	int		fd_stdout;
 	int		builtin_cmd;
 	int		pid;
 	int		in_pipe;
