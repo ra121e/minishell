@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 21:58:55 by athonda           #+#    #+#             */
-/*   Updated: 2024/12/02 18:43:42 by xlok             ###   ########.fr       */
+/*   Updated: 2024/12/02 22:45:08 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,20 @@
  *		- exit number and one more arguments
  */
 
+static void	before_exit(t_ms *ms, unsigned char c)
+{
+	if (ms->in_pipe == 0)
+	{
+		if (dup2(ms->fd_stdin, STDIN_FILENO) < 0)
+			error_exit("dup2 error");
+		if (dup2(ms->fd_stdout, STDOUT_FILENO) < 0)
+			error_exit("dup2 error");
+		close(ms->fd_stdin);
+		close(ms->fd_stdout);
+	}
+	clean_cmd_before_exit(ms, c);
+}
+
 static void	process_in_parent(t_ms *ms, unsigned char c)
 {
 	ft_dprintf(2, "exit\n");
@@ -36,15 +50,7 @@ static void	process_in_parent(t_ms *ms, unsigned char c)
 		ms->exit_status = 1;
 	}
 	else
-	{
-		if (dup2(ms->fd_stdin, STDIN_FILENO) < 0)
-			error_exit("dup2 error");
-		if (dup2(ms->fd_stdout, STDOUT_FILENO) < 0)
-			error_exit("dup2 error");
-		close(ms->fd_stdin);
-		close(ms->fd_stdout);
-		clean_cmd_before_exit(ms, c);
-	}
+		before_exit(ms, c);
 }
 
 static void	process_in_child(t_ms *ms, unsigned char c)
@@ -70,7 +76,7 @@ static void	process_arg(t_ms *ms)
 	{
 		ft_dprintf(2, "exit\n");
 		ft_dprintf(2, "bash: exit: %s: numeric argument required\n", ms->cmd[1]);
-		clean_cmd_before_exit(ms, 2);
+		before_exit(ms, 2);
 	}
 	i = sign;
 	while (ms->cmd[1] && ms->cmd[1][i])
@@ -80,7 +86,7 @@ static void	process_arg(t_ms *ms)
 			ft_dprintf(2, "exit\n");
 			ft_dprintf(2, "bash: exit: %s: numeric argument required\n", \
 			ms->cmd[1]);
-			clean_cmd_before_exit(ms, 2);
+			before_exit(ms, 2);
 		}
 		i++;
 	}
