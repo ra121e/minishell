@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:07:30 by xlok              #+#    #+#             */
-/*   Updated: 2024/12/02 18:42:39 by xlok             ###   ########.fr       */
+/*   Updated: 2024/12/06 17:02:46 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ typedef struct s_ms
 void	init(t_ms *ms, char **envp);
 void	init_loop(t_ms *ms);
 void	init_envp(t_ms *ms, char **envp);
+int		ft_m_atoi(const char *s);
 void	cleanup(t_ms *ms);
 int		syntax_checker(t_ms *ms, char *str);
 void	lexer(t_ms *ms, char *str);
@@ -175,6 +176,7 @@ int		lexer_is_space_or_tab(int c);
 int		word_split_delimiter(int c);
 
 void	ft_signal(void);
+int		check_rl_done(void);
 
 t_node	*parser(t_token **token);
 t_node	*parser_expr(t_token **token);

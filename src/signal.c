@@ -6,13 +6,18 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:25:44 by xlok              #+#    #+#             */
-/*   Updated: 2024/11/19 22:19:03 by xlok             ###   ########.fr       */
+/*   Updated: 2024/12/06 17:02:50 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_sig;
+
+int	check_rl_done(void)
+{
+	return (0);
+}
 
 void	handler(int signum)
 {
