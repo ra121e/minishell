@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/12/07 11:12:41 by xlok             ###   ########.fr       */
+/*   Updated: 2024/12/07 14:42:31 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	init_envp(t_ms *ms, char **envp)
 	while (envp[i])
 	{
 		j = 0;
-		while (envp[i][j] != '=')
+		while (envp[i][j] && envp[i][j] != '=')
 			j++;
 		ms->envp[i] = malloc(sizeof(t_envp));
 		if (!ms->envp[i])
