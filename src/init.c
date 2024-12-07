@@ -6,56 +6,20 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/12/07 07:50:37 by xlok             ###   ########.fr       */
+/*   Updated: 2024/12/07 11:12:41 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	update_shlvl(t_ms *ms, int shlvl, int i)
+static void	init_envp2(t_ms *ms)
 {
-	char	*tmp;
-
-	tmp = ms->envp[i]->value;
-	ms->envp[i]->value = ft_itoa(shlvl);
-	if (!ms->envp[i]->value)
-		error_malloc(ms, "init_envp_shlvl malloc error");
-	free_str(tmp);
-	tmp = ms->envp[i]->pair;
-	ms->envp[i]->pair = ft_strsjoin(3, ms->envp[i]->key, \
-			"=", ms->envp[i]->value);
-	if (!ms->envp[i]->pair)
-		error_malloc(ms, "init_envp_shlvl malloc error");
-	free_str(tmp);
-}
-
-static void	init_envp_shlvl(t_ms *ms)
-{
-	int		shlvl;
-	int		i;
-
-	i = -1;
-	while (ms->envp[++i])
-	{
-		if (!ft_strncmp(ms->envp[i]->key, "SHLVL", 6))
-		{
-			shlvl = ft_m_atoi(ms->envp[i]->value) + 1;
-			if (shlvl < 0)
-				shlvl = 0;
-			else if (shlvl > 999)
-			{
-				ft_dprintf(2, "minishell: warning: shell level ");
-				ft_dprintf(2, "(%d) too high, resetting to 1\n", shlvl);
-				shlvl = 1;
-			}
-			update_shlvl(ms, shlvl, i);
-			return ;
-		}
-	}
-	ms->key = ft_strdup("SHLVL");
-	ms->value = ft_strdup("1");
-	ms->pair = ft_strdup("SHLVL=1");
+	ms->key = ft_strdup("OLDPWD");
+	ms->value = 0;
+	ms->pair = ft_strdup("OLDPWD");
 	export_add(ms, ms->envp);
+	ms->unset_pwd = 0;
+	init_envp_shlvl(ms);
 }
 
 void	init_envp(t_ms *ms, char **envp)
@@ -84,7 +48,7 @@ void	init_envp(t_ms *ms, char **envp)
 		i++;
 	}
 	ms->envp[i] = 0;
-	init_envp_shlvl(ms);
+	init_envp2(ms);
 }
 
 void	init_loop(t_ms *ms)

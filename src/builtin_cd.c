@@ -6,66 +6,59 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 21:02:22 by athonda           #+#    #+#             */
-/*   Updated: 2024/12/06 20:18:33 by xlok             ###   ########.fr       */
+/*   Updated: 2024/12/07 11:33:03 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	update_value(t_ms *ms, char *str, int i)
+static void	update_value(t_ms *ms, char *key, char *new_value)
 {
 	char	*tmp;
-
-	tmp = ms->envp[i]->value;
-	ms->envp[i]->value = str;
-	if (!ms->envp[i]->value)
-		error_malloc(ms, "cd update_value malloc error");
-	free_str(tmp);
-	tmp = ms->envp[i]->pair;
-	ms->envp[i]->pair = ft_strsjoin(3, ms->envp[i]->key, \
-			"=", ms->envp[i]->value);
-	if (!ms->envp[i]->pair)
-		error_malloc(ms, "cd update_value malloc error");
-	free_str(tmp);
-}
-
-static void	update_oldpwd(t_ms *ms, char *oldpwd)
-{
-	int	i;
+	int		i;
 
 	i = -1;
 	while (ms->envp[++i])
 	{
-		if (!ft_strncmp(ms->envp[i]->key, "OLDPWD", 7))
+		if (!ft_strncmp(ms->envp[i]->key, key, ft_strlen(key) + 1))
 		{
-			update_value(ms, oldpwd, i);
+			tmp = ms->envp[i]->value;
+			ms->envp[i]->value = new_value;
+			if (!ms->envp[i]->value)
+				error_malloc(ms, "cd update_value malloc error");
+			free_str(tmp);
+			tmp = ms->envp[i]->pair;
+			ms->envp[i]->pair = ft_strsjoin(3, ms->envp[i]->key, \
+					"=", new_value);
+			if (!ms->envp[i]->pair)
+				error_malloc(ms, "cd update_value malloc error");
+			free_str(tmp);
 			break ;
 		}
 	}
 	if (!ms->envp[i])
-	{
-		ms->key = ft_strdup("OLDPWD");
-		ms->value = oldpwd;
-		ms->pair = ft_strsjoin(3, ms->key, "=", ms->value);
-		export_add(ms, ms->envp);
-	}
+		free_str(new_value);
 }
 
 static void	update_envp(t_ms *ms, char *oldpwd)
 {
 	char	*pwd;
-	int		i;
+	char	*tmp;
 
 	pwd = getcwd(0, 0);
 	if (!pwd)
 		error_malloc(ms, "cd pwd malloc error");
-	i = -1;
-	while (ms->envp[++i])
+	update_value(ms, "PWD", pwd);
+	if (ms->unset_pwd)
 	{
-		if (!ft_strncmp(ms->envp[i]->key, "PWD", 4))
-			update_value(ms, pwd, i);
+		tmp = oldpwd;
+		oldpwd = ft_strdup("");
+		update_value(ms, "OLDPWD", oldpwd);
+		free_str(tmp);
+		ms->unset_pwd = 0;
 	}
-	update_oldpwd(ms, oldpwd);
+	else
+		update_value(ms, "OLDPWD", oldpwd);
 	ms->exit_status = 0;
 }
 

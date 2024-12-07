@@ -6,7 +6,7 @@
 #    By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/15 14:23:26 by xlok              #+#    #+#              #
-#    Updated: 2024/12/06 17:01:58 by xlok             ###   ########.fr        #
+#    Updated: 2024/12/07 08:49:21 by xlok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ DEP := inc/minishell.h
 SRC_DIR := src
 SRC_F := minishell.c \
 		 init.c \
+		 init_shlvl.c \
 		 cleanup.c \
 		 free.c \
 		 helper.c \

@@ -6,7 +6,7 @@
 /*   By: xlok <xlok@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:07:30 by xlok              #+#    #+#             */
-/*   Updated: 2024/12/06 17:02:46 by xlok             ###   ########.fr       */
+/*   Updated: 2024/12/07 10:25:31 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_ms
 	int		i;
 	int		n;
 	char	c;
+	int		unset_pwd;
 	int		len;
 	int		var_len;
 	char	*var;
@@ -142,6 +143,7 @@ typedef struct s_ms
 void	init(t_ms *ms, char **envp);
 void	init_loop(t_ms *ms);
 void	init_envp(t_ms *ms, char **envp);
+void	init_envp_shlvl(t_ms *ms);
 int		ft_m_atoi(const char *s);
 void	cleanup(t_ms *ms);
 int		syntax_checker(t_ms *ms, char *str);
