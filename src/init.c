@@ -6,7 +6,7 @@
 /*   By: athonda <athonda@student.42singapore.sg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:19:55 by xlok              #+#    #+#             */
-/*   Updated: 2024/12/06 17:08:36 by xlok             ###   ########.fr       */
+/*   Updated: 2024/12/07 07:50:37 by xlok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static void	init_envp_shlvl(t_ms *ms)
 	int		shlvl;
 	int		i;
 
-	i = 0;
-	while (ms->envp[i])
+	i = -1;
+	while (ms->envp[++i])
 	{
 		if (!ft_strncmp(ms->envp[i]->key, "SHLVL", 6))
 		{
@@ -51,8 +51,11 @@ static void	init_envp_shlvl(t_ms *ms)
 			update_shlvl(ms, shlvl, i);
 			return ;
 		}
-		i++;
 	}
+	ms->key = ft_strdup("SHLVL");
+	ms->value = ft_strdup("1");
+	ms->pair = ft_strdup("SHLVL=1");
+	export_add(ms, ms->envp);
 }
 
 void	init_envp(t_ms *ms, char **envp)
